@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +27,6 @@ import com.entity.TokenEntity;
 import com.entity.UsersEntity;
 import com.service.TokenService;
 import com.service.UsersService;
-import com.utils.CommonUtil;
-import com.utils.MPUtil;
-import com.utils.PageUtils;
-import com.utils.R;
-import com.utils.ValidatorUtils;
 
 /**
  * 登录相关
@@ -45,17 +41,18 @@ public class UsersController{
 	@Autowired
 	private TokenService tokenService;
 
-	/**
-	 * 登录
-	 */
 	@IgnoreAuth
-	@RequestMapping(value = "/login")
-	public R login(String username, String password, String captcha, HttpServletRequest request) {
+	@PostMapping("/login") // 建议明确请求方法
+	public R login(
+			@RequestParam String username,
+			@RequestParam String password) {
+
 		UsersEntity user = userService.selectOne(new EntityWrapper<UsersEntity>().eq("username", username));
-		if(user==null || !user.getPassword().equals(password)) {
+		if (user == null || !password.equals(user.getPassword())) { // 实际场景中密码应加密存储和验证
 			return R.error("账号或密码不正确");
 		}
-		String token = tokenService.generateToken(user.getId(),username, "users", user.getRole());
+
+		String token = JwtUtils.generateToken(user.getId(), username, "users", user.getRole());
 		return R.ok().put("token", token);
 	}
 	

@@ -12,7 +12,7 @@ spring:
         driverClassName: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://127.0.0.1:3306/springbootsagm21hd?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
         username: root
-        password: 000000
+        password: 2005-07-22zXr
 
 #        driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
 #        url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=springbootsagm21hd

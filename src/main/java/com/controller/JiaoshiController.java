@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-import com.utils.ValidatorUtils;
+import com.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,11 +32,7 @@ import com.entity.view.JiaoshiView;
 
 import com.service.JiaoshiService;
 import com.service.TokenService;
-import com.utils.PageUtils;
-import com.utils.R;
-import com.utils.MPUtil;
-import com.utils.MapUtils;
-import com.utils.CommonUtil;
+
 import java.io.IOException;
 
 /**
@@ -69,9 +65,9 @@ public class JiaoshiController {
 		if(u==null || !u.getMima().equals(password)) {
 			return R.error("账号或密码不正确");
 		}
-		
-		String token = tokenService.generateToken(u.getId(), username,"jiaoshi",  "教师" );
-		return R.ok().put("token", token);
+
+        String token = JwtUtils.generateToken(u.getId(), username, "teacher", "teacher");
+        return R.ok().put("token", token);
 	}
 
 
