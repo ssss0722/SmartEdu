@@ -57,12 +57,6 @@ public class JiaoxueziliaoController {
     @Autowired
     private StoreupService storeupService;
 
-
-
-    
-
-
-
     /**
      * 后端列表
      */
