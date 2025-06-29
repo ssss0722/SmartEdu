@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.enums.IdType;
 /** 
  * 用户
  */
-@TableName("users")
-public class UsersEntity implements Serializable {
+@TableName("user_admin")
+public class AdminEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@TableId(type = IdType.AUTO)

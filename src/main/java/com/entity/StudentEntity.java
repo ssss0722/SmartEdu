@@ -2,23 +2,15 @@ package com.entity;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.lang.reflect.InvocationTargetException;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.beanutils.BeanUtils;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.enums.FieldFill;
-import com.baomidou.mybatisplus.enums.IdType;
 
 
 /**
@@ -28,16 +20,16 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-@TableName("xuesheng")
-public class XueshengEntity<T> implements Serializable {
+@TableName("user_student")
+public class StudentEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 
-	public XueshengEntity() {
+	public StudentEntity() {
 		
 	}
 	
-	public XueshengEntity(T t) {
+	public StudentEntity(T t) {
 		try {
 			BeanUtils.copyProperties(this, t);
 		} catch (IllegalAccessException | InvocationTargetException e) {
@@ -55,37 +47,37 @@ public class XueshengEntity<T> implements Serializable {
 	 * 学生账号
 	 */
 					
-	private String xueshengzhanghao;
+	private String sUsername;
 	
 	/**
 	 * 学生姓名
 	 */
 					
-	private String xueshengxingming;
+	private String sName;
 	
 	/**
 	 * 密码
 	 */
 					
-	private String mima;
+	private String password;
 	
 	/**
 	 * 性别
 	 */
 					
-	private String xingbie;
+	private String gender;
 	
 	/**
 	 * 联系电话
 	 */
 					
-	private String lianxidianhua;
+	private String tel;
 	
 	/**
 	 * 头像
 	 */
 					
-	private String touxiang;
+	private String avatar;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -109,74 +101,74 @@ public class XueshengEntity<T> implements Serializable {
 	/**
 	 * 设置：学生账号
 	 */
-	public void setXueshengzhanghao(String xueshengzhanghao) {
-		this.xueshengzhanghao = xueshengzhanghao;
+	public void setsUsername(String username) {
+		this.sUsername=username;
 	}
 	/**
 	 * 获取：学生账号
 	 */
-	public String getXueshengzhanghao() {
-		return xueshengzhanghao;
+	public String getsUsername() {
+		return sUsername;
 	}
 	/**
 	 * 设置：学生姓名
 	 */
-	public void setXueshengxingming(String xueshengxingming) {
-		this.xueshengxingming = xueshengxingming;
+	public void setsName(String name) {
+		this.sName=name;
 	}
 	/**
 	 * 获取：学生姓名
 	 */
-	public String getXueshengxingming() {
-		return xueshengxingming;
+	public String getsName() {
+		return sName;
 	}
 	/**
 	 * 设置：密码
 	 */
-	public void setMima(String mima) {
-		this.mima = mima;
+	public void setPassword(String password) {
+		this.password=password;
 	}
 	/**
 	 * 获取：密码
 	 */
-	public String getMima() {
-		return mima;
+	public String getPassword() {
+		return password;
 	}
 	/**
 	 * 设置：性别
 	 */
-	public void setXingbie(String xingbie) {
-		this.xingbie = xingbie;
+	public void setGender(String gender) {
+		this.gender=gender;
 	}
 	/**
 	 * 获取：性别
 	 */
-	public String getXingbie() {
-		return xingbie;
+	public String getGender() {
+		return gender;
 	}
 	/**
 	 * 设置：联系电话
 	 */
-	public void setLianxidianhua(String lianxidianhua) {
-		this.lianxidianhua = lianxidianhua;
+	public void setTel(String tel) {
+		this.tel=tel;
 	}
 	/**
 	 * 获取：联系电话
 	 */
-	public String getLianxidianhua() {
-		return lianxidianhua;
+	public String getTel() {
+		return tel;
 	}
 	/**
 	 * 设置：头像
 	 */
-	public void setTouxiang(String touxiang) {
-		this.touxiang = touxiang;
+	public void setAvatar(String avatar) {
+		this.avatar=avatar;
 	}
 	/**
 	 * 获取：头像
 	 */
-	public String getTouxiang() {
-		return touxiang;
+	public String getAvatar() {
+		return avatar;
 	}
 
 }

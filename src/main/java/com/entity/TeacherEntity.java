@@ -1,24 +1,17 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.lang.reflect.InvocationTargetException;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.beanutils.BeanUtils;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.enums.FieldFill;
-import com.baomidou.mybatisplus.enums.IdType;
 
 
 /**
@@ -28,16 +21,16 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-@TableName("jiaoshi")
-public class JiaoshiEntity<T> implements Serializable {
+@TableName("user_teacher")
+public class TeacherEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 
-	public JiaoshiEntity() {
+	public TeacherEntity() {
 		
 	}
 	
-	public JiaoshiEntity(T t) {
+	public TeacherEntity(T t) {
 		try {
 			BeanUtils.copyProperties(this, t);
 		} catch (IllegalAccessException | InvocationTargetException e) {
@@ -51,47 +44,41 @@ public class JiaoshiEntity<T> implements Serializable {
 	 */
     @TableId
     private Long id;
-	/**
-	 * 教师工号
-	 */
-					
-	private String jiaoshigonghao;
-	
-	/**
-	 * 教师姓名
-	 */
-					
-	private String jiaoshixingming;
+	@TableField("t_username")
+	private String tUsername;
+
+	@TableField("t_name")
+	private String tName;
 	
 	/**
 	 * 密码
 	 */
 					
-	private String mima;
+	private String password;
 	
 	/**
 	 * 性别
 	 */
 					
-	private String xingbie;
+	private String gender;
 	
 	/**
 	 * 头像
 	 */
 					
-	private String touxiang;
+	private String avatar;
 	
 	/**
 	 * 电话
 	 */
 					
-	private String dianhua;
+	private String tel;
 	
 	/**
 	 * 课程名称
 	 */
 					
-	private String kechengmingcheng;
+	private String course;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -115,86 +102,86 @@ public class JiaoshiEntity<T> implements Serializable {
 	/**
 	 * 设置：教师工号
 	 */
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void setT_username(String username) {
+		this.tUsername=username;
 	}
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String getT_username() {
+		return tUsername;
 	}
 	/**
 	 * 设置：教师姓名
 	 */
-	public void setJiaoshixingming(String jiaoshixingming) {
-		this.jiaoshixingming = jiaoshixingming;
+	public void setT_name(String name) {
+		this.tName=name;
 	}
 	/**
 	 * 获取：教师姓名
 	 */
-	public String getJiaoshixingming() {
-		return jiaoshixingming;
+	public String getT_name() {
+		return tName;
 	}
 	/**
 	 * 设置：密码
 	 */
-	public void setMima(String mima) {
-		this.mima = mima;
+	public void setPassword(String password) {
+		this.password=password;
 	}
 	/**
 	 * 获取：密码
 	 */
-	public String getMima() {
-		return mima;
+	public String getPassword() {
+		return password;
 	}
 	/**
 	 * 设置：性别
 	 */
-	public void setXingbie(String xingbie) {
-		this.xingbie = xingbie;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	/**
 	 * 获取：性别
 	 */
-	public String getXingbie() {
-		return xingbie;
+	public String getGender() {
+		return gender;
 	}
 	/**
 	 * 设置：头像
 	 */
-	public void setTouxiang(String touxiang) {
-		this.touxiang = touxiang;
+	public void setAvatar(String avatar) {
+		this.avatar=avatar;
 	}
 	/**
 	 * 获取：头像
 	 */
-	public String getTouxiang() {
-		return touxiang;
+	public String getAvatar() {
+		return avatar;
 	}
 	/**
 	 * 设置：电话
 	 */
-	public void setDianhua(String dianhua) {
-		this.dianhua = dianhua;
+	public void setTel(String tel) {
+		this.tel=tel;
 	}
 	/**
 	 * 获取：电话
 	 */
-	public String getDianhua() {
-		return dianhua;
+	public String getTel() {
+		return tel;
 	}
 	/**
 	 * 设置：课程名称
 	 */
-	public void setKechengmingcheng(String kechengmingcheng) {
-		this.kechengmingcheng = kechengmingcheng;
+	public void setCourse(String course) {
+		this.course=course;
 	}
 	/**
 	 * 获取：课程名称
 	 */
-	public String getKechengmingcheng() {
-		return kechengmingcheng;
+	public String getCourse() {
+		return course;
 	}
 
 }

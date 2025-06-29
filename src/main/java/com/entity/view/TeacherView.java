@@ -1,34 +1,32 @@
 package com.entity.view;
 
-import com.entity.XueshengEntity;
+import com.entity.TeacherEntity;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 import org.apache.commons.beanutils.BeanUtils;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
 
 import java.io.Serializable;
-import com.utils.EncryptUtil;
- 
+
 
 /**
- * 学生
+ * 教师
  * 后端返回视图实体辅助类   
  * （通常后端关联的表或者自定义的字段需要返回使用）
  * @author 
  * @email 
  * @date 2024-03-05 11:41:23
  */
-@TableName("xuesheng")
-public class XueshengView  extends XueshengEntity implements Serializable {
+@TableName("user_teacher")
+public class TeacherView extends TeacherEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public XueshengView(){
+	public TeacherView(){
 	}
  
- 	public XueshengView(XueshengEntity xueshengEntity){
+ 	public TeacherView(TeacherEntity teacherEntity){
  	try {
-			BeanUtils.copyProperties(this, xueshengEntity);
+			BeanUtils.copyProperties(this, teacherEntity);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

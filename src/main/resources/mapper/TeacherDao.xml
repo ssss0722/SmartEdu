@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.TeacherDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.TeacherEntity" id="jiaoshiMap">
+        <result property="tUsername" column="t_username"/>
+        <result property="tName" column="t_name"/>
+        <result property="password" column="password"/>
+        <result property="gender" column="gender"/>
+        <result property="avatar" column="avatar"/>
+        <result property="tel" column="tel"/>
+        <result property="course" column="course"/>
+    </resultMap>
+
+	<select id="selectListVO"
+		resultType="com.entity.vo.JiaoshiVO" >
+		SELECT * FROM user_teacher  teacher
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectVO"
+		resultType="com.entity.vo.JiaoshiVO" >
+		SELECT  teacher.* FROM user_teacher  teacher
+ 		<where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+    <select id="selectListView"
+		resultType="com.entity.view.TeacherView" >
+		SELECT  teacher.* FROM user_teacher  teacher
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.entity.view.TeacherView" >
+		SELECT * FROM user_teacher  teacher <where> 1=1 ${ew.sqlSegment} LIMIT 1</where>
+	</select>
+	<select id="selectViewPage" resultType="com.entity.TeacherEntity">
+		SELECT * FROM user_teacher teacher
+		<where>
+			${ew.sqlSegment}
+		</where>
+	</select>
+
+
+</mapper>

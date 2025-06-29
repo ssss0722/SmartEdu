@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.XueshengDao;
-import com.entity.XueshengEntity;
-import com.service.XueshengService;
+import com.dao.StudentDao;
+import com.entity.StudentEntity;
+import com.service.StudentService;
 import com.entity.vo.XueshengVO;
-import com.entity.view.XueshengView;
+import com.entity.view.StudentView;
 
 @Service("xueshengService")
-public class XueshengServiceImpl extends ServiceImpl<XueshengDao, XueshengEntity> implements XueshengService {
+public class StudentServiceImpl extends ServiceImpl<StudentDao, StudentEntity> implements StudentService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<XueshengEntity> page = this.selectPage(
-                new Query<XueshengEntity>(params).getPage(),
-                new EntityWrapper<XueshengEntity>()
+        Page<StudentEntity> page = this.selectPage(
+                new Query<StudentEntity>(params).getPage(),
+                new EntityWrapper<StudentEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<XueshengEntity> wrapper) {
-		  Page<XueshengView> page =new Query<XueshengView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<StudentEntity> wrapper) {
+		  Page<StudentView> page =new Query<StudentView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class XueshengServiceImpl extends ServiceImpl<XueshengDao, XueshengEntity
 
     
     @Override
-	public List<XueshengVO> selectListVO(Wrapper<XueshengEntity> wrapper) {
+	public List<XueshengVO> selectListVO(Wrapper<StudentEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public XueshengVO selectVO(Wrapper<XueshengEntity> wrapper) {
+	public XueshengVO selectVO(Wrapper<StudentEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<XueshengView> selectListView(Wrapper<XueshengEntity> wrapper) {
+	public List<StudentView> selectListView(Wrapper<StudentEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public XueshengView selectView(Wrapper<XueshengEntity> wrapper) {
+	public StudentView selectView(Wrapper<StudentEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

@@ -10,7 +10,7 @@ server:
 spring:
     datasource:
         driverClassName: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/springbootsagm21hd?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+        url: jdbc:mysql://127.0.0.1:3306/smartedu?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
         username: root
         password: 2005-07-22zXr
 

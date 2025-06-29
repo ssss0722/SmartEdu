@@ -1,12 +1,5 @@
 package com.entity.model;
 
-import com.entity.XueshengEntity;
-
-import com.baomidou.mybatisplus.annotations.TableName;
-import java.util.Date;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
  
 
@@ -19,7 +12,7 @@ import java.io.Serializable;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-public class XueshengModel  implements Serializable {
+public class StudentModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	 			

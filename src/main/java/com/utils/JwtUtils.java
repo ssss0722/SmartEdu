@@ -6,6 +6,7 @@ import java.util.Date;
 import io.jsonwebtoken.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class JwtUtils {
     // 使用字节数组作为密钥（推荐）
@@ -31,5 +32,54 @@ public class JwtUtils {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public static long getRemainingTime(String token, TimeUnit timeUnit) {
+        try {
+            Claims claims = parseToken(token);
+            Date expiration = claims.getExpiration();
+            long remainingMillis = expiration.getTime() - System.currentTimeMillis();
+
+            switch (timeUnit) {
+                case SECONDS: return remainingMillis / 1000;
+                case MINUTES: return remainingMillis / (1000 * 60);
+                case HOURS: return remainingMillis / (1000 * 60 * 60);
+                case DAYS: return remainingMillis / (1000 * 60 * 60 * 24);
+                default: return remainingMillis;
+            }
+        } catch (Exception e) {
+            return 0; // token无效或已过期
+        }
+    }
+
+    public static Long getUserIdFromToken(String fullToken) {
+        if (fullToken == null) return null;
+
+        String token = fullToken.startsWith("Bearer ") ?
+                fullToken.substring(7) : fullToken;
+
+        try {
+            Claims claims = parseToken(token);
+            return claims.get("userId", Long.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * 检查token是否有效
+     */
+    public static boolean isValidToken(String fullToken) {
+        if (fullToken == null) return false;
+
+        String token = fullToken.startsWith("Bearer ") ?
+                fullToken.substring(7) : fullToken;
+
+        try {
+            parseToken(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

@@ -11,9 +11,9 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.dao.UsersDao;
-import com.entity.UsersEntity;
-import com.service.UsersService;
+import com.dao.AdminDao;
+import com.entity.AdminEntity;
+import com.service.AdminService;
 import com.utils.PageUtils;
 import com.utils.Query;
 
@@ -22,26 +22,26 @@ import com.utils.Query;
  * 系统用户
  */
 @Service("usersService")
-public class UsersServiceImpl extends ServiceImpl<UsersDao, UsersEntity> implements UsersService {
+public class AdminServiceImpl extends ServiceImpl<AdminDao, AdminEntity> implements AdminService {
 
 	@Override
 	public PageUtils queryPage(Map<String, Object> params) {
-		Page<UsersEntity> page = this.selectPage(
-                new Query<UsersEntity>(params).getPage(),
-                new EntityWrapper<UsersEntity>()
+		Page<AdminEntity> page = this.selectPage(
+                new Query<AdminEntity>(params).getPage(),
+                new EntityWrapper<AdminEntity>()
         );
         return new PageUtils(page);
 	}
 
 	@Override
-	public List<UsersEntity> selectListView(Wrapper<UsersEntity> wrapper) {
+	public List<AdminEntity> selectListView(Wrapper<AdminEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
 	public PageUtils queryPage(Map<String, Object> params,
-			Wrapper<UsersEntity> wrapper) {
-		 Page<UsersEntity> page =new Query<UsersEntity>(params).getPage();
+			Wrapper<AdminEntity> wrapper) {
+		 	Page<AdminEntity> page =new Query<AdminEntity>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;

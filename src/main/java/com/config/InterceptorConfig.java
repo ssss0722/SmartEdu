@@ -1,24 +1,28 @@
 package com.config;
 
-import org.springframework.context.annotation.Bean;
+import com.interceptor.JwtInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import com.interceptor.AuthorizationInterceptor;
-
 @Configuration
 public class InterceptorConfig extends WebMvcConfigurationSupport{
-	
-	@Bean
-    public AuthorizationInterceptor getAuthorizationInterceptor() {
-        return new AuthorizationInterceptor();
-    }
+
+	@Autowired
+	private JwtInterceptor jwtInterceptor;
 	
 	@Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getAuthorizationInterceptor()).addPathPatterns("/**").excludePathPatterns("/static/**");
+		registry.addInterceptor(jwtInterceptor)
+				.addPathPatterns("/**")
+				// 排除不需要认证的接口
+				.excludePathPatterns(
+						"/login",
+						"/register",
+						"/resetPass"
+				);
         super.addInterceptors(registry);
 	}
 	
