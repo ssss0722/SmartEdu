@@ -11,7 +11,7 @@
  Target Server Version : 80011 (8.0.11)
  File Encoding         : 65001
 
- Date: 30/06/2025 11:41:29
+ Date: 01/07/2025 09:37:56
 */
 
 SET NAMES utf8mb4;
@@ -118,6 +118,32 @@ INSERT INTO `course_homework` VALUES (66, '2024-03-05 11:41:50', '课程名称6'
 INSERT INTO `course_homework` VALUES (67, '2024-03-05 11:41:50', '课程名称7', '作业名称7', 'upload/kechengzuoye_tupian7.jpg,upload/kechengzuoye_tupian8.jpg,upload/kechengzuoye_tupian9.jpg', '', '教师工号7', '教师姓名7', '2024-03-05 11:41:50', '作业内容7', 0, 7);
 INSERT INTO `course_homework` VALUES (68, '2024-03-05 11:41:50', '课程名称8', '作业名称8', 'upload/kechengzuoye_tupian8.jpg,upload/kechengzuoye_tupian9.jpg,upload/kechengzuoye_tupian10.jpg', '', '教师工号8', '教师姓名8', '2024-03-05 11:41:50', '作业内容8', 0, 8);
 INSERT INTO `course_homework` VALUES (69, '2024-03-05 11:54:22', '编程', '第一单元', 'upload/1709610853914.jpg', 'upload/1709610859409.doc', '111', '杨洋', '2024-03-05 11:56:18', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', 0, 1);
+
+-- ----------------------------
+-- Table structure for course_homework_question
+-- ----------------------------
+DROP TABLE IF EXISTS `course_homework_question`;
+CREATE TABLE `course_homework_question`  (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `addtime` timestamp NOT NULL COMMENT '创建时间',
+  `homework_id` bigint(20) NOT NULL COMMENT '所属作业id（外键）',
+  `homework_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '作业名称',
+  `question_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '试题名称',
+  `options` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '选项，json字符串',
+  `score` bigint(20) NULL DEFAULT NULL COMMENT '分值',
+  `answer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '正确答案',
+  `analysis` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '答案解析',
+  `type` bigint(20) NULL DEFAULT NULL COMMENT '试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）4:主观题',
+  `sequence` bigint(20) NULL DEFAULT NULL COMMENT '试题排序，值越大排越前面',
+  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `t_ho_question`(`t_username` ASC) USING BTREE,
+  CONSTRAINT `t_ho_question` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of course_homework_question
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for course_homework_review
@@ -289,7 +315,7 @@ CREATE TABLE `discuss_course_homework`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `co_ho_dis`(`refid` ASC) USING BTREE,
   CONSTRAINT `co_ho_dis` FOREIGN KEY (`refid`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '课程作业评论表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '课程作业评论表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of discuss_course_homework
@@ -334,7 +360,7 @@ CREATE TABLE `discuss_course_video`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `co_vi_dis`(`refid` ASC) USING BTREE,
   CONSTRAINT `co_vi_dis` FOREIGN KEY (`refid`) REFERENCES `course_video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '教学视频评论表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '教学视频评论表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of discuss_course_video
@@ -666,7 +692,7 @@ CREATE TABLE `user_student`  (
   `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学生账号',
   `s_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生姓名',
   `password` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
-  `grander` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
+  `gender` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
   `tel` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系电话',
   `avatar` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
   PRIMARY KEY (`id`, `s_username` DESC) USING BTREE,
@@ -700,6 +726,7 @@ CREATE TABLE `user_teacher`  (
   `avatar` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
   `tel` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电话号码',
   `course` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程名称',
+  `role` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色（分为助教和教师）',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `jiaoshigonghao`(`t_username` ASC) USING BTREE,
   INDEX `t_name`(`t_name` ASC) USING BTREE
@@ -708,14 +735,14 @@ CREATE TABLE `user_teacher`  (
 -- ----------------------------
 -- Records of user_teacher
 -- ----------------------------
-INSERT INTO `user_teacher` VALUES (11, '2024-03-05 11:41:50', '教师工号1', '教师姓名1', '123456', '男', 'upload/jiaoshi_touxiang1.jpg', '13823888881', '课程名称1');
-INSERT INTO `user_teacher` VALUES (12, '2024-03-05 11:41:50', '教师工号2', '教师姓名2', '123456', '男', 'upload/jiaoshi_touxiang2.jpg', '13823888882', '课程名称2');
-INSERT INTO `user_teacher` VALUES (13, '2024-03-05 11:41:50', '教师工号3', '教师姓名3', '123456', '男', 'upload/jiaoshi_touxiang3.jpg', '13823888883', '课程名称3');
-INSERT INTO `user_teacher` VALUES (14, '2024-03-05 11:41:50', '教师工号4', '教师姓名4', '123456', '男', 'upload/jiaoshi_touxiang4.jpg', '13823888884', '课程名称4');
-INSERT INTO `user_teacher` VALUES (15, '2024-03-05 11:41:50', '教师工号5', '教师姓名5', '123456', '男', 'upload/jiaoshi_touxiang5.jpg', '13823888885', '课程名称5');
-INSERT INTO `user_teacher` VALUES (16, '2024-03-05 11:41:50', '教师工号6', '教师姓名6', '123456', '男', 'upload/jiaoshi_touxiang6.jpg', '13823888886', '课程名称6');
-INSERT INTO `user_teacher` VALUES (17, '2024-03-05 11:41:50', '教师工号7', '教师姓名7', '123456', '男', 'upload/jiaoshi_touxiang7.jpg', '13823888887', '课程名称7');
-INSERT INTO `user_teacher` VALUES (18, '2024-03-05 11:41:50', '教师工号8', '教师姓名8', '123456', '男', 'upload/jiaoshi_touxiang8.jpg', '13823888888', '课程名称8');
-INSERT INTO `user_teacher` VALUES (1709610637034, '2024-03-05 11:50:37', '111', '杨洋', '111', '女', 'upload/1709610626972.png', '13612514514', '编程');
+INSERT INTO `user_teacher` VALUES (11, '2024-03-05 11:41:50', '教师工号1', '教师姓名1', '123456', '男', 'upload/jiaoshi_touxiang1.jpg', '13823888881', '课程名称1', '教师');
+INSERT INTO `user_teacher` VALUES (12, '2024-03-05 11:41:50', '教师工号2', '教师姓名2', '123456', '男', 'upload/jiaoshi_touxiang2.jpg', '13823888882', '课程名称2', '教师');
+INSERT INTO `user_teacher` VALUES (13, '2024-03-05 11:41:50', '教师工号3', '教师姓名3', '123456', '男', 'upload/jiaoshi_touxiang3.jpg', '13823888883', '课程名称3', '教师');
+INSERT INTO `user_teacher` VALUES (14, '2024-03-05 11:41:50', '教师工号4', '教师姓名4', '123456', '男', 'upload/jiaoshi_touxiang4.jpg', '13823888884', '课程名称4', '助教');
+INSERT INTO `user_teacher` VALUES (15, '2024-03-05 11:41:50', '教师工号5', '教师姓名5', '123456', '男', 'upload/jiaoshi_touxiang5.jpg', '13823888885', '课程名称5', '助教');
+INSERT INTO `user_teacher` VALUES (16, '2024-03-05 11:41:50', '教师工号6', '教师姓名6', '123456', '男', 'upload/jiaoshi_touxiang6.jpg', '13823888886', '课程名称6', '教师');
+INSERT INTO `user_teacher` VALUES (17, '2024-03-05 11:41:50', '教师工号7', '教师姓名7', '123456', '男', 'upload/jiaoshi_touxiang7.jpg', '13823888887', '课程名称7', '助教');
+INSERT INTO `user_teacher` VALUES (18, '2024-03-05 11:41:50', '教师工号8', '教师姓名8', '123456', '男', 'upload/jiaoshi_touxiang8.jpg', '13823888888', '课程名称8', '教师');
+INSERT INTO `user_teacher` VALUES (1709610637034, '2024-03-05 11:50:37', '111', '杨洋', '111', '女', 'upload/1709610626972.png', '13612514514', '编程', '教师');
 
 SET FOREIGN_KEY_CHECKS = 1;
