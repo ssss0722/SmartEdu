@@ -17,26 +17,26 @@
 
 	<select id="selectListVO"
 		resultType="com.entity.vo.StoreupVO" >
-		SELECT * FROM storeup  storeup         
+		SELECT * FROM store_up  store_up
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
 		resultType="com.entity.vo.StoreupVO" >
-		SELECT  storeup.* FROM storeup  storeup 	
+		SELECT  store_up.* FROM store_up  store_up
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
     <select id="selectListView"
 		resultType="com.entity.view.StoreupView" >
 
-		SELECT  storeup.* FROM storeup  storeup 	        
+		SELECT  store_up.* FROM store_up  store_up
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
 		resultType="com.entity.view.StoreupView" >
-		SELECT * FROM storeup  storeup <where> 1=1 ${ew.sqlSegment}</where>
+		SELECT * FROM store_up  store_up <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 

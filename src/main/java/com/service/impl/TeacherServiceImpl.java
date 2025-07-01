@@ -16,7 +16,7 @@ import com.utils.Query;
 import com.dao.TeacherDao;
 import com.entity.TeacherEntity;
 import com.service.TeacherService;
-import com.entity.vo.JiaoshiVO;
+import com.entity.vo.TeacherVO;
 import com.entity.view.TeacherView;
 
 @Service("TeacherService")
@@ -49,12 +49,12 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, TeacherEntity> i
 
 
 	@Override
-	public List<JiaoshiVO> selectListVO(Wrapper<TeacherEntity> wrapper) {
+	public List<TeacherVO> selectListVO(Wrapper<TeacherEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public JiaoshiVO selectVO(Wrapper<TeacherEntity> wrapper) {
+	public TeacherVO selectVO(Wrapper<TeacherEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	

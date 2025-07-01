@@ -1,23 +1,17 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.lang.reflect.InvocationTargetException;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.beanutils.BeanUtils;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.enums.FieldFill;
 import com.baomidou.mybatisplus.enums.IdType;
 
 
@@ -28,16 +22,16 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-@TableName("jiaoxueziliao")
-public class JiaoxueziliaoEntity<T> implements Serializable {
+@TableName("course_material")
+public class CourseMaterialEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 
-	public JiaoxueziliaoEntity() {
+	public CourseMaterialEntity() {
 		
 	}
 	
-	public JiaoxueziliaoEntity(T t) {
+	public CourseMaterialEntity(T t) {
 		try {
 			BeanUtils.copyProperties(this, t);
 		} catch (IllegalAccessException | InvocationTargetException e) {
@@ -55,37 +49,37 @@ public class JiaoxueziliaoEntity<T> implements Serializable {
 	 * 标题
 	 */
 					
-	private String biaoti;
+	private String title;
 	
 	/**
 	 * 课程类别
 	 */
 					
-	private String kechengleibie;
+	private String course;
 	
 	/**
 	 * 图片
 	 */
 					
-	private String tupian;
+	private String picture;
 	
 	/**
 	 * 附件
 	 */
 					
-	private String fujian;
+	private String attachment;
 	
 	/**
 	 * 教师工号
 	 */
-					
-	private String jiaoshigonghao;
+	@TableField("t_username")
+	private String tUsername;
 	
 	/**
 	 * 教师姓名
 	 */
-					
-	private String jiaoshixingming;
+	@TableField("t_name")
+	private String tName;
 	
 	/**
 	 * 发布时间
@@ -93,13 +87,13 @@ public class JiaoxueziliaoEntity<T> implements Serializable {
 				
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat 		
-	private Date fabushijian;
+	private Date publishAt;
 	
 	/**
 	 * 内容
 	 */
 					
-	private String neirong;
+	private String content;
 	
 	/**
 	 * 最近点击时间
@@ -149,98 +143,98 @@ public class JiaoxueziliaoEntity<T> implements Serializable {
 	/**
 	 * 设置：标题
 	 */
-	public void setBiaoti(String biaoti) {
-		this.biaoti = biaoti;
+	public void setTitle(String title) {
+		this.title=title;
 	}
 	/**
 	 * 获取：标题
 	 */
-	public String getBiaoti() {
-		return biaoti;
+	public String getTitle() {
+		return title;
 	}
 	/**
 	 * 设置：课程类别
 	 */
-	public void setKechengleibie(String kechengleibie) {
-		this.kechengleibie = kechengleibie;
+	public void setCourse(String course) {
+		this.course=course;
 	}
 	/**
 	 * 获取：课程类别
 	 */
-	public String getKechengleibie() {
-		return kechengleibie;
+	public String getCourse() {
+		return course;
 	}
 	/**
 	 * 设置：图片
 	 */
-	public void setTupian(String tupian) {
-		this.tupian = tupian;
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 	/**
 	 * 获取：图片
 	 */
-	public String getTupian() {
-		return tupian;
+	public String getPicture() {
+		return picture;
 	}
 	/**
 	 * 设置：附件
 	 */
-	public void setFujian(String fujian) {
-		this.fujian = fujian;
+	public void setAttachment(String attachment) {
+		this.attachment=attachment;
 	}
 	/**
 	 * 获取：附件
 	 */
-	public String getFujian() {
-		return fujian;
+	public String getAttachment() {
+		return attachment;
 	}
 	/**
 	 * 设置：教师工号
 	 */
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void settUsername(String username) {
+		this.tUsername=username;
 	}
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String gettUsername() {
+		return tUsername;
 	}
 	/**
 	 * 设置：教师姓名
 	 */
-	public void setJiaoshixingming(String jiaoshixingming) {
-		this.jiaoshixingming = jiaoshixingming;
+	public void settName(String tName) {
+		this.tName=tName;
 	}
 	/**
 	 * 获取：教师姓名
 	 */
-	public String getJiaoshixingming() {
-		return jiaoshixingming;
+	public String gettName() {
+		return tName;
 	}
 	/**
 	 * 设置：发布时间
 	 */
-	public void setFabushijian(Date fabushijian) {
-		this.fabushijian = fabushijian;
+	public void setPublishAt(Date publishAt) {
+		this.publishAt=publishAt;
 	}
 	/**
 	 * 获取：发布时间
 	 */
-	public Date getFabushijian() {
-		return fabushijian;
+	public Date getPublishAt() {
+		return publishAt;
 	}
 	/**
 	 * 设置：内容
 	 */
-	public void setNeirong(String neirong) {
-		this.neirong = neirong;
+	public void setContent(String content) {
+		this.content=content;
 	}
 	/**
 	 * 获取：内容
 	 */
-	public String getNeirong() {
-		return neirong;
+	public String getContent() {
+		return content;
 	}
 	/**
 	 * 设置：最近点击时间

@@ -82,4 +82,17 @@ public class JwtUtils {
             return false;
         }
     }
+
+    public static String getRoleFromToken(String fullToken){
+        if (fullToken == null) return null;
+
+        String token = fullToken.startsWith("Bearer ") ?
+                fullToken.substring(7) : fullToken;
+        try {
+            Claims claims = parseToken(token);
+            return claims.get("role", String.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

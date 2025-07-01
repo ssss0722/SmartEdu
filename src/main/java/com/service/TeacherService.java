@@ -7,7 +7,7 @@ import com.utils.PageUtils;
 import com.entity.TeacherEntity;
 import java.util.List;
 import java.util.Map;
-import com.entity.vo.JiaoshiVO;
+import com.entity.vo.TeacherVO;
 import org.apache.ibatis.annotations.Param;
 import com.entity.view.TeacherView;
 
@@ -23,9 +23,9 @@ public interface TeacherService extends IService<TeacherEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<JiaoshiVO> selectListVO(Wrapper<TeacherEntity> wrapper);
+   	List<TeacherVO> selectListVO(Wrapper<TeacherEntity> wrapper);
    	
-   	JiaoshiVO selectVO(@Param("ew") Wrapper<TeacherEntity> wrapper);
+   	TeacherVO selectVO(@Param("ew") Wrapper<TeacherEntity> wrapper);
    	
    	List<TeacherView> selectListView(Wrapper<TeacherEntity> wrapper);
    	

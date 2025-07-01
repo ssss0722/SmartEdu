@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.dao.DiscussjiaoxueziliaoDao">
+<mapper namespace="com.dao.DiscussCourseMaterialDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.entity.DiscussjiaoxueziliaoEntity" id="discussjiaoxueziliaoMap">
+    <resultMap type="com.entity.DiscussCourseMaterialEntity" id="discussCourseMaterialMap">
         <result property="refid" column="refid"/>
         <result property="userid" column="userid"/>
         <result property="avatarurl" column="avatarurl"/>
@@ -15,26 +15,26 @@
 
 	<select id="selectListVO"
 		resultType="com.entity.vo.DiscussjiaoxueziliaoVO" >
-		SELECT * FROM discussjiaoxueziliao  discussjiaoxueziliao         
+		SELECT * FROM discuss_course_material  discussCm
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
 		resultType="com.entity.vo.DiscussjiaoxueziliaoVO" >
-		SELECT  discussjiaoxueziliao.* FROM discussjiaoxueziliao  discussjiaoxueziliao 	
+		SELECT  discussCm.* FROM discuss_course_material  discussCm
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
     <select id="selectListView"
-		resultType="com.entity.view.DiscussjiaoxueziliaoView" >
+		resultType="com.entity.view.DiscussCourseMaterialView" >
 
-		SELECT  discussjiaoxueziliao.* FROM discussjiaoxueziliao  discussjiaoxueziliao 	        
+		SELECT  discussCm.* FROM discuss_course_material  discussCm
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
-		resultType="com.entity.view.DiscussjiaoxueziliaoView" >
-		SELECT * FROM discussjiaoxueziliao  discussjiaoxueziliao <where> 1=1 ${ew.sqlSegment}</where>
+		resultType="com.entity.view.DiscussCourseMaterialView" >
+		SELECT * FROM discuss_course_material  discussCm <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 

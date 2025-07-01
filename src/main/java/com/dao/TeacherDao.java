@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import org.apache.ibatis.annotations.Param;
-import com.entity.vo.JiaoshiVO;
+import com.entity.vo.TeacherVO;
 import com.entity.view.TeacherView;
 
 
@@ -22,9 +22,9 @@ import com.entity.view.TeacherView;
  */
 public interface TeacherDao extends BaseMapper<TeacherEntity> {
 	
-	List<JiaoshiVO> selectListVO(@Param("ew") Wrapper<TeacherEntity> wrapper);
+	List<TeacherVO> selectListVO(@Param("ew") Wrapper<TeacherEntity> wrapper);
 	
-	JiaoshiVO selectVO(@Param("ew") Wrapper<TeacherEntity> wrapper);
+	TeacherVO selectVO(@Param("ew") Wrapper<TeacherEntity> wrapper);
 	
 	List<TeacherView> selectListView(@Param("ew") Wrapper<TeacherEntity> wrapper);
 
