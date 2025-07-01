@@ -11,7 +11,7 @@
  Target Server Version : 80011 (8.0.11)
  File Encoding         : 65001
 
- Date: 01/07/2025 09:37:56
+ Date: 01/07/2025 17:10:36
 */
 
 SET NAMES utf8mb4;
@@ -94,7 +94,6 @@ CREATE TABLE `course_homework`  (
   `picture` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '图片',
   `attachment` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '相关附件',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
-  `t_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师姓名',
   `publish_at` datetime NULL DEFAULT NULL COMMENT '发布时间',
   `contxt` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '作业内容',
   `discussnum` int(11) NULL DEFAULT 0 COMMENT '评论数',
@@ -109,15 +108,15 @@ CREATE TABLE `course_homework`  (
 -- ----------------------------
 -- Records of course_homework
 -- ----------------------------
-INSERT INTO `course_homework` VALUES (61, '2024-03-05 11:41:50', '课程名称1', '作业名称1', 'upload/kechengzuoye_tupian1.jpg,upload/kechengzuoye_tupian2.jpg,upload/kechengzuoye_tupian3.jpg', '', '教师工号1', '教师姓名1', '2024-03-05 11:41:50', '作业内容1', 0, 1);
-INSERT INTO `course_homework` VALUES (62, '2024-03-05 11:41:50', '课程名称2', '作业名称2', 'upload/kechengzuoye_tupian2.jpg,upload/kechengzuoye_tupian3.jpg,upload/kechengzuoye_tupian4.jpg', '', '教师工号2', '教师姓名2', '2024-03-05 11:41:50', '作业内容2', 0, 2);
-INSERT INTO `course_homework` VALUES (63, '2024-03-05 11:41:50', '课程名称3', '作业名称3', 'upload/kechengzuoye_tupian3.jpg,upload/kechengzuoye_tupian4.jpg,upload/kechengzuoye_tupian5.jpg', '', '教师工号3', '教师姓名3', '2024-03-05 11:41:50', '作业内容3', 0, 3);
-INSERT INTO `course_homework` VALUES (64, '2024-03-05 11:41:50', '课程名称4', '作业名称4', 'upload/kechengzuoye_tupian4.jpg,upload/kechengzuoye_tupian5.jpg,upload/kechengzuoye_tupian6.jpg', '', '教师工号4', '教师姓名4', '2024-03-05 11:41:50', '作业内容4', 0, 4);
-INSERT INTO `course_homework` VALUES (65, '2024-03-05 11:41:50', '课程名称5', '作业名称5', 'upload/kechengzuoye_tupian5.jpg,upload/kechengzuoye_tupian6.jpg,upload/kechengzuoye_tupian7.jpg', '', '教师工号5', '教师姓名5', '2024-03-05 11:41:50', '作业内容5', 0, 5);
-INSERT INTO `course_homework` VALUES (66, '2024-03-05 11:41:50', '课程名称6', '作业名称6', 'upload/kechengzuoye_tupian6.jpg,upload/kechengzuoye_tupian7.jpg,upload/kechengzuoye_tupian8.jpg', '', '教师工号6', '教师姓名6', '2024-03-05 11:41:50', '作业内容6', 0, 6);
-INSERT INTO `course_homework` VALUES (67, '2024-03-05 11:41:50', '课程名称7', '作业名称7', 'upload/kechengzuoye_tupian7.jpg,upload/kechengzuoye_tupian8.jpg,upload/kechengzuoye_tupian9.jpg', '', '教师工号7', '教师姓名7', '2024-03-05 11:41:50', '作业内容7', 0, 7);
-INSERT INTO `course_homework` VALUES (68, '2024-03-05 11:41:50', '课程名称8', '作业名称8', 'upload/kechengzuoye_tupian8.jpg,upload/kechengzuoye_tupian9.jpg,upload/kechengzuoye_tupian10.jpg', '', '教师工号8', '教师姓名8', '2024-03-05 11:41:50', '作业内容8', 0, 8);
-INSERT INTO `course_homework` VALUES (69, '2024-03-05 11:54:22', '编程', '第一单元', 'upload/1709610853914.jpg', 'upload/1709610859409.doc', '111', '杨洋', '2024-03-05 11:56:18', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', 0, 1);
+INSERT INTO `course_homework` VALUES (61, '2024-03-05 11:41:50', '课程名称1', '作业名称1', 'upload/kechengzuoye_tupian1.jpg,upload/kechengzuoye_tupian2.jpg,upload/kechengzuoye_tupian3.jpg', '', '教师工号1', '2024-03-05 11:41:50', '作业内容1', 0, 1);
+INSERT INTO `course_homework` VALUES (62, '2024-03-05 11:41:50', '课程名称2', '作业名称2', 'upload/kechengzuoye_tupian2.jpg,upload/kechengzuoye_tupian3.jpg,upload/kechengzuoye_tupian4.jpg', '', '教师工号2', '2024-03-05 11:41:50', '作业内容2', 0, 2);
+INSERT INTO `course_homework` VALUES (63, '2024-03-05 11:41:50', '课程名称3', '作业名称3', 'upload/kechengzuoye_tupian3.jpg,upload/kechengzuoye_tupian4.jpg,upload/kechengzuoye_tupian5.jpg', '', '教师工号3', '2024-03-05 11:41:50', '作业内容3', 0, 3);
+INSERT INTO `course_homework` VALUES (64, '2024-03-05 11:41:50', '课程名称4', '作业名称4', 'upload/kechengzuoye_tupian4.jpg,upload/kechengzuoye_tupian5.jpg,upload/kechengzuoye_tupian6.jpg', '', '教师工号4', '2024-03-05 11:41:50', '作业内容4', 0, 4);
+INSERT INTO `course_homework` VALUES (65, '2024-03-05 11:41:50', '课程名称5', '作业名称5', 'upload/kechengzuoye_tupian5.jpg,upload/kechengzuoye_tupian6.jpg,upload/kechengzuoye_tupian7.jpg', '', '教师工号5', '2024-03-05 11:41:50', '作业内容5', 0, 5);
+INSERT INTO `course_homework` VALUES (66, '2024-03-05 11:41:50', '课程名称6', '作业名称6', 'upload/kechengzuoye_tupian6.jpg,upload/kechengzuoye_tupian7.jpg,upload/kechengzuoye_tupian8.jpg', '', '教师工号6', '2024-03-05 11:41:50', '作业内容6', 0, 6);
+INSERT INTO `course_homework` VALUES (67, '2024-03-05 11:41:50', '课程名称7', '作业名称7', 'upload/kechengzuoye_tupian7.jpg,upload/kechengzuoye_tupian8.jpg,upload/kechengzuoye_tupian9.jpg', '', '教师工号7', '2024-03-05 11:41:50', '作业内容7', 0, 7);
+INSERT INTO `course_homework` VALUES (68, '2024-03-05 11:41:50', '课程名称8', '作业名称8', 'upload/kechengzuoye_tupian8.jpg,upload/kechengzuoye_tupian9.jpg,upload/kechengzuoye_tupian10.jpg', '', '教师工号8', '2024-03-05 11:41:50', '作业内容8', 0, 8);
+INSERT INTO `course_homework` VALUES (69, '2024-03-05 11:54:22', '编程', '第一单元', 'upload/1709610853914.jpg', 'upload/1709610859409.doc', '111', '2024-03-05 11:56:18', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', 0, 1);
 
 -- ----------------------------
 -- Table structure for course_homework_question
@@ -138,6 +137,8 @@ CREATE TABLE `course_homework_question`  (
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_ho_question`(`t_username` ASC) USING BTREE,
+  INDEX `qu_ho`(`homework_id` ASC) USING BTREE,
+  CONSTRAINT `qu_ho` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_ho_question` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -153,11 +154,9 @@ CREATE TABLE `course_homework_review`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `course` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程名称',
-  `homework` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作业名称',
+  `homework_id` bigint(20) NOT NULL COMMENT '作业名称',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
-  `t_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师姓名',
   `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生账号',
-  `s_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生姓名',
   `grade` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作业评分',
   `reviewed_at` datetime NULL DEFAULT NULL COMMENT '批改时间',
   `teacher_comment` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '教师评语',
@@ -165,7 +164,9 @@ CREATE TABLE `course_homework_review`  (
   INDEX `t_co_ho_re`(`t_username` ASC) USING BTREE,
   INDEX `s_co_ho_re`(`s_username` ASC) USING BTREE,
   INDEX `cate_co_ho_re`(`course` ASC) USING BTREE,
+  INDEX `rev_ho`(`homework_id` ASC) USING BTREE,
   CONSTRAINT `cate_co_ho_re` FOREIGN KEY (`course`) REFERENCES `course_categories` (`course`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `rev_ho` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `s_co_ho_re` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_co_ho_re` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '作业批改' ROW_FORMAT = DYNAMIC;
@@ -173,15 +174,15 @@ CREATE TABLE `course_homework_review`  (
 -- ----------------------------
 -- Records of course_homework_review
 -- ----------------------------
-INSERT INTO `course_homework_review` VALUES (81, '2024-03-05 11:41:50', '课程名称1', '作业名称1', '教师工号1', '教师姓名1', '学生账号1', '学生姓名1', '作业评分1', '2024-03-05 11:41:50', '教师评语1');
-INSERT INTO `course_homework_review` VALUES (82, '2024-03-05 11:41:50', '课程名称2', '作业名称2', '教师工号2', '教师姓名2', '学生账号2', '学生姓名2', '作业评分2', '2024-03-05 11:41:50', '教师评语2');
-INSERT INTO `course_homework_review` VALUES (83, '2024-03-05 11:41:50', '课程名称3', '作业名称3', '教师工号3', '教师姓名3', '学生账号3', '学生姓名3', '作业评分3', '2024-03-05 11:41:50', '教师评语3');
-INSERT INTO `course_homework_review` VALUES (84, '2024-03-05 11:41:50', '课程名称4', '作业名称4', '教师工号4', '教师姓名4', '学生账号4', '学生姓名4', '作业评分4', '2024-03-05 11:41:50', '教师评语4');
-INSERT INTO `course_homework_review` VALUES (85, '2024-03-05 11:41:50', '课程名称5', '作业名称5', '教师工号5', '教师姓名5', '学生账号5', '学生姓名5', '作业评分5', '2024-03-05 11:41:50', '教师评语5');
-INSERT INTO `course_homework_review` VALUES (86, '2024-03-05 11:41:50', '课程名称6', '作业名称6', '教师工号6', '教师姓名6', '学生账号6', '学生姓名6', '作业评分6', '2024-03-05 11:41:50', '教师评语6');
-INSERT INTO `course_homework_review` VALUES (87, '2024-03-05 11:41:50', '课程名称7', '作业名称7', '教师工号7', '教师姓名7', '学生账号7', '学生姓名7', '作业评分7', '2024-03-05 11:41:50', '教师评语7');
-INSERT INTO `course_homework_review` VALUES (88, '2024-03-05 11:41:50', '课程名称8', '作业名称8', '教师工号8', '教师姓名8', '学生账号8', '学生姓名8', '作业评分8', '2024-03-05 11:41:50', '教师评语8');
-INSERT INTO `course_homework_review` VALUES (89, '2024-03-05 12:00:24', '编程', '第一单元', '111', '杨洋', '222', '杨悦', '85', '2024-03-05 12:02:37', '11');
+INSERT INTO `course_homework_review` VALUES (81, '2024-03-05 11:41:50', '课程名称1', 61, '教师工号1', '学生账号1', '作业评分1', '2024-03-05 11:41:50', '教师评语1');
+INSERT INTO `course_homework_review` VALUES (82, '2024-03-05 11:41:50', '课程名称2', 62, '教师工号2', '学生账号2', '作业评分2', '2024-03-05 11:41:50', '教师评语2');
+INSERT INTO `course_homework_review` VALUES (83, '2024-03-05 11:41:50', '课程名称3', 63, '教师工号3', '学生账号3', '作业评分3', '2024-03-05 11:41:50', '教师评语3');
+INSERT INTO `course_homework_review` VALUES (84, '2024-03-05 11:41:50', '课程名称4', 64, '教师工号4', '学生账号4', '作业评分4', '2024-03-05 11:41:50', '教师评语4');
+INSERT INTO `course_homework_review` VALUES (85, '2024-03-05 11:41:50', '课程名称5', 65, '教师工号5', '学生账号5', '作业评分5', '2024-03-05 11:41:50', '教师评语5');
+INSERT INTO `course_homework_review` VALUES (86, '2024-03-05 11:41:50', '课程名称6', 66, '教师工号6', '学生账号6', '作业评分6', '2024-03-05 11:41:50', '教师评语6');
+INSERT INTO `course_homework_review` VALUES (87, '2024-03-05 11:41:50', '课程名称7', 67, '教师工号7', '学生账号7', '作业评分7', '2024-03-05 11:41:50', '教师评语7');
+INSERT INTO `course_homework_review` VALUES (88, '2024-03-05 11:41:50', '课程名称8', 68, '教师工号8', '学生账号8', '作业评分8', '2024-03-05 11:41:50', '教师评语8');
+INSERT INTO `course_homework_review` VALUES (89, '2024-03-05 12:00:24', '编程', 69, '111', '222', '85', '2024-03-05 12:02:37', '11');
 
 -- ----------------------------
 -- Table structure for course_homework_submission
@@ -191,34 +192,34 @@ CREATE TABLE `course_homework_submission`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `course` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程名称',
-  `homework` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作业名称',
+  `homework_id` bigint(20) NULL DEFAULT NULL COMMENT '作业名称',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
-  `t_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师姓名',
   `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生账号',
-  `s_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生姓名',
   `submission` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '提交作业',
   `submission_at` datetime NULL DEFAULT NULL COMMENT '提交时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_co_ho_sub`(`t_username` ASC) USING BTREE,
   INDEX `s_co_ho_sub`(`s_username` ASC) USING BTREE,
   INDEX `cate_co_ho_sub`(`course` ASC) USING BTREE,
+  INDEX `sub_ho`(`homework_id` ASC) USING BTREE,
   CONSTRAINT `cate_co_ho_sub` FOREIGN KEY (`course`) REFERENCES `course_categories` (`course`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `s_co_ho_sub` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sub_ho` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_co_ho_sub` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 80 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '作业提交' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of course_homework_submission
 -- ----------------------------
-INSERT INTO `course_homework_submission` VALUES (71, '2024-03-05 11:41:50', '课程名称1', '作业名称1', '教师工号1', '教师姓名1', '学生账号1', '学生姓名1', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (72, '2024-03-05 11:41:50', '课程名称2', '作业名称2', '教师工号2', '教师姓名2', '学生账号2', '学生姓名2', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (73, '2024-03-05 11:41:50', '课程名称3', '作业名称3', '教师工号3', '教师姓名3', '学生账号3', '学生姓名3', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (74, '2024-03-05 11:41:50', '课程名称4', '作业名称4', '教师工号4', '教师姓名4', '学生账号4', '学生姓名4', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (75, '2024-03-05 11:41:50', '课程名称5', '作业名称5', '教师工号5', '教师姓名5', '学生账号5', '学生姓名5', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (76, '2024-03-05 11:41:50', '课程名称6', '作业名称6', '教师工号6', '教师姓名6', '学生账号6', '学生姓名6', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (77, '2024-03-05 11:41:50', '课程名称7', '作业名称7', '教师工号7', '教师姓名7', '学生账号7', '学生姓名7', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (78, '2024-03-05 11:41:50', '课程名称8', '作业名称8', '教师工号8', '教师姓名8', '学生账号8', '学生姓名8', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (79, '2024-03-05 11:58:20', '编程', '第一单元', '111', '杨洋', '222', '杨悦', 'upload/1709611098834.doc', '2024-03-05 12:00:29');
+INSERT INTO `course_homework_submission` VALUES (71, '2024-03-05 11:41:50', '课程名称1', 61, '教师工号1', '学生账号1', '', '2024-03-05 11:41:50');
+INSERT INTO `course_homework_submission` VALUES (72, '2024-03-05 11:41:50', '课程名称2', 62, '教师工号2', '学生账号2', '', '2024-03-05 11:41:50');
+INSERT INTO `course_homework_submission` VALUES (73, '2024-03-05 11:41:50', '课程名称3', 63, '教师工号3', '学生账号3', '', '2024-03-05 11:41:50');
+INSERT INTO `course_homework_submission` VALUES (74, '2024-03-05 11:41:50', '课程名称4', 64, '教师工号4', '学生账号4', '', '2024-03-05 11:41:50');
+INSERT INTO `course_homework_submission` VALUES (75, '2024-03-05 11:41:50', '课程名称5', 65, '教师工号5', '学生账号5', '', '2024-03-05 11:41:50');
+INSERT INTO `course_homework_submission` VALUES (76, '2024-03-05 11:41:50', '课程名称6', 66, '教师工号6', '学生账号6', '', '2024-03-05 11:41:50');
+INSERT INTO `course_homework_submission` VALUES (77, '2024-03-05 11:41:50', '课程名称7', 67, '教师工号7', '学生账号7', '', '2024-03-05 11:41:50');
+INSERT INTO `course_homework_submission` VALUES (78, '2024-03-05 11:41:50', '课程名称8', 68, '教师工号8', '学生账号8', '', '2024-03-05 11:41:50');
+INSERT INTO `course_homework_submission` VALUES (79, '2024-03-05 11:58:20', '编程', 69, '111', '222', 'upload/1709611098834.doc', '2024-03-05 12:00:29');
 
 -- ----------------------------
 -- Table structure for course_material
@@ -232,7 +233,6 @@ CREATE TABLE `course_material`  (
   `picture` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '图片',
   `attachment` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '附件',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
-  `t_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师姓名',
   `publish_at` datetime NULL DEFAULT NULL COMMENT '发布时间',
   `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
   `clicktime` datetime NULL DEFAULT NULL COMMENT '最近点击时间',
@@ -249,15 +249,15 @@ CREATE TABLE `course_material`  (
 -- ----------------------------
 -- Records of course_material
 -- ----------------------------
-INSERT INTO `course_material` VALUES (31, '2024-03-05 11:41:50', '标题1', '课程名称1', 'upload/jiaoxueziliao_tupian1.jpg,upload/jiaoxueziliao_tupian2.jpg,upload/jiaoxueziliao_tupian3.jpg', '', '教师工号1', '教师姓名1', '2024-03-05 11:41:50', '内容1', '2024-03-05 11:41:50', 1, 0, 1);
-INSERT INTO `course_material` VALUES (32, '2024-03-05 11:41:50', '标题2', '课程名称2', 'upload/jiaoxueziliao_tupian2.jpg,upload/jiaoxueziliao_tupian3.jpg,upload/jiaoxueziliao_tupian4.jpg', '', '教师工号2', '教师姓名2', '2024-03-05 11:41:50', '内容2', '2024-03-05 11:41:50', 2, 0, 2);
-INSERT INTO `course_material` VALUES (33, '2024-03-05 11:41:50', '标题3', '课程名称3', 'upload/jiaoxueziliao_tupian3.jpg,upload/jiaoxueziliao_tupian4.jpg,upload/jiaoxueziliao_tupian5.jpg', '', '教师工号3', '教师姓名3', '2024-03-05 11:41:50', '内容3', '2024-03-05 11:41:50', 3, 0, 3);
-INSERT INTO `course_material` VALUES (34, '2024-03-05 11:41:50', '标题4', '课程名称4', 'upload/jiaoxueziliao_tupian4.jpg,upload/jiaoxueziliao_tupian5.jpg,upload/jiaoxueziliao_tupian6.jpg', '', '教师工号4', '教师姓名4', '2024-03-05 11:41:50', '内容4', '2024-03-05 11:41:50', 4, 0, 4);
-INSERT INTO `course_material` VALUES (35, '2024-03-05 11:41:50', '标题5', '课程名称5', 'upload/jiaoxueziliao_tupian5.jpg,upload/jiaoxueziliao_tupian6.jpg,upload/jiaoxueziliao_tupian7.jpg', '', '教师工号5', '教师姓名5', '2024-03-05 11:41:50', '内容5', '2024-03-05 11:41:50', 5, 0, 5);
-INSERT INTO `course_material` VALUES (36, '2024-03-05 11:41:50', '标题6', '课程名称6', 'upload/jiaoxueziliao_tupian6.jpg,upload/jiaoxueziliao_tupian7.jpg,upload/jiaoxueziliao_tupian8.jpg', '', '教师工号6', '教师姓名6', '2024-03-05 11:41:50', '内容6', '2024-03-05 11:41:50', 6, 0, 6);
-INSERT INTO `course_material` VALUES (37, '2024-03-05 11:41:50', '标题7', '课程名称7', 'upload/jiaoxueziliao_tupian7.jpg,upload/jiaoxueziliao_tupian8.jpg,upload/jiaoxueziliao_tupian9.jpg', '', '教师工号7', '教师姓名7', '2024-03-05 11:41:50', '内容7', '2024-03-05 11:41:50', 7, 0, 7);
-INSERT INTO `course_material` VALUES (38, '2024-03-05 11:41:50', '标题8', '课程名称8', 'upload/jiaoxueziliao_tupian8.jpg,upload/jiaoxueziliao_tupian9.jpg,upload/jiaoxueziliao_tupian10.jpg', '', '教师工号8', '教师姓名8', '2024-03-05 11:41:50', '内容8', '2024-03-05 11:41:50', 8, 0, 8);
-INSERT INTO `course_material` VALUES (39, '2024-03-05 11:53:19', '初级编程', '编程', 'upload/1709610789808.jpg', 'upload/1709610795897.doc', '111', '杨洋', '2024-03-05 11:55:14', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2024-03-05 11:57:04', 1, 1, 1);
+INSERT INTO `course_material` VALUES (31, '2024-03-05 11:41:50', '标题1', '课程名称1', 'upload/jiaoxueziliao_tupian1.jpg,upload/jiaoxueziliao_tupian2.jpg,upload/jiaoxueziliao_tupian3.jpg', '', '教师工号1', '2024-03-05 11:41:50', '内容1', '2024-03-05 11:41:50', 1, 0, 1);
+INSERT INTO `course_material` VALUES (32, '2024-03-05 11:41:50', '标题2', '课程名称2', 'upload/jiaoxueziliao_tupian2.jpg,upload/jiaoxueziliao_tupian3.jpg,upload/jiaoxueziliao_tupian4.jpg', '', '教师工号2', '2024-03-05 11:41:50', '内容2', '2024-03-05 11:41:50', 2, 0, 2);
+INSERT INTO `course_material` VALUES (33, '2024-03-05 11:41:50', '标题3', '课程名称3', 'upload/jiaoxueziliao_tupian3.jpg,upload/jiaoxueziliao_tupian4.jpg,upload/jiaoxueziliao_tupian5.jpg', '', '教师工号3', '2024-03-05 11:41:50', '内容3', '2024-03-05 11:41:50', 3, 0, 3);
+INSERT INTO `course_material` VALUES (34, '2024-03-05 11:41:50', '标题4', '课程名称4', 'upload/jiaoxueziliao_tupian4.jpg,upload/jiaoxueziliao_tupian5.jpg,upload/jiaoxueziliao_tupian6.jpg', '', '教师工号4', '2024-03-05 11:41:50', '内容4', '2024-03-05 11:41:50', 4, 0, 4);
+INSERT INTO `course_material` VALUES (35, '2024-03-05 11:41:50', '标题5', '课程名称5', 'upload/jiaoxueziliao_tupian5.jpg,upload/jiaoxueziliao_tupian6.jpg,upload/jiaoxueziliao_tupian7.jpg', '', '教师工号5', '2024-03-05 11:41:50', '内容5', '2024-03-05 11:41:50', 5, 0, 5);
+INSERT INTO `course_material` VALUES (36, '2024-03-05 11:41:50', '标题6', '课程名称6', 'upload/jiaoxueziliao_tupian6.jpg,upload/jiaoxueziliao_tupian7.jpg,upload/jiaoxueziliao_tupian8.jpg', '', '教师工号6', '2024-03-05 11:41:50', '内容6', '2024-03-05 11:41:50', 6, 0, 6);
+INSERT INTO `course_material` VALUES (37, '2024-03-05 11:41:50', '标题7', '课程名称7', 'upload/jiaoxueziliao_tupian7.jpg,upload/jiaoxueziliao_tupian8.jpg,upload/jiaoxueziliao_tupian9.jpg', '', '教师工号7', '2024-03-05 11:41:50', '内容7', '2024-03-05 11:41:50', 7, 0, 7);
+INSERT INTO `course_material` VALUES (38, '2024-03-05 11:41:50', '标题8', '课程名称8', 'upload/jiaoxueziliao_tupian8.jpg,upload/jiaoxueziliao_tupian9.jpg,upload/jiaoxueziliao_tupian10.jpg', '', '教师工号8', '2024-03-05 11:41:50', '内容8', '2024-03-05 11:41:50', 8, 0, 8);
+INSERT INTO `course_material` VALUES (39, '2024-03-05 11:53:19', '初级编程', '编程', 'upload/1709610789808.jpg', 'upload/1709610795897.doc', '111', '2024-03-05 11:55:14', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2024-03-05 11:57:04', 1, 1, 1);
 
 -- ----------------------------
 -- Table structure for course_video
@@ -270,7 +270,6 @@ CREATE TABLE `course_video`  (
   `course` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程类别',
   `cover` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '封面',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
-  `t_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师姓名',
   `video` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '教学视频',
   `published_at` date NULL DEFAULT NULL COMMENT '发布时间',
   `intro` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '基本介绍',
@@ -280,7 +279,6 @@ CREATE TABLE `course_video`  (
   `storeupnum` int(11) NULL DEFAULT 0 COMMENT '收藏数',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_co_video`(`t_username` ASC) USING BTREE,
-  INDEX `tn_co_video`(`t_name` ASC) USING BTREE,
   INDEX `cate_co_video`(`course` ASC) USING BTREE,
   CONSTRAINT `cate_co_video` FOREIGN KEY (`course`) REFERENCES `course_categories` (`course`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_co_video` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -289,15 +287,15 @@ CREATE TABLE `course_video`  (
 -- ----------------------------
 -- Records of course_video
 -- ----------------------------
-INSERT INTO `course_video` VALUES (41, '2024-03-05 11:41:50', '标题1', '课程名称1', 'upload/jiaoxueshipin_fengmian1.jpg,upload/jiaoxueshipin_fengmian2.jpg,upload/jiaoxueshipin_fengmian3.jpg', '教师工号1', '教师姓名1', '', '2024-03-05', '基本介绍1', '2025-06-27 09:02:53', 2, 0, 1);
-INSERT INTO `course_video` VALUES (42, '2024-03-05 11:41:50', '标题2', '课程名称2', 'upload/jiaoxueshipin_fengmian2.jpg,upload/jiaoxueshipin_fengmian3.jpg,upload/jiaoxueshipin_fengmian4.jpg', '教师工号2', '教师姓名2', '', '2024-03-05', '基本介绍2', '2024-03-05 11:41:50', 2, 0, 2);
-INSERT INTO `course_video` VALUES (43, '2024-03-05 11:41:50', '标题3', '课程名称3', 'upload/jiaoxueshipin_fengmian3.jpg,upload/jiaoxueshipin_fengmian4.jpg,upload/jiaoxueshipin_fengmian5.jpg', '教师工号3', '教师姓名3', '', '2024-03-05', '基本介绍3', '2024-03-05 11:41:50', 3, 0, 3);
-INSERT INTO `course_video` VALUES (44, '2024-03-05 11:41:50', '标题4', '课程名称4', 'upload/jiaoxueshipin_fengmian4.jpg,upload/jiaoxueshipin_fengmian5.jpg,upload/jiaoxueshipin_fengmian6.jpg', '教师工号4', '教师姓名4', '', '2024-03-05', '基本介绍4', '2025-06-27 09:03:15', 5, 0, 4);
-INSERT INTO `course_video` VALUES (45, '2024-03-05 11:41:50', '标题5', '课程名称5', 'upload/jiaoxueshipin_fengmian5.jpg,upload/jiaoxueshipin_fengmian6.jpg,upload/jiaoxueshipin_fengmian7.jpg', '教师工号5', '教师姓名5', '', '2024-03-05', '基本介绍5', '2024-03-05 11:41:50', 5, 0, 5);
-INSERT INTO `course_video` VALUES (46, '2024-03-05 11:41:50', '标题6', '课程名称6', 'upload/jiaoxueshipin_fengmian6.jpg,upload/jiaoxueshipin_fengmian7.jpg,upload/jiaoxueshipin_fengmian8.jpg', '教师工号6', '教师姓名6', '', '2024-03-05', '基本介绍6', '2024-03-05 11:41:50', 6, 0, 6);
-INSERT INTO `course_video` VALUES (47, '2024-03-05 11:41:50', '标题7', '课程名称7', 'upload/jiaoxueshipin_fengmian7.jpg,upload/jiaoxueshipin_fengmian8.jpg,upload/jiaoxueshipin_fengmian9.jpg', '教师工号7', '教师姓名7', '', '2024-03-05', '基本介绍7', '2024-03-05 11:41:50', 7, 0, 7);
-INSERT INTO `course_video` VALUES (48, '2024-03-05 11:41:50', '标题8', '课程名称8', 'upload/jiaoxueshipin_fengmian8.jpg,upload/jiaoxueshipin_fengmian9.jpg,upload/jiaoxueshipin_fengmian10.jpg', '教师工号8', '教师姓名8', '', '2024-03-05', '基本介绍8', '2024-03-05 11:41:50', 8, 0, 8);
-INSERT INTO `course_video` VALUES (49, '2024-03-05 11:53:53', '初级编程', '编程', 'upload/1709610825018.jpg', '111', '杨洋', 'upload/1709611063013.mp4', '2024-03-05', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2024-03-05 11:58:25', 4, 0, 1);
+INSERT INTO `course_video` VALUES (41, '2024-03-05 11:41:50', '标题1', '课程名称1', 'upload/jiaoxueshipin_fengmian1.jpg,upload/jiaoxueshipin_fengmian2.jpg,upload/jiaoxueshipin_fengmian3.jpg', '教师工号1', '', '2024-03-05', '基本介绍1', '2025-06-27 09:02:53', 2, 0, 1);
+INSERT INTO `course_video` VALUES (42, '2024-03-05 11:41:50', '标题2', '课程名称2', 'upload/jiaoxueshipin_fengmian2.jpg,upload/jiaoxueshipin_fengmian3.jpg,upload/jiaoxueshipin_fengmian4.jpg', '教师工号2', '', '2024-03-05', '基本介绍2', '2024-03-05 11:41:50', 2, 0, 2);
+INSERT INTO `course_video` VALUES (43, '2024-03-05 11:41:50', '标题3', '课程名称3', 'upload/jiaoxueshipin_fengmian3.jpg,upload/jiaoxueshipin_fengmian4.jpg,upload/jiaoxueshipin_fengmian5.jpg', '教师工号3', '', '2024-03-05', '基本介绍3', '2024-03-05 11:41:50', 3, 0, 3);
+INSERT INTO `course_video` VALUES (44, '2024-03-05 11:41:50', '标题4', '课程名称4', 'upload/jiaoxueshipin_fengmian4.jpg,upload/jiaoxueshipin_fengmian5.jpg,upload/jiaoxueshipin_fengmian6.jpg', '教师工号4', '', '2024-03-05', '基本介绍4', '2025-06-27 09:03:15', 5, 0, 4);
+INSERT INTO `course_video` VALUES (45, '2024-03-05 11:41:50', '标题5', '课程名称5', 'upload/jiaoxueshipin_fengmian5.jpg,upload/jiaoxueshipin_fengmian6.jpg,upload/jiaoxueshipin_fengmian7.jpg', '教师工号5', '', '2024-03-05', '基本介绍5', '2024-03-05 11:41:50', 5, 0, 5);
+INSERT INTO `course_video` VALUES (46, '2024-03-05 11:41:50', '标题6', '课程名称6', 'upload/jiaoxueshipin_fengmian6.jpg,upload/jiaoxueshipin_fengmian7.jpg,upload/jiaoxueshipin_fengmian8.jpg', '教师工号6', '', '2024-03-05', '基本介绍6', '2024-03-05 11:41:50', 6, 0, 6);
+INSERT INTO `course_video` VALUES (47, '2024-03-05 11:41:50', '标题7', '课程名称7', 'upload/jiaoxueshipin_fengmian7.jpg,upload/jiaoxueshipin_fengmian8.jpg,upload/jiaoxueshipin_fengmian9.jpg', '教师工号7', '', '2024-03-05', '基本介绍7', '2024-03-05 11:41:50', 7, 0, 7);
+INSERT INTO `course_video` VALUES (48, '2024-03-05 11:41:50', '标题8', '课程名称8', 'upload/jiaoxueshipin_fengmian8.jpg,upload/jiaoxueshipin_fengmian9.jpg,upload/jiaoxueshipin_fengmian10.jpg', '教师工号8', '', '2024-03-05', '基本介绍8', '2024-03-05 11:41:50', 8, 0, 8);
+INSERT INTO `course_video` VALUES (49, '2024-03-05 11:53:53', '初级编程', '编程', 'upload/1709610825018.jpg', '111', 'upload/1709611063013.mp4', '2024-03-05', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2024-03-05 11:58:25', 4, 0, 1);
 
 -- ----------------------------
 -- Table structure for discuss_course_homework
@@ -396,34 +394,32 @@ CREATE TABLE `exam_question`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `paperid` bigint(20) NOT NULL COMMENT '所属在线考试id（外键）',
-  `papername` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '在线考试名称',
-  `questionname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '试题名称',
-  `options` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '选项，json字符串',
   `score` bigint(20) NULL DEFAULT 0 COMMENT '分值',
-  `answer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '正确答案',
-  `analysis` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '答案解析',
-  `type` bigint(20) NULL DEFAULT 0 COMMENT '试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）4:主观题',
-  `sequence` bigint(20) NULL DEFAULT 100 COMMENT '试题排序，值越大排越前面',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
+  `question_id` bigint(20) NULL DEFAULT NULL COMMENT '试题序号（外键）',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_ex_queation`(`t_username` ASC) USING BTREE,
+  INDEX `qu_pa`(`paperid` ASC) USING BTREE,
+  INDEX `bank_qu`(`question_id` ASC) USING BTREE,
+  CONSTRAINT `bank_qu` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `qu_pa` FOREIGN KEY (`paperid`) REFERENCES `exam_paper` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_ex_queation` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '试题表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of exam_question
 -- ----------------------------
-INSERT INTO `exam_question` VALUES (1, '2024-03-05 11:41:50', 1, '十万个为什么', '下面动物不属于昆虫的是（）。', '[{\"text\":\"A.苍蝇\",\"code\":\"A\"},{\"text\":\"B.蜜蜂\",\"code\":\"B\"},{\"text\":\"C.蜂鸟\",\"code\":\"C\"}]', 20, 'C', '蜂鸟', 0, 1, NULL);
-INSERT INTO `exam_question` VALUES (2, '2024-03-05 11:41:50', 1, '十万个为什么', '油着火后可以用水扑灭。', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 20, 'B', '油着火后不可以用水扑灭', 2, 2, NULL);
-INSERT INTO `exam_question` VALUES (3, '2024-03-05 11:41:50', 1, '十万个为什么', '地球是个球体，中间是（ ）。', '[]', 30, '赤道', '赤道', 3, 3, NULL);
-INSERT INTO `exam_question` VALUES (4, '2024-03-05 11:41:50', 1, '十万个为什么', '下面动物中会流汗的有（ ）。', '[{\"text\":\"A.马\",\"code\":\"A\"},{\"text\":\"B.猫\",\"code\":\"B\"},{\"text\":\"C.狗\",\"code\":\"C\"}]', 30, 'A,B', '狗不会流汗', 1, 4, NULL);
-INSERT INTO `exam_question` VALUES (5, '2024-03-05 11:41:50', 1, '十万个为什么', '世界上为什么不存在完美的圆？', '[]', 30, '', '目前没有证据表明现实中存在完美的圆', 4, 5, NULL);
-INSERT INTO `exam_question` VALUES (6, '2024-03-05 11:56:22', 2, '编程', '测试1', '[{\"text\":\"A.11\",\"code\":\"A\"},{\"text\":\"B.22\",\"code\":\"B\"},{\"text\":\"C.33\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 5, 'B', '5', 0, 1, '111');
-INSERT INTO `exam_question` VALUES (7, '2024-03-05 11:56:22', 2, '编程', '222', '[{\"text\":\"A.22\",\"code\":\"A\"},{\"text\":\"B.213\",\"code\":\"B\"},{\"text\":\"C.333\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 5, 'A,B', '5', 1, 2, '111');
-INSERT INTO `exam_question` VALUES (8, '2024-03-05 11:56:22', 2, '编程', '666', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 6, 'B', '6', 2, 3, '111');
-INSERT INTO `exam_question` VALUES (9, '2024-03-05 11:56:22', 2, '编程', '878', '[]', 8, '8', '8', 3, 4, '111');
-INSERT INTO `exam_question` VALUES (10, '2024-03-05 11:56:22', 2, '编程', '77', '[]', 7, '7', '7', 3, 5, '111');
-INSERT INTO `exam_question` VALUES (11, '2024-03-05 11:56:22', 2, '编程', '878', '[]', 8, '', '8', 4, 6, '111');
+INSERT INTO `exam_question` VALUES (1, '2024-03-05 11:41:50', 1, 20, NULL, 1);
+INSERT INTO `exam_question` VALUES (2, '2024-03-05 11:41:50', 1, 20, NULL, 2);
+INSERT INTO `exam_question` VALUES (3, '2024-03-05 11:41:50', 1, 30, NULL, 3);
+INSERT INTO `exam_question` VALUES (4, '2024-03-05 11:41:50', 1, 30, NULL, 4);
+INSERT INTO `exam_question` VALUES (5, '2024-03-05 11:41:50', 1, 30, NULL, 5);
+INSERT INTO `exam_question` VALUES (6, '2024-03-05 11:56:22', 2, 5, '111', 6);
+INSERT INTO `exam_question` VALUES (7, '2024-03-05 11:56:22', 2, 5, '111', 7);
+INSERT INTO `exam_question` VALUES (8, '2024-03-05 11:56:22', 2, 6, '111', 8);
+INSERT INTO `exam_question` VALUES (9, '2024-03-05 11:56:22', 2, 8, '111', 9);
+INSERT INTO `exam_question` VALUES (10, '2024-03-05 11:56:22', 2, 7, '111', 10);
+INSERT INTO `exam_question` VALUES (11, '2024-03-05 11:56:22', 2, 8, '111', 11);
 
 -- ----------------------------
 -- Table structure for exam_question_bank
@@ -434,7 +430,6 @@ CREATE TABLE `exam_question_bank`  (
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `questionname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '试题名称',
   `options` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '选项，json字符串',
-  `score` bigint(20) NULL DEFAULT 0 COMMENT '分值',
   `answer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '正确答案',
   `analysis` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '答案解析',
   `type` bigint(20) NULL DEFAULT 0 COMMENT '试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题',
@@ -448,17 +443,17 @@ CREATE TABLE `exam_question_bank`  (
 -- ----------------------------
 -- Records of exam_question_bank
 -- ----------------------------
-INSERT INTO `exam_question_bank` VALUES (1, '2024-03-05 11:41:50', '下面动物不属于昆虫的是（）。', '[{\"text\":\"A.苍蝇\",\"code\":\"A\"},{\"text\":\"B.蜜蜂\",\"code\":\"B\"},{\"text\":\"C.蜂鸟\",\"code\":\"C\"}]', 20, 'C', '蜂鸟', 0, 1, NULL);
-INSERT INTO `exam_question_bank` VALUES (2, '2024-03-05 11:41:50', '油着火后可以用水扑灭。', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 20, 'B', '油着火后不可以用水扑灭', 2, 2, NULL);
-INSERT INTO `exam_question_bank` VALUES (3, '2024-03-05 11:41:50', '地球是个球体，中间是（ ）。', '[]', 30, '赤道', '赤道', 3, 3, NULL);
-INSERT INTO `exam_question_bank` VALUES (4, '2024-03-05 11:41:50', '下面动物中会流汗的有（ ）。', '[{\"text\":\"A.马\",\"code\":\"A\"},{\"text\":\"B.猫\",\"code\":\"B\"},{\"text\":\"C.狗\",\"code\":\"C\"}]', 30, 'A,B', '狗不会流汗', 1, 4, NULL);
-INSERT INTO `exam_question_bank` VALUES (5, '2024-03-05 11:41:50', '世界上为什么不存在完美的圆？', '[]', 30, '', '目前没有证据表明现实中存在完美的圆', 4, 5, NULL);
-INSERT INTO `exam_question_bank` VALUES (6, '2024-03-05 11:55:11', '测试1', '[{\"text\":\"A.11\",\"code\":\"A\"},{\"text\":\"B.22\",\"code\":\"B\"},{\"text\":\"C.33\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 5, 'B', '5', 0, 5, '111');
-INSERT INTO `exam_question_bank` VALUES (7, '2024-03-05 11:55:35', '222', '[{\"text\":\"A.22\",\"code\":\"A\"},{\"text\":\"B.213\",\"code\":\"B\"},{\"text\":\"C.333\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 5, 'A,B', '5', 1, 6, '111');
-INSERT INTO `exam_question_bank` VALUES (8, '2024-03-05 11:55:43', '666', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 6, 'B', '6', 2, 6, '111');
-INSERT INTO `exam_question_bank` VALUES (9, '2024-03-05 11:55:50', '77', '[]', 7, '7', '7', 3, 7, '111');
-INSERT INTO `exam_question_bank` VALUES (10, '2024-03-05 11:55:56', '878', '[]', 8, '', '8', 4, 8, '111');
-INSERT INTO `exam_question_bank` VALUES (11, '2024-03-05 11:56:05', '878', '[]', 8, '8', '8', 3, 8, '111');
+INSERT INTO `exam_question_bank` VALUES (1, '2024-03-05 11:41:50', '下面动物不属于昆虫的是（）。', '[{\"text\":\"A.苍蝇\",\"code\":\"A\"},{\"text\":\"B.蜜蜂\",\"code\":\"B\"},{\"text\":\"C.蜂鸟\",\"code\":\"C\"}]', 'C', '蜂鸟', 0, 1, NULL);
+INSERT INTO `exam_question_bank` VALUES (2, '2024-03-05 11:41:50', '油着火后可以用水扑灭。', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '油着火后不可以用水扑灭', 2, 2, NULL);
+INSERT INTO `exam_question_bank` VALUES (3, '2024-03-05 11:41:50', '地球是个球体，中间是（ ）。', '[]', '赤道', '赤道', 3, 3, NULL);
+INSERT INTO `exam_question_bank` VALUES (4, '2024-03-05 11:41:50', '下面动物中会流汗的有（ ）。', '[{\"text\":\"A.马\",\"code\":\"A\"},{\"text\":\"B.猫\",\"code\":\"B\"},{\"text\":\"C.狗\",\"code\":\"C\"}]', 'A,B', '狗不会流汗', 1, 4, NULL);
+INSERT INTO `exam_question_bank` VALUES (5, '2024-03-05 11:41:50', '世界上为什么不存在完美的圆？', '[]', '', '目前没有证据表明现实中存在完美的圆', 4, 5, NULL);
+INSERT INTO `exam_question_bank` VALUES (6, '2024-03-05 11:55:11', '测试1', '[{\"text\":\"A.11\",\"code\":\"A\"},{\"text\":\"B.22\",\"code\":\"B\"},{\"text\":\"C.33\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 'B', '5', 0, 5, '111');
+INSERT INTO `exam_question_bank` VALUES (7, '2024-03-05 11:55:35', '222', '[{\"text\":\"A.22\",\"code\":\"A\"},{\"text\":\"B.213\",\"code\":\"B\"},{\"text\":\"C.333\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 'A,B', '5', 1, 6, '111');
+INSERT INTO `exam_question_bank` VALUES (8, '2024-03-05 11:55:43', '666', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '6', 2, 6, '111');
+INSERT INTO `exam_question_bank` VALUES (9, '2024-03-05 11:55:50', '77', '[]', '7', '7', 3, 7, '111');
+INSERT INTO `exam_question_bank` VALUES (10, '2024-03-05 11:55:56', '878', '[]', '', '8', 4, 8, '111');
+INSERT INTO `exam_question_bank` VALUES (11, '2024-03-05 11:56:05', '878', '[]', '8', '8', 3, 8, '111');
 
 -- ----------------------------
 -- Table structure for exam_record
@@ -467,40 +462,38 @@ DROP TABLE IF EXISTS `exam_record`;
 CREATE TABLE `exam_record`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `userid` bigint(20) NOT NULL COMMENT '用户id',
-  `username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
+  `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户id（外键）',
   `paperid` bigint(20) NOT NULL COMMENT '在线考试id（外键）',
-  `papername` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '在线考试名称',
-  `questionid` bigint(20) NOT NULL COMMENT '试题id（外键）',
-  `questionname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '试题名称',
-  `options` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '选项，json字符串',
-  `score` bigint(20) NULL DEFAULT 0 COMMENT '分值',
-  `answer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '正确答案',
-  `analysis` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '答案解析',
+  `question_id` bigint(20) NOT NULL COMMENT '试题id（外键）',
   `ismark` bigint(20) NULL DEFAULT 0 COMMENT '是否批卷',
-  `type` bigint(20) NULL DEFAULT 0 COMMENT '试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题',
   `myscore` bigint(20) NOT NULL DEFAULT 0 COMMENT '试题得分',
   `myanswer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考生答案',
-  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
+  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号(外键)',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_ex_record`(`t_username` ASC) USING BTREE,
+  INDEX `re_qu_bank`(`question_id` ASC) USING BTREE,
+  INDEX `re_user_s`(`s_username` ASC) USING BTREE,
+  INDEX `re_pa`(`paperid` ASC) USING BTREE,
+  CONSTRAINT `re_pa` FOREIGN KEY (`paperid`) REFERENCES `exam_paper` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `re_qu_bank` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `re_user_s` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_ex_record` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of exam_record
 -- ----------------------------
-INSERT INTO `exam_record` VALUES (6, '2024-03-05 11:59:10', 1709611010643, '杨悦', 2, '编程', 8, '666', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 6, 'B', '6', 1, 2, 6, 'B', '111');
-INSERT INTO `exam_record` VALUES (7, '2024-03-05 11:59:10', 1709611010643, '杨悦', 2, '编程', 11, '878', '[]', 8, '', '8', 1, 4, 1, '222', '111');
-INSERT INTO `exam_record` VALUES (8, '2024-03-05 11:59:10', 1709611010643, '杨悦', 2, '编程', 9, '878', '[]', 8, '8', '8', 1, 3, 0, '22', '111');
-INSERT INTO `exam_record` VALUES (9, '2024-03-05 11:59:10', 1709611010643, '杨悦', 2, '编程', 7, '222', '[{\"text\":\"A.22\",\"code\":\"A\"},{\"text\":\"B.213\",\"code\":\"B\"},{\"text\":\"C.333\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 5, 'A,B', '5', 1, 1, 0, 'D', '111');
-INSERT INTO `exam_record` VALUES (10, '2024-03-05 11:59:10', 1709611010643, '杨悦', 2, '编程', 10, '77', '[]', 7, '7', '7', 1, 3, 0, '22', '111');
-INSERT INTO `exam_record` VALUES (11, '2024-03-05 11:59:10', 1709611010643, '杨悦', 2, '编程', 6, '测试1', '[{\"text\":\"A.11\",\"code\":\"A\"},{\"text\":\"B.22\",\"code\":\"B\"},{\"text\":\"C.33\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 5, 'B', '5', 1, 0, 0, 'D', '111');
-INSERT INTO `exam_record` VALUES (12, '2025-06-27 09:01:35', 1709611010643, '杨悦', 1, '十万个为什么', 1, '下面动物不属于昆虫的是（）。', '[{\"text\":\"A.苍蝇\",\"code\":\"A\"},{\"text\":\"B.蜜蜂\",\"code\":\"B\"},{\"text\":\"C.蜂鸟\",\"code\":\"C\"}]', 20, 'C', '蜂鸟', 0, 0, 20, 'C', NULL);
-INSERT INTO `exam_record` VALUES (13, '2025-06-27 09:01:35', 1709611010643, '杨悦', 1, '十万个为什么', 4, '下面动物中会流汗的有（ ）。', '[{\"text\":\"A.马\",\"code\":\"A\"},{\"text\":\"B.猫\",\"code\":\"B\"},{\"text\":\"C.狗\",\"code\":\"C\"}]', 30, 'A,B', '狗不会流汗', 0, 1, 0, 'B,C', NULL);
-INSERT INTO `exam_record` VALUES (14, '2025-06-27 09:01:35', 1709611010643, '杨悦', 1, '十万个为什么', 5, '世界上为什么不存在完美的圆？', '[]', 30, '', '目前没有证据表明现实中存在完美的圆', 0, 4, 0, '21', NULL);
-INSERT INTO `exam_record` VALUES (15, '2025-06-27 09:01:35', 1709611010643, '杨悦', 1, '十万个为什么', 3, '地球是个球体，中间是（ ）。', '[]', 30, '赤道', '赤道', 0, 3, 0, '球心', NULL);
-INSERT INTO `exam_record` VALUES (16, '2025-06-27 09:01:35', 1709611010643, '杨悦', 1, '十万个为什么', 2, '油着火后可以用水扑灭。', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 20, 'B', '油着火后不可以用水扑灭', 0, 2, 20, 'B', NULL);
+INSERT INTO `exam_record` VALUES (6, '2024-03-05 11:59:10', '222', 2, 8, 1, 6, 'B', '111');
+INSERT INTO `exam_record` VALUES (7, '2024-03-05 11:59:10', '222', 2, 11, 1, 1, '222', '111');
+INSERT INTO `exam_record` VALUES (8, '2024-03-05 11:59:10', '222', 2, 9, 1, 0, '22', '111');
+INSERT INTO `exam_record` VALUES (9, '2024-03-05 11:59:10', '222', 2, 7, 1, 0, 'D', '111');
+INSERT INTO `exam_record` VALUES (10, '2024-03-05 11:59:10', '222', 2, 10, 1, 0, '22', '111');
+INSERT INTO `exam_record` VALUES (11, '2024-03-05 11:59:10', '222', 2, 6, 1, 0, 'D', '111');
+INSERT INTO `exam_record` VALUES (12, '2025-06-27 09:01:35', '222', 1, 1, 0, 20, 'C', NULL);
+INSERT INTO `exam_record` VALUES (13, '2025-06-27 09:01:35', '222', 1, 4, 0, 0, 'B,C', NULL);
+INSERT INTO `exam_record` VALUES (14, '2025-06-27 09:01:35', '222', 1, 5, 0, 0, '21', NULL);
+INSERT INTO `exam_record` VALUES (15, '2025-06-27 09:01:35', '222', 1, 3, 0, 0, '球心', NULL);
+INSERT INTO `exam_record` VALUES (16, '2025-06-27 09:01:35', '222', 1, 2, 0, 20, 'B', NULL);
 
 -- ----------------------------
 -- Table structure for forum
