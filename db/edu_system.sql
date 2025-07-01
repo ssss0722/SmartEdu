@@ -11,7 +11,7 @@
  Target Server Version : 80011 (8.0.11)
  File Encoding         : 65001
 
- Date: 01/07/2025 17:10:36
+ Date: 01/07/2025 21:43:15
 */
 
 SET NAMES utf8mb4;
@@ -144,6 +144,35 @@ CREATE TABLE `course_homework_question`  (
 
 -- ----------------------------
 -- Records of course_homework_question
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for course_homework_record
+-- ----------------------------
+DROP TABLE IF EXISTS `course_homework_record`;
+CREATE TABLE `course_homework_record`  (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学生用户id（外键）',
+  `homework_id` bigint(20) NOT NULL COMMENT '作业id（外键）',
+  `question_id` bigint(20) NOT NULL COMMENT '试题id（外键）',
+  `ismark` bigint(20) NULL DEFAULT 0 COMMENT '是否批改',
+  `myscore` bigint(20) NOT NULL DEFAULT 0 COMMENT '试题得分',
+  `myanswer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考生答案',
+  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号(外键)',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `ho_re_id`(`homework_id` ASC) USING BTREE,
+  INDEX `ho_re_qu_bank`(`question_id` ASC) USING BTREE,
+  INDEX `ho_re_user_s`(`s_username` ASC) USING BTREE,
+  INDEX `ho_t_ex_record`(`t_username` ASC) USING BTREE,
+  CONSTRAINT `ho_re_id` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ho_re_qu_bank` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ho_re_user_s` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ho_t_ex_record` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of course_homework_record
 -- ----------------------------
 
 -- ----------------------------
@@ -462,7 +491,7 @@ DROP TABLE IF EXISTS `exam_record`;
 CREATE TABLE `exam_record`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户id（外键）',
+  `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学生用户id（外键）',
   `paperid` bigint(20) NOT NULL COMMENT '在线考试id（外键）',
   `question_id` bigint(20) NOT NULL COMMENT '试题id（外键）',
   `ismark` bigint(20) NULL DEFAULT 0 COMMENT '是否批卷',
