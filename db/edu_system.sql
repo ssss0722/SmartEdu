@@ -11,7 +11,7 @@
  Target Server Version : 80011 (8.0.11)
  File Encoding         : 65001
 
- Date: 28/06/2025 08:36:27
+ Date: 30/06/2025 11:41:29
 */
 
 SET NAMES utf8mb4;
@@ -65,7 +65,7 @@ CREATE TABLE `course_categories`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `course` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '课程类别',
-  PRIMARY KEY (`id`) USING BTREE,
+  PRIMARY KEY (`id`, `course`) USING BTREE,
   UNIQUE INDEX `kechengleibie`(`course` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '课程类别' ROW_FORMAT = DYNAMIC;
 
@@ -286,8 +286,10 @@ CREATE TABLE `discuss_course_homework`  (
   `nickname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论内容',
   `reply` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '回复内容',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '课程作业评论表' ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `co_ho_dis`(`refid` ASC) USING BTREE,
+  CONSTRAINT `co_ho_dis` FOREIGN KEY (`refid`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '课程作业评论表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of discuss_course_homework
@@ -306,7 +308,9 @@ CREATE TABLE `discuss_course_material`  (
   `nickname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论内容',
   `reply` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '回复内容',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `co_ma_dis`(`refid` ASC) USING BTREE,
+  CONSTRAINT `co_ma_dis` FOREIGN KEY (`refid`) REFERENCES `course_material` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '教学资料评论表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -327,8 +331,10 @@ CREATE TABLE `discuss_course_video`  (
   `nickname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论内容',
   `reply` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '回复内容',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '教学视频评论表' ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `co_vi_dis`(`refid` ASC) USING BTREE,
+  CONSTRAINT `co_vi_dis` FOREIGN KEY (`refid`) REFERENCES `course_video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '教学视频评论表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of discuss_course_video
@@ -657,13 +663,13 @@ DROP TABLE IF EXISTS `user_student`;
 CREATE TABLE `user_student`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生账号',
+  `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学生账号',
   `s_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生姓名',
   `password` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
   `grander` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
   `tel` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系电话',
   `avatar` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
-  PRIMARY KEY (`id`) USING BTREE,
+  PRIMARY KEY (`id`, `s_username` DESC) USING BTREE,
   UNIQUE INDEX `xueshengzhanghao`(`s_username` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1709611010644 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '学生' ROW_FORMAT = DYNAMIC;
 
