@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.ExampaperDao;
-import com.entity.ExampaperEntity;
+import com.dao.ExamPaperDao;
+import com.entity.ExamPaperEntity;
 import com.service.ExampaperService;
 import com.entity.vo.ExampaperVO;
-import com.entity.view.ExampaperView;
+import com.entity.view.ExamPaperView;
 
 @Service("exampaperService")
-public class ExampaperServiceImpl extends ServiceImpl<ExampaperDao, ExampaperEntity> implements ExampaperService {
+public class ExampaperServiceImpl extends ServiceImpl<ExamPaperDao, ExamPaperEntity> implements ExampaperService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<ExampaperEntity> page = this.selectPage(
-                new Query<ExampaperEntity>(params).getPage(),
-                new EntityWrapper<ExampaperEntity>()
+        Page<ExamPaperEntity> page = this.selectPage(
+                new Query<ExamPaperEntity>(params).getPage(),
+                new EntityWrapper<ExamPaperEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<ExampaperEntity> wrapper) {
-		  Page<ExampaperView> page =new Query<ExampaperView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<ExamPaperEntity> wrapper) {
+		  Page<ExamPaperView> page =new Query<ExamPaperView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class ExampaperServiceImpl extends ServiceImpl<ExampaperDao, ExampaperEnt
 
     
     @Override
-	public List<ExampaperVO> selectListVO(Wrapper<ExampaperEntity> wrapper) {
+	public List<ExampaperVO> selectListVO(Wrapper<ExamPaperEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public ExampaperVO selectVO(Wrapper<ExampaperEntity> wrapper) {
+	public ExampaperVO selectVO(Wrapper<ExamPaperEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<ExampaperView> selectListView(Wrapper<ExampaperEntity> wrapper) {
+	public List<ExamPaperView> selectListView(Wrapper<ExamPaperEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public ExampaperView selectView(Wrapper<ExampaperEntity> wrapper) {
+	public ExamPaperView selectView(Wrapper<ExamPaperEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

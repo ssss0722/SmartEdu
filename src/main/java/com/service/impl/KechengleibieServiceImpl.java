@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.KechengleibieDao;
-import com.entity.KechengleibieEntity;
+import com.dao.CourseCategoriesDao;
+import com.entity.CourseCategoriesEntity;
 import com.service.KechengleibieService;
 import com.entity.vo.KechengleibieVO;
-import com.entity.view.KechengleibieView;
+import com.entity.view.CourseCategoriesView;
 
 @Service("kechengleibieService")
-public class KechengleibieServiceImpl extends ServiceImpl<KechengleibieDao, KechengleibieEntity> implements KechengleibieService {
+public class KechengleibieServiceImpl extends ServiceImpl<CourseCategoriesDao, CourseCategoriesEntity> implements KechengleibieService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<KechengleibieEntity> page = this.selectPage(
-                new Query<KechengleibieEntity>(params).getPage(),
-                new EntityWrapper<KechengleibieEntity>()
+        Page<CourseCategoriesEntity> page = this.selectPage(
+                new Query<CourseCategoriesEntity>(params).getPage(),
+                new EntityWrapper<CourseCategoriesEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<KechengleibieEntity> wrapper) {
-		  Page<KechengleibieView> page =new Query<KechengleibieView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<CourseCategoriesEntity> wrapper) {
+		  Page<CourseCategoriesView> page =new Query<CourseCategoriesView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class KechengleibieServiceImpl extends ServiceImpl<KechengleibieDao, Kech
 
     
     @Override
-	public List<KechengleibieVO> selectListVO(Wrapper<KechengleibieEntity> wrapper) {
+	public List<KechengleibieVO> selectListVO(Wrapper<CourseCategoriesEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public KechengleibieVO selectVO(Wrapper<KechengleibieEntity> wrapper) {
+	public KechengleibieVO selectVO(Wrapper<CourseCategoriesEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<KechengleibieView> selectListView(Wrapper<KechengleibieEntity> wrapper) {
+	public List<CourseCategoriesView> selectListView(Wrapper<CourseCategoriesEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public KechengleibieView selectView(Wrapper<KechengleibieEntity> wrapper) {
+	public CourseCategoriesView selectView(Wrapper<CourseCategoriesEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.SystemintroDao;
-import com.entity.SystemintroEntity;
+import com.dao.SystemIntroDao;
+import com.entity.SystemIntroEntity;
 import com.service.SystemintroService;
 import com.entity.vo.SystemintroVO;
-import com.entity.view.SystemintroView;
+import com.entity.view.SystemIntroView;
 
 @Service("systemintroService")
-public class SystemintroServiceImpl extends ServiceImpl<SystemintroDao, SystemintroEntity> implements SystemintroService {
+public class SystemintroServiceImpl extends ServiceImpl<SystemIntroDao, SystemIntroEntity> implements SystemintroService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<SystemintroEntity> page = this.selectPage(
-                new Query<SystemintroEntity>(params).getPage(),
-                new EntityWrapper<SystemintroEntity>()
+        Page<SystemIntroEntity> page = this.selectPage(
+                new Query<SystemIntroEntity>(params).getPage(),
+                new EntityWrapper<SystemIntroEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<SystemintroEntity> wrapper) {
-		  Page<SystemintroView> page =new Query<SystemintroView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<SystemIntroEntity> wrapper) {
+		  Page<SystemIntroView> page =new Query<SystemIntroView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class SystemintroServiceImpl extends ServiceImpl<SystemintroDao, Systemin
 
     
     @Override
-	public List<SystemintroVO> selectListVO(Wrapper<SystemintroEntity> wrapper) {
+	public List<SystemintroVO> selectListVO(Wrapper<SystemIntroEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public SystemintroVO selectVO(Wrapper<SystemintroEntity> wrapper) {
+	public SystemintroVO selectVO(Wrapper<SystemIntroEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<SystemintroView> selectListView(Wrapper<SystemintroEntity> wrapper) {
+	public List<SystemIntroView> selectListView(Wrapper<SystemIntroEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public SystemintroView selectView(Wrapper<SystemintroEntity> wrapper) {
+	public SystemIntroView selectView(Wrapper<SystemIntroEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

@@ -3,12 +3,12 @@ package com.service;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
 import com.utils.PageUtils;
-import com.entity.JiaoxueshipinEntity;
+import com.entity.CourseVideoEntity;
 import java.util.List;
 import java.util.Map;
 import com.entity.vo.JiaoxueshipinVO;
 import org.apache.ibatis.annotations.Param;
-import com.entity.view.JiaoxueshipinView;
+import com.entity.view.CourseVideoView;
 
 
 /**
@@ -18,19 +18,19 @@ import com.entity.view.JiaoxueshipinView;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-public interface JiaoxueshipinService extends IService<JiaoxueshipinEntity> {
+public interface JiaoxueshipinService extends IService<CourseVideoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<JiaoxueshipinVO> selectListVO(Wrapper<JiaoxueshipinEntity> wrapper);
+   	List<JiaoxueshipinVO> selectListVO(Wrapper<CourseVideoEntity> wrapper);
    	
-   	JiaoxueshipinVO selectVO(@Param("ew") Wrapper<JiaoxueshipinEntity> wrapper);
+   	JiaoxueshipinVO selectVO(@Param("ew") Wrapper<CourseVideoEntity> wrapper);
    	
-   	List<JiaoxueshipinView> selectListView(Wrapper<JiaoxueshipinEntity> wrapper);
+   	List<CourseVideoView> selectListView(Wrapper<CourseVideoEntity> wrapper);
    	
-   	JiaoxueshipinView selectView(@Param("ew") Wrapper<JiaoxueshipinEntity> wrapper);
+   	CourseVideoView selectView(@Param("ew") Wrapper<CourseVideoEntity> wrapper);
    	
-   	PageUtils queryPage(Map<String, Object> params,Wrapper<JiaoxueshipinEntity> wrapper);
+   	PageUtils queryPage(Map<String, Object> params,Wrapper<CourseVideoEntity> wrapper);
 
    	
 

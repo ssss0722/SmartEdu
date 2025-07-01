@@ -3,12 +3,12 @@ package com.service;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
 import com.utils.PageUtils;
-import com.entity.AboutusEntity;
+import com.entity.AboutUsEntity;
 import java.util.List;
 import java.util.Map;
 import com.entity.vo.AboutusVO;
 import org.apache.ibatis.annotations.Param;
-import com.entity.view.AboutusView;
+import com.entity.view.AboutUsView;
 
 
 /**
@@ -18,19 +18,19 @@ import com.entity.view.AboutusView;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public interface AboutusService extends IService<AboutusEntity> {
+public interface AboutusService extends IService<AboutUsEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<AboutusVO> selectListVO(Wrapper<AboutusEntity> wrapper);
+   	List<AboutusVO> selectListVO(Wrapper<AboutUsEntity> wrapper);
    	
-   	AboutusVO selectVO(@Param("ew") Wrapper<AboutusEntity> wrapper);
+   	AboutusVO selectVO(@Param("ew") Wrapper<AboutUsEntity> wrapper);
    	
-   	List<AboutusView> selectListView(Wrapper<AboutusEntity> wrapper);
+   	List<AboutUsView> selectListView(Wrapper<AboutUsEntity> wrapper);
    	
-   	AboutusView selectView(@Param("ew") Wrapper<AboutusEntity> wrapper);
+   	AboutUsView selectView(@Param("ew") Wrapper<AboutUsEntity> wrapper);
    	
-   	PageUtils queryPage(Map<String, Object> params,Wrapper<AboutusEntity> wrapper);
+   	PageUtils queryPage(Map<String, Object> params,Wrapper<AboutUsEntity> wrapper);
 
    	
 

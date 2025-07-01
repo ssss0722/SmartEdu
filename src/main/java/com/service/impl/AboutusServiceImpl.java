@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.AboutusDao;
-import com.entity.AboutusEntity;
+import com.dao.AboutUsDao;
+import com.entity.AboutUsEntity;
 import com.service.AboutusService;
 import com.entity.vo.AboutusVO;
-import com.entity.view.AboutusView;
+import com.entity.view.AboutUsView;
 
 @Service("aboutusService")
-public class AboutusServiceImpl extends ServiceImpl<AboutusDao, AboutusEntity> implements AboutusService {
+public class AboutusServiceImpl extends ServiceImpl<AboutUsDao, AboutUsEntity> implements AboutusService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<AboutusEntity> page = this.selectPage(
-                new Query<AboutusEntity>(params).getPage(),
-                new EntityWrapper<AboutusEntity>()
+        Page<AboutUsEntity> page = this.selectPage(
+                new Query<AboutUsEntity>(params).getPage(),
+                new EntityWrapper<AboutUsEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<AboutusEntity> wrapper) {
-		  Page<AboutusView> page =new Query<AboutusView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<AboutUsEntity> wrapper) {
+		  Page<AboutUsView> page =new Query<AboutUsView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class AboutusServiceImpl extends ServiceImpl<AboutusDao, AboutusEntity> i
 
     
     @Override
-	public List<AboutusVO> selectListVO(Wrapper<AboutusEntity> wrapper) {
+	public List<AboutusVO> selectListVO(Wrapper<AboutUsEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public AboutusVO selectVO(Wrapper<AboutusEntity> wrapper) {
+	public AboutusVO selectVO(Wrapper<AboutUsEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<AboutusView> selectListView(Wrapper<AboutusEntity> wrapper) {
+	public List<AboutUsView> selectListView(Wrapper<AboutUsEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public AboutusView selectView(Wrapper<AboutusEntity> wrapper) {
+	public AboutUsView selectView(Wrapper<AboutUsEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

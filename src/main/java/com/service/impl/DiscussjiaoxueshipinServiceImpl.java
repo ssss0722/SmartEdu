@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.DiscussjiaoxueshipinDao;
-import com.entity.DiscussjiaoxueshipinEntity;
+import com.dao.DiscussCourseVideoDao;
+import com.entity.DiscussCourseVideoEntity;
 import com.service.DiscussjiaoxueshipinService;
 import com.entity.vo.DiscussjiaoxueshipinVO;
-import com.entity.view.DiscussjiaoxueshipinView;
+import com.entity.view.DiscussCourseVideoView;
 
 @Service("discussjiaoxueshipinService")
-public class DiscussjiaoxueshipinServiceImpl extends ServiceImpl<DiscussjiaoxueshipinDao, DiscussjiaoxueshipinEntity> implements DiscussjiaoxueshipinService {
+public class DiscussjiaoxueshipinServiceImpl extends ServiceImpl<DiscussCourseVideoDao, DiscussCourseVideoEntity> implements DiscussjiaoxueshipinService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<DiscussjiaoxueshipinEntity> page = this.selectPage(
-                new Query<DiscussjiaoxueshipinEntity>(params).getPage(),
-                new EntityWrapper<DiscussjiaoxueshipinEntity>()
+        Page<DiscussCourseVideoEntity> page = this.selectPage(
+                new Query<DiscussCourseVideoEntity>(params).getPage(),
+                new EntityWrapper<DiscussCourseVideoEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<DiscussjiaoxueshipinEntity> wrapper) {
-		  Page<DiscussjiaoxueshipinView> page =new Query<DiscussjiaoxueshipinView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<DiscussCourseVideoEntity> wrapper) {
+		  Page<DiscussCourseVideoView> page =new Query<DiscussCourseVideoView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class DiscussjiaoxueshipinServiceImpl extends ServiceImpl<Discussjiaoxues
 
     
     @Override
-	public List<DiscussjiaoxueshipinVO> selectListVO(Wrapper<DiscussjiaoxueshipinEntity> wrapper) {
+	public List<DiscussjiaoxueshipinVO> selectListVO(Wrapper<DiscussCourseVideoEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public DiscussjiaoxueshipinVO selectVO(Wrapper<DiscussjiaoxueshipinEntity> wrapper) {
+	public DiscussjiaoxueshipinVO selectVO(Wrapper<DiscussCourseVideoEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<DiscussjiaoxueshipinView> selectListView(Wrapper<DiscussjiaoxueshipinEntity> wrapper) {
+	public List<DiscussCourseVideoView> selectListView(Wrapper<DiscussCourseVideoEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public DiscussjiaoxueshipinView selectView(Wrapper<DiscussjiaoxueshipinEntity> wrapper) {
+	public DiscussCourseVideoView selectView(Wrapper<DiscussCourseVideoEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

@@ -3,12 +3,12 @@ package com.service;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
 import com.utils.PageUtils;
-import com.entity.ZuoyetijiaoEntity;
+import com.entity.CourseHomeworkSubmissionEntity;
 import java.util.List;
 import java.util.Map;
 import com.entity.vo.ZuoyetijiaoVO;
 import org.apache.ibatis.annotations.Param;
-import com.entity.view.ZuoyetijiaoView;
+import com.entity.view.CourseHomeworkSubmissionView;
 
 
 /**
@@ -18,19 +18,19 @@ import com.entity.view.ZuoyetijiaoView;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public interface ZuoyetijiaoService extends IService<ZuoyetijiaoEntity> {
+public interface ZuoyetijiaoService extends IService<CourseHomeworkSubmissionEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<ZuoyetijiaoVO> selectListVO(Wrapper<ZuoyetijiaoEntity> wrapper);
+   	List<ZuoyetijiaoVO> selectListVO(Wrapper<CourseHomeworkSubmissionEntity> wrapper);
    	
-   	ZuoyetijiaoVO selectVO(@Param("ew") Wrapper<ZuoyetijiaoEntity> wrapper);
+   	ZuoyetijiaoVO selectVO(@Param("ew") Wrapper<CourseHomeworkSubmissionEntity> wrapper);
    	
-   	List<ZuoyetijiaoView> selectListView(Wrapper<ZuoyetijiaoEntity> wrapper);
+   	List<CourseHomeworkSubmissionView> selectListView(Wrapper<CourseHomeworkSubmissionEntity> wrapper);
    	
-   	ZuoyetijiaoView selectView(@Param("ew") Wrapper<ZuoyetijiaoEntity> wrapper);
+   	CourseHomeworkSubmissionView selectView(@Param("ew") Wrapper<CourseHomeworkSubmissionEntity> wrapper);
    	
-   	PageUtils queryPage(Map<String, Object> params,Wrapper<ZuoyetijiaoEntity> wrapper);
+   	PageUtils queryPage(Map<String, Object> params,Wrapper<CourseHomeworkSubmissionEntity> wrapper);
 
    	
 

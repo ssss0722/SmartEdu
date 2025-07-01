@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.StoreupDao;
-import com.entity.StoreupEntity;
+import com.dao.StoreUpDao;
+import com.entity.StoreUpEntity;
 import com.service.StoreupService;
 import com.entity.vo.StoreupVO;
-import com.entity.view.StoreupView;
+import com.entity.view.StoreUpView;
 
 @Service("storeupService")
-public class StoreupServiceImpl extends ServiceImpl<StoreupDao, StoreupEntity> implements StoreupService {
+public class StoreupServiceImpl extends ServiceImpl<StoreUpDao, StoreUpEntity> implements StoreupService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<StoreupEntity> page = this.selectPage(
-                new Query<StoreupEntity>(params).getPage(),
-                new EntityWrapper<StoreupEntity>()
+        Page<StoreUpEntity> page = this.selectPage(
+                new Query<StoreUpEntity>(params).getPage(),
+                new EntityWrapper<StoreUpEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<StoreupEntity> wrapper) {
-		  Page<StoreupView> page =new Query<StoreupView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<StoreUpEntity> wrapper) {
+		  Page<StoreUpView> page =new Query<StoreUpView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class StoreupServiceImpl extends ServiceImpl<StoreupDao, StoreupEntity> i
 
     
     @Override
-	public List<StoreupVO> selectListVO(Wrapper<StoreupEntity> wrapper) {
+	public List<StoreupVO> selectListVO(Wrapper<StoreUpEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public StoreupVO selectVO(Wrapper<StoreupEntity> wrapper) {
+	public StoreupVO selectVO(Wrapper<StoreUpEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<StoreupView> selectListView(Wrapper<StoreupEntity> wrapper) {
+	public List<StoreUpView> selectListView(Wrapper<StoreUpEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public StoreupView selectView(Wrapper<StoreupEntity> wrapper) {
+	public StoreUpView selectView(Wrapper<StoreUpEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

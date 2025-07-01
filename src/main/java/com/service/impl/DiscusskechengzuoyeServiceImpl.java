@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.DiscusskechengzuoyeDao;
-import com.entity.DiscusskechengzuoyeEntity;
+import com.dao.DiscussCourseHomeworkDao;
+import com.entity.DiscussCourseHomeworkEntity;
 import com.service.DiscusskechengzuoyeService;
 import com.entity.vo.DiscusskechengzuoyeVO;
-import com.entity.view.DiscusskechengzuoyeView;
+import com.entity.view.DiscussCourseHomeworkView;
 
 @Service("discusskechengzuoyeService")
-public class DiscusskechengzuoyeServiceImpl extends ServiceImpl<DiscusskechengzuoyeDao, DiscusskechengzuoyeEntity> implements DiscusskechengzuoyeService {
+public class DiscusskechengzuoyeServiceImpl extends ServiceImpl<DiscussCourseHomeworkDao, DiscussCourseHomeworkEntity> implements DiscusskechengzuoyeService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<DiscusskechengzuoyeEntity> page = this.selectPage(
-                new Query<DiscusskechengzuoyeEntity>(params).getPage(),
-                new EntityWrapper<DiscusskechengzuoyeEntity>()
+        Page<DiscussCourseHomeworkEntity> page = this.selectPage(
+                new Query<DiscussCourseHomeworkEntity>(params).getPage(),
+                new EntityWrapper<DiscussCourseHomeworkEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<DiscusskechengzuoyeEntity> wrapper) {
-		  Page<DiscusskechengzuoyeView> page =new Query<DiscusskechengzuoyeView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<DiscussCourseHomeworkEntity> wrapper) {
+		  Page<DiscussCourseHomeworkView> page =new Query<DiscussCourseHomeworkView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class DiscusskechengzuoyeServiceImpl extends ServiceImpl<Discusskechengzu
 
     
     @Override
-	public List<DiscusskechengzuoyeVO> selectListVO(Wrapper<DiscusskechengzuoyeEntity> wrapper) {
+	public List<DiscusskechengzuoyeVO> selectListVO(Wrapper<DiscussCourseHomeworkEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public DiscusskechengzuoyeVO selectVO(Wrapper<DiscusskechengzuoyeEntity> wrapper) {
+	public DiscusskechengzuoyeVO selectVO(Wrapper<DiscussCourseHomeworkEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<DiscusskechengzuoyeView> selectListView(Wrapper<DiscusskechengzuoyeEntity> wrapper) {
+	public List<DiscussCourseHomeworkView> selectListView(Wrapper<DiscussCourseHomeworkEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public DiscusskechengzuoyeView selectView(Wrapper<DiscusskechengzuoyeEntity> wrapper) {
+	public DiscussCourseHomeworkView selectView(Wrapper<DiscussCourseHomeworkEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

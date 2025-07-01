@@ -1,10 +1,7 @@
 package com.controller;
 
-import java.sql.Timestamp;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.entity.TeacherEntity;
@@ -24,7 +21,7 @@ import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
 import com.service.StoreupService;
-import com.entity.StoreupEntity;
+import com.entity.StoreUpEntity;
 import com.utils.JwtUtils;
 
 /**
@@ -221,15 +218,15 @@ public class CourseMaterialController {
         int pageSize = Integer.parseInt(params.getOrDefault("limit", "10").toString());
 
         // 2. 获取用户收藏的课程类别
-        List<StoreupEntity> storeups = storeupService.selectList(
-                new EntityWrapper<StoreupEntity>()
+        List<StoreUpEntity> storeups = storeupService.selectList(
+                new EntityWrapper<StoreUpEntity>()
                         .eq("type", 1)
                         .eq("userid", userId)
                         .eq("tablename", "course_material")
         );
 
         Set<String> userFavoriteCategories = storeups.stream()
-                .map(StoreupEntity::getInteltype)
+                .map(StoreUpEntity::getInteltype)
                 .collect(Collectors.toSet());
 
         // 3. 构建查询条件

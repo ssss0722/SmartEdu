@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.JiaoxueshipinDao;
-import com.entity.JiaoxueshipinEntity;
+import com.dao.CourseVideoDao;
+import com.entity.CourseVideoEntity;
 import com.service.JiaoxueshipinService;
 import com.entity.vo.JiaoxueshipinVO;
-import com.entity.view.JiaoxueshipinView;
+import com.entity.view.CourseVideoView;
 
 @Service("jiaoxueshipinService")
-public class JiaoxueshipinServiceImpl extends ServiceImpl<JiaoxueshipinDao, JiaoxueshipinEntity> implements JiaoxueshipinService {
+public class JiaoxueshipinServiceImpl extends ServiceImpl<CourseVideoDao, CourseVideoEntity> implements JiaoxueshipinService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<JiaoxueshipinEntity> page = this.selectPage(
-                new Query<JiaoxueshipinEntity>(params).getPage(),
-                new EntityWrapper<JiaoxueshipinEntity>()
+        Page<CourseVideoEntity> page = this.selectPage(
+                new Query<CourseVideoEntity>(params).getPage(),
+                new EntityWrapper<CourseVideoEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<JiaoxueshipinEntity> wrapper) {
-		  Page<JiaoxueshipinView> page =new Query<JiaoxueshipinView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<CourseVideoEntity> wrapper) {
+		  Page<CourseVideoView> page =new Query<CourseVideoView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class JiaoxueshipinServiceImpl extends ServiceImpl<JiaoxueshipinDao, Jiao
 
     
     @Override
-	public List<JiaoxueshipinVO> selectListVO(Wrapper<JiaoxueshipinEntity> wrapper) {
+	public List<JiaoxueshipinVO> selectListVO(Wrapper<CourseVideoEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public JiaoxueshipinVO selectVO(Wrapper<JiaoxueshipinEntity> wrapper) {
+	public JiaoxueshipinVO selectVO(Wrapper<CourseVideoEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<JiaoxueshipinView> selectListView(Wrapper<JiaoxueshipinEntity> wrapper) {
+	public List<CourseVideoView> selectListView(Wrapper<CourseVideoEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public JiaoxueshipinView selectView(Wrapper<JiaoxueshipinEntity> wrapper) {
+	public CourseVideoView selectView(Wrapper<CourseVideoEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

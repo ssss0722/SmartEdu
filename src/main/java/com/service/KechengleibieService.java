@@ -3,12 +3,12 @@ package com.service;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
 import com.utils.PageUtils;
-import com.entity.KechengleibieEntity;
+import com.entity.CourseCategoriesEntity;
 import java.util.List;
 import java.util.Map;
 import com.entity.vo.KechengleibieVO;
 import org.apache.ibatis.annotations.Param;
-import com.entity.view.KechengleibieView;
+import com.entity.view.CourseCategoriesView;
 
 
 /**
@@ -18,19 +18,19 @@ import com.entity.view.KechengleibieView;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-public interface KechengleibieService extends IService<KechengleibieEntity> {
+public interface KechengleibieService extends IService<CourseCategoriesEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<KechengleibieVO> selectListVO(Wrapper<KechengleibieEntity> wrapper);
+   	List<KechengleibieVO> selectListVO(Wrapper<CourseCategoriesEntity> wrapper);
    	
-   	KechengleibieVO selectVO(@Param("ew") Wrapper<KechengleibieEntity> wrapper);
+   	KechengleibieVO selectVO(@Param("ew") Wrapper<CourseCategoriesEntity> wrapper);
    	
-   	List<KechengleibieView> selectListView(Wrapper<KechengleibieEntity> wrapper);
+   	List<CourseCategoriesView> selectListView(Wrapper<CourseCategoriesEntity> wrapper);
    	
-   	KechengleibieView selectView(@Param("ew") Wrapper<KechengleibieEntity> wrapper);
+   	CourseCategoriesView selectView(@Param("ew") Wrapper<CourseCategoriesEntity> wrapper);
    	
-   	PageUtils queryPage(Map<String, Object> params,Wrapper<KechengleibieEntity> wrapper);
+   	PageUtils queryPage(Map<String, Object> params,Wrapper<CourseCategoriesEntity> wrapper);
 
    	
 

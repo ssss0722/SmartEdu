@@ -3,12 +3,12 @@ package com.service;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
 import com.utils.PageUtils;
-import com.entity.KechengzuoyeEntity;
+import com.entity.CourseHomeworkEntity;
 import java.util.List;
 import java.util.Map;
 import com.entity.vo.KechengzuoyeVO;
 import org.apache.ibatis.annotations.Param;
-import com.entity.view.KechengzuoyeView;
+import com.entity.view.CourseHomeworkView;
 
 
 /**
@@ -18,19 +18,19 @@ import com.entity.view.KechengzuoyeView;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public interface KechengzuoyeService extends IService<KechengzuoyeEntity> {
+public interface KechengzuoyeService extends IService<CourseHomeworkEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<KechengzuoyeVO> selectListVO(Wrapper<KechengzuoyeEntity> wrapper);
+   	List<KechengzuoyeVO> selectListVO(Wrapper<CourseHomeworkEntity> wrapper);
    	
-   	KechengzuoyeVO selectVO(@Param("ew") Wrapper<KechengzuoyeEntity> wrapper);
+   	KechengzuoyeVO selectVO(@Param("ew") Wrapper<CourseHomeworkEntity> wrapper);
    	
-   	List<KechengzuoyeView> selectListView(Wrapper<KechengzuoyeEntity> wrapper);
+   	List<CourseHomeworkView> selectListView(Wrapper<CourseHomeworkEntity> wrapper);
    	
-   	KechengzuoyeView selectView(@Param("ew") Wrapper<KechengzuoyeEntity> wrapper);
+   	CourseHomeworkView selectView(@Param("ew") Wrapper<CourseHomeworkEntity> wrapper);
    	
-   	PageUtils queryPage(Map<String, Object> params,Wrapper<KechengzuoyeEntity> wrapper);
+   	PageUtils queryPage(Map<String, Object> params,Wrapper<CourseHomeworkEntity> wrapper);
 
    	
 

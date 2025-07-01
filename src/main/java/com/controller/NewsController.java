@@ -1,11 +1,7 @@
 package com.controller;
 
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,33 +9,26 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-import com.utils.ValidatorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.annotation.IgnoreAuth;
 
 import com.entity.NewsEntity;
 import com.entity.view.NewsView;
 
 import com.service.NewsService;
-import com.service.TokenService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
-import com.utils.MapUtils;
-import com.utils.CommonUtil;
-import java.io.IOException;
 import com.service.StoreupService;
-import com.entity.StoreupEntity;
+import com.entity.StoreUpEntity;
 
 /**
  * 系统公告
@@ -251,13 +240,13 @@ public class NewsController {
     public R autoSort2(@RequestParam Map<String, Object> params,NewsEntity news, HttpServletRequest request){
         String userId = request.getSession().getAttribute("userId").toString();
         String inteltypeColumn = "typename";
-        List<StoreupEntity> storeups = storeupService.selectList(new EntityWrapper<StoreupEntity>().eq("type", 1).eq("userid", userId).eq("tablename", "news").orderBy("addtime", false));
+        List<StoreUpEntity> storeups = storeupService.selectList(new EntityWrapper<StoreUpEntity>().eq("type", 1).eq("userid", userId).eq("tablename", "news").orderBy("addtime", false));
         List<String> inteltypes = new ArrayList<String>();
         Integer limit = params.get("limit")==null?10:Integer.parseInt(params.get("limit").toString());
         List<NewsEntity> newsList = new ArrayList<NewsEntity>();
         //去重
         if(storeups!=null && storeups.size()>0) {
-            for(StoreupEntity s : storeups) {
+            for(StoreUpEntity s : storeups) {
                 newsList.addAll(newsService.selectList(new EntityWrapper<NewsEntity>().eq(inteltypeColumn, s.getInteltype())));
             }
         }

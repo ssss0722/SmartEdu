@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.ExamquestionbankDao;
-import com.entity.ExamquestionbankEntity;
+import com.dao.ExamQuestionBankDao;
+import com.entity.ExamQuestionBankEntity;
 import com.service.ExamquestionbankService;
 import com.entity.vo.ExamquestionbankVO;
-import com.entity.view.ExamquestionbankView;
+import com.entity.view.ExamQuestionBankView;
 
 @Service("examquestionbankService")
-public class ExamquestionbankServiceImpl extends ServiceImpl<ExamquestionbankDao, ExamquestionbankEntity> implements ExamquestionbankService {
+public class ExamquestionbankServiceImpl extends ServiceImpl<ExamQuestionBankDao, ExamQuestionBankEntity> implements ExamquestionbankService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<ExamquestionbankEntity> page = this.selectPage(
-                new Query<ExamquestionbankEntity>(params).getPage(),
-                new EntityWrapper<ExamquestionbankEntity>()
+        Page<ExamQuestionBankEntity> page = this.selectPage(
+                new Query<ExamQuestionBankEntity>(params).getPage(),
+                new EntityWrapper<ExamQuestionBankEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<ExamquestionbankEntity> wrapper) {
-		  Page<ExamquestionbankView> page =new Query<ExamquestionbankView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<ExamQuestionBankEntity> wrapper) {
+		  Page<ExamQuestionBankView> page =new Query<ExamQuestionBankView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class ExamquestionbankServiceImpl extends ServiceImpl<ExamquestionbankDao
 
     
     @Override
-	public List<ExamquestionbankVO> selectListVO(Wrapper<ExamquestionbankEntity> wrapper) {
+	public List<ExamquestionbankVO> selectListVO(Wrapper<ExamQuestionBankEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public ExamquestionbankVO selectVO(Wrapper<ExamquestionbankEntity> wrapper) {
+	public ExamquestionbankVO selectVO(Wrapper<ExamQuestionBankEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<ExamquestionbankView> selectListView(Wrapper<ExamquestionbankEntity> wrapper) {
+	public List<ExamQuestionBankView> selectListView(Wrapper<ExamQuestionBankEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public ExamquestionbankView selectView(Wrapper<ExamquestionbankEntity> wrapper) {
+	public ExamQuestionBankView selectView(Wrapper<ExamQuestionBankEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

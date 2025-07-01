@@ -3,12 +3,12 @@ package com.service;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
 import com.utils.PageUtils;
-import com.entity.SystemintroEntity;
+import com.entity.SystemIntroEntity;
 import java.util.List;
 import java.util.Map;
 import com.entity.vo.SystemintroVO;
 import org.apache.ibatis.annotations.Param;
-import com.entity.view.SystemintroView;
+import com.entity.view.SystemIntroView;
 
 
 /**
@@ -18,19 +18,19 @@ import com.entity.view.SystemintroView;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public interface SystemintroService extends IService<SystemintroEntity> {
+public interface SystemintroService extends IService<SystemIntroEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<SystemintroVO> selectListVO(Wrapper<SystemintroEntity> wrapper);
+   	List<SystemintroVO> selectListVO(Wrapper<SystemIntroEntity> wrapper);
    	
-   	SystemintroVO selectVO(@Param("ew") Wrapper<SystemintroEntity> wrapper);
+   	SystemintroVO selectVO(@Param("ew") Wrapper<SystemIntroEntity> wrapper);
    	
-   	List<SystemintroView> selectListView(Wrapper<SystemintroEntity> wrapper);
+   	List<SystemIntroView> selectListView(Wrapper<SystemIntroEntity> wrapper);
    	
-   	SystemintroView selectView(@Param("ew") Wrapper<SystemintroEntity> wrapper);
+   	SystemIntroView selectView(@Param("ew") Wrapper<SystemIntroEntity> wrapper);
    	
-   	PageUtils queryPage(Map<String, Object> params,Wrapper<SystemintroEntity> wrapper);
+   	PageUtils queryPage(Map<String, Object> params,Wrapper<SystemIntroEntity> wrapper);
 
    	
 

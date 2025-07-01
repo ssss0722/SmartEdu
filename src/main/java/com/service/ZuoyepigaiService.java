@@ -3,12 +3,12 @@ package com.service;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
 import com.utils.PageUtils;
-import com.entity.ZuoyepigaiEntity;
+import com.entity.CourseHomeworkReviewEntity;
 import java.util.List;
 import java.util.Map;
 import com.entity.vo.ZuoyepigaiVO;
 import org.apache.ibatis.annotations.Param;
-import com.entity.view.ZuoyepigaiView;
+import com.entity.view.CourseHomeworkReviewView;
 
 
 /**
@@ -18,27 +18,27 @@ import com.entity.view.ZuoyepigaiView;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public interface ZuoyepigaiService extends IService<ZuoyepigaiEntity> {
+public interface ZuoyepigaiService extends IService<CourseHomeworkReviewEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<ZuoyepigaiVO> selectListVO(Wrapper<ZuoyepigaiEntity> wrapper);
+   	List<ZuoyepigaiVO> selectListVO(Wrapper<CourseHomeworkReviewEntity> wrapper);
    	
-   	ZuoyepigaiVO selectVO(@Param("ew") Wrapper<ZuoyepigaiEntity> wrapper);
+   	ZuoyepigaiVO selectVO(@Param("ew") Wrapper<CourseHomeworkReviewEntity> wrapper);
    	
-   	List<ZuoyepigaiView> selectListView(Wrapper<ZuoyepigaiEntity> wrapper);
+   	List<CourseHomeworkReviewView> selectListView(Wrapper<CourseHomeworkReviewEntity> wrapper);
    	
-   	ZuoyepigaiView selectView(@Param("ew") Wrapper<ZuoyepigaiEntity> wrapper);
+   	CourseHomeworkReviewView selectView(@Param("ew") Wrapper<CourseHomeworkReviewEntity> wrapper);
    	
-   	PageUtils queryPage(Map<String, Object> params,Wrapper<ZuoyepigaiEntity> wrapper);
+   	PageUtils queryPage(Map<String, Object> params,Wrapper<CourseHomeworkReviewEntity> wrapper);
 
    	
 
-    List<Map<String, Object>> selectValue(Map<String, Object> params,Wrapper<ZuoyepigaiEntity> wrapper);
+    List<Map<String, Object>> selectValue(Map<String, Object> params,Wrapper<CourseHomeworkReviewEntity> wrapper);
 
-    List<Map<String, Object>> selectTimeStatValue(Map<String, Object> params,Wrapper<ZuoyepigaiEntity> wrapper);
+    List<Map<String, Object>> selectTimeStatValue(Map<String, Object> params,Wrapper<CourseHomeworkReviewEntity> wrapper);
 
-    List<Map<String, Object>> selectGroup(Map<String, Object> params,Wrapper<ZuoyepigaiEntity> wrapper);
+    List<Map<String, Object>> selectGroup(Map<String, Object> params,Wrapper<CourseHomeworkReviewEntity> wrapper);
 
 
 

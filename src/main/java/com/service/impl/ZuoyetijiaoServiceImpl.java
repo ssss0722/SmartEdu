@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.ZuoyetijiaoDao;
-import com.entity.ZuoyetijiaoEntity;
+import com.dao.CourseHomeworkSubmissionDao;
+import com.entity.CourseHomeworkSubmissionEntity;
 import com.service.ZuoyetijiaoService;
 import com.entity.vo.ZuoyetijiaoVO;
-import com.entity.view.ZuoyetijiaoView;
+import com.entity.view.CourseHomeworkSubmissionView;
 
 @Service("zuoyetijiaoService")
-public class ZuoyetijiaoServiceImpl extends ServiceImpl<ZuoyetijiaoDao, ZuoyetijiaoEntity> implements ZuoyetijiaoService {
+public class ZuoyetijiaoServiceImpl extends ServiceImpl<CourseHomeworkSubmissionDao, CourseHomeworkSubmissionEntity> implements ZuoyetijiaoService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<ZuoyetijiaoEntity> page = this.selectPage(
-                new Query<ZuoyetijiaoEntity>(params).getPage(),
-                new EntityWrapper<ZuoyetijiaoEntity>()
+        Page<CourseHomeworkSubmissionEntity> page = this.selectPage(
+                new Query<CourseHomeworkSubmissionEntity>(params).getPage(),
+                new EntityWrapper<CourseHomeworkSubmissionEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<ZuoyetijiaoEntity> wrapper) {
-		  Page<ZuoyetijiaoView> page =new Query<ZuoyetijiaoView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<CourseHomeworkSubmissionEntity> wrapper) {
+		  Page<CourseHomeworkSubmissionView> page =new Query<CourseHomeworkSubmissionView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,22 +41,22 @@ public class ZuoyetijiaoServiceImpl extends ServiceImpl<ZuoyetijiaoDao, Zuoyetij
 
     
     @Override
-	public List<ZuoyetijiaoVO> selectListVO(Wrapper<ZuoyetijiaoEntity> wrapper) {
+	public List<ZuoyetijiaoVO> selectListVO(Wrapper<CourseHomeworkSubmissionEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public ZuoyetijiaoVO selectVO(Wrapper<ZuoyetijiaoEntity> wrapper) {
+	public ZuoyetijiaoVO selectVO(Wrapper<CourseHomeworkSubmissionEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<ZuoyetijiaoView> selectListView(Wrapper<ZuoyetijiaoEntity> wrapper) {
+	public List<CourseHomeworkSubmissionView> selectListView(Wrapper<CourseHomeworkSubmissionEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public ZuoyetijiaoView selectView(Wrapper<ZuoyetijiaoEntity> wrapper) {
+	public CourseHomeworkSubmissionView selectView(Wrapper<CourseHomeworkSubmissionEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

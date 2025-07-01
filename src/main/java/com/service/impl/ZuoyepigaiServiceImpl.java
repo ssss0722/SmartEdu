@@ -12,28 +12,28 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.ZuoyepigaiDao;
-import com.entity.ZuoyepigaiEntity;
+import com.dao.CourseHomeworkReviewDao;
+import com.entity.CourseHomeworkReviewEntity;
 import com.service.ZuoyepigaiService;
 import com.entity.vo.ZuoyepigaiVO;
-import com.entity.view.ZuoyepigaiView;
+import com.entity.view.CourseHomeworkReviewView;
 
 @Service("zuoyepigaiService")
-public class ZuoyepigaiServiceImpl extends ServiceImpl<ZuoyepigaiDao, ZuoyepigaiEntity> implements ZuoyepigaiService {
+public class ZuoyepigaiServiceImpl extends ServiceImpl<CourseHomeworkReviewDao, CourseHomeworkReviewEntity> implements ZuoyepigaiService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<ZuoyepigaiEntity> page = this.selectPage(
-                new Query<ZuoyepigaiEntity>(params).getPage(),
-                new EntityWrapper<ZuoyepigaiEntity>()
+        Page<CourseHomeworkReviewEntity> page = this.selectPage(
+                new Query<CourseHomeworkReviewEntity>(params).getPage(),
+                new EntityWrapper<CourseHomeworkReviewEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<ZuoyepigaiEntity> wrapper) {
-		  Page<ZuoyepigaiView> page =new Query<ZuoyepigaiView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<CourseHomeworkReviewEntity> wrapper) {
+		  Page<CourseHomeworkReviewView> page =new Query<CourseHomeworkReviewView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
@@ -41,37 +41,37 @@ public class ZuoyepigaiServiceImpl extends ServiceImpl<ZuoyepigaiDao, Zuoyepigai
 
     
     @Override
-	public List<ZuoyepigaiVO> selectListVO(Wrapper<ZuoyepigaiEntity> wrapper) {
+	public List<ZuoyepigaiVO> selectListVO(Wrapper<CourseHomeworkReviewEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public ZuoyepigaiVO selectVO(Wrapper<ZuoyepigaiEntity> wrapper) {
+	public ZuoyepigaiVO selectVO(Wrapper<CourseHomeworkReviewEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<ZuoyepigaiView> selectListView(Wrapper<ZuoyepigaiEntity> wrapper) {
+	public List<CourseHomeworkReviewView> selectListView(Wrapper<CourseHomeworkReviewEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public ZuoyepigaiView selectView(Wrapper<ZuoyepigaiEntity> wrapper) {
+	public CourseHomeworkReviewView selectView(Wrapper<CourseHomeworkReviewEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 
     @Override
-    public List<Map<String, Object>> selectValue(Map<String, Object> params, Wrapper<ZuoyepigaiEntity> wrapper) {
+    public List<Map<String, Object>> selectValue(Map<String, Object> params, Wrapper<CourseHomeworkReviewEntity> wrapper) {
         return baseMapper.selectValue(params, wrapper);
     }
 
     @Override
-    public List<Map<String, Object>> selectTimeStatValue(Map<String, Object> params, Wrapper<ZuoyepigaiEntity> wrapper) {
+    public List<Map<String, Object>> selectTimeStatValue(Map<String, Object> params, Wrapper<CourseHomeworkReviewEntity> wrapper) {
         return baseMapper.selectTimeStatValue(params, wrapper);
     }
 
     @Override
-    public List<Map<String, Object>> selectGroup(Map<String, Object> params, Wrapper<ZuoyepigaiEntity> wrapper) {
+    public List<Map<String, Object>> selectGroup(Map<String, Object> params, Wrapper<CourseHomeworkReviewEntity> wrapper) {
         return baseMapper.selectGroup(params, wrapper);
     }
 

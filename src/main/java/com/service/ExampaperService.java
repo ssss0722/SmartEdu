@@ -3,12 +3,12 @@ package com.service;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
 import com.utils.PageUtils;
-import com.entity.ExampaperEntity;
+import com.entity.ExamPaperEntity;
 import java.util.List;
 import java.util.Map;
 import com.entity.vo.ExampaperVO;
 import org.apache.ibatis.annotations.Param;
-import com.entity.view.ExampaperView;
+import com.entity.view.ExamPaperView;
 
 
 /**
@@ -18,19 +18,19 @@ import com.entity.view.ExampaperView;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public interface ExampaperService extends IService<ExampaperEntity> {
+public interface ExampaperService extends IService<ExamPaperEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<ExampaperVO> selectListVO(Wrapper<ExampaperEntity> wrapper);
+   	List<ExampaperVO> selectListVO(Wrapper<ExamPaperEntity> wrapper);
    	
-   	ExampaperVO selectVO(@Param("ew") Wrapper<ExampaperEntity> wrapper);
+   	ExampaperVO selectVO(@Param("ew") Wrapper<ExamPaperEntity> wrapper);
    	
-   	List<ExampaperView> selectListView(Wrapper<ExampaperEntity> wrapper);
+   	List<ExamPaperView> selectListView(Wrapper<ExamPaperEntity> wrapper);
    	
-   	ExampaperView selectView(@Param("ew") Wrapper<ExampaperEntity> wrapper);
+   	ExamPaperView selectView(@Param("ew") Wrapper<ExamPaperEntity> wrapper);
    	
-   	PageUtils queryPage(Map<String, Object> params,Wrapper<ExampaperEntity> wrapper);
+   	PageUtils queryPage(Map<String, Object> params,Wrapper<ExamPaperEntity> wrapper);
 
    	
 
