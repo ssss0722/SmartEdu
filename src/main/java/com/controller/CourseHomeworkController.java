@@ -118,7 +118,6 @@ public class CourseHomeworkController {
         String role=JwtUtils.getRoleFromToken(token);
         if(role.equals("teacher")){
             courseHomework.settUsername(teacherService.selectById(id).getT_username());
-            courseHomework.settName(teacherService.selectById(id).getT_name());
         }
         courseHomework.setPublishAt(new Date());
         courseHomeworkService.insert(courseHomework);

@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -13,9 +14,13 @@ import com.service.ExamrecordService;
 import com.service.HomeworkRecordService;
 import com.utils.PageUtils;
 import com.utils.Query;
+import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
+@Service("homeworkRecordService")
 public class HomeworkRecordServiceImpl extends ServiceImpl<HomeworkRecordDao, HomeworkRecordEntity> implements HomeworkRecordService {
 
     @Override
@@ -24,5 +29,31 @@ public class HomeworkRecordServiceImpl extends ServiceImpl<HomeworkRecordDao, Ho
         page.setRecords(baseMapper.selectGroupBy(page,wrapper));
         PageUtils pageUtil = new PageUtils(page);
         return pageUtil;
+    }
+
+    @Override
+    public PageUtils queryPageOptionsNum(Map<String, Object> params, Wrapper wrapper) {
+        Page<HomeworkRecordView> page =new Query<HomeworkRecordView>(params).getPage();
+        page.setRecords(baseMapper.selectOptionsNum(page,wrapper));
+        PageUtils pageUtil = new PageUtils(page);
+        return pageUtil;
+    }
+
+    @Override
+    public PageUtils queryPage(Map<String, Object> params, Wrapper wrapper) {
+        Page<HomeworkRecordView> page =new Query<HomeworkRecordView>(params).getPage();
+        page.setRecords(baseMapper.selectListView(page,wrapper));
+        PageUtils pageUtil = new PageUtils(page);
+        return pageUtil;
+    }
+
+    @Override
+    public List<HomeworkRecordView> selectListView(EntityWrapper<HomeworkRecordEntity> ew) {
+        return baseMapper.selectListView(ew);
+    }
+
+    @Override
+    public HomeworkRecordView selectView(EntityWrapper<HomeworkRecordEntity> ew) {
+        return baseMapper.selectView(ew);
     }
 }
