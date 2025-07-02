@@ -11,7 +11,7 @@
  Target Server Version : 80011 (8.0.11)
  File Encoding         : 65001
 
- Date: 01/07/2025 21:43:15
+ Date: 02/07/2025 08:36:15
 */
 
 SET NAMES utf8mb4;
@@ -126,20 +126,15 @@ CREATE TABLE `course_homework_question`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
   `addtime` timestamp NOT NULL COMMENT '创建时间',
   `homework_id` bigint(20) NOT NULL COMMENT '所属作业id（外键）',
-  `homework_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '作业名称',
-  `question_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '试题名称',
-  `options` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '选项，json字符串',
-  `score` bigint(20) NULL DEFAULT NULL COMMENT '分值',
-  `answer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '正确答案',
-  `analysis` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '答案解析',
-  `type` bigint(20) NULL DEFAULT NULL COMMENT '试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）4:主观题',
-  `sequence` bigint(20) NULL DEFAULT NULL COMMENT '试题排序，值越大排越前面',
-  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
+  `question_id` bigint(20) NOT NULL COMMENT '试题ID（外键）',
+  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号（外键）',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_ho_question`(`t_username` ASC) USING BTREE,
   INDEX `qu_ho`(`homework_id` ASC) USING BTREE,
+  INDEX `bank_ho_qu`(`question_id` ASC) USING BTREE,
   CONSTRAINT `qu_ho` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `t_ho_question` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `t_ho_question` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `bank_ho_qu` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -464,6 +459,7 @@ CREATE TABLE `exam_question_bank`  (
   `type` bigint(20) NULL DEFAULT 0 COMMENT '试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题',
   `sequence` bigint(20) NULL DEFAULT 100 COMMENT '试题排序，值越大排越前面',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
+  `score` bigint(20) NULL DEFAULT NULL COMMENT '试题分值',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_ex_bank`(`t_username` ASC) USING BTREE,
   CONSTRAINT `t_ex_bank` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -472,17 +468,17 @@ CREATE TABLE `exam_question_bank`  (
 -- ----------------------------
 -- Records of exam_question_bank
 -- ----------------------------
-INSERT INTO `exam_question_bank` VALUES (1, '2024-03-05 11:41:50', '下面动物不属于昆虫的是（）。', '[{\"text\":\"A.苍蝇\",\"code\":\"A\"},{\"text\":\"B.蜜蜂\",\"code\":\"B\"},{\"text\":\"C.蜂鸟\",\"code\":\"C\"}]', 'C', '蜂鸟', 0, 1, NULL);
-INSERT INTO `exam_question_bank` VALUES (2, '2024-03-05 11:41:50', '油着火后可以用水扑灭。', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '油着火后不可以用水扑灭', 2, 2, NULL);
-INSERT INTO `exam_question_bank` VALUES (3, '2024-03-05 11:41:50', '地球是个球体，中间是（ ）。', '[]', '赤道', '赤道', 3, 3, NULL);
-INSERT INTO `exam_question_bank` VALUES (4, '2024-03-05 11:41:50', '下面动物中会流汗的有（ ）。', '[{\"text\":\"A.马\",\"code\":\"A\"},{\"text\":\"B.猫\",\"code\":\"B\"},{\"text\":\"C.狗\",\"code\":\"C\"}]', 'A,B', '狗不会流汗', 1, 4, NULL);
-INSERT INTO `exam_question_bank` VALUES (5, '2024-03-05 11:41:50', '世界上为什么不存在完美的圆？', '[]', '', '目前没有证据表明现实中存在完美的圆', 4, 5, NULL);
-INSERT INTO `exam_question_bank` VALUES (6, '2024-03-05 11:55:11', '测试1', '[{\"text\":\"A.11\",\"code\":\"A\"},{\"text\":\"B.22\",\"code\":\"B\"},{\"text\":\"C.33\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 'B', '5', 0, 5, '111');
-INSERT INTO `exam_question_bank` VALUES (7, '2024-03-05 11:55:35', '222', '[{\"text\":\"A.22\",\"code\":\"A\"},{\"text\":\"B.213\",\"code\":\"B\"},{\"text\":\"C.333\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 'A,B', '5', 1, 6, '111');
-INSERT INTO `exam_question_bank` VALUES (8, '2024-03-05 11:55:43', '666', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '6', 2, 6, '111');
-INSERT INTO `exam_question_bank` VALUES (9, '2024-03-05 11:55:50', '77', '[]', '7', '7', 3, 7, '111');
-INSERT INTO `exam_question_bank` VALUES (10, '2024-03-05 11:55:56', '878', '[]', '', '8', 4, 8, '111');
-INSERT INTO `exam_question_bank` VALUES (11, '2024-03-05 11:56:05', '878', '[]', '8', '8', 3, 8, '111');
+INSERT INTO `exam_question_bank` VALUES (1, '2024-03-05 11:41:50', '下面动物不属于昆虫的是（）。', '[{\"text\":\"A.苍蝇\",\"code\":\"A\"},{\"text\":\"B.蜜蜂\",\"code\":\"B\"},{\"text\":\"C.蜂鸟\",\"code\":\"C\"}]', 'C', '蜂鸟', 0, 1, NULL, 20);
+INSERT INTO `exam_question_bank` VALUES (2, '2024-03-05 11:41:50', '油着火后可以用水扑灭。', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '油着火后不可以用水扑灭', 2, 2, NULL, 20);
+INSERT INTO `exam_question_bank` VALUES (3, '2024-03-05 11:41:50', '地球是个球体，中间是（ ）。', '[]', '赤道', '赤道', 3, 3, NULL, 20);
+INSERT INTO `exam_question_bank` VALUES (4, '2024-03-05 11:41:50', '下面动物中会流汗的有（ ）。', '[{\"text\":\"A.马\",\"code\":\"A\"},{\"text\":\"B.猫\",\"code\":\"B\"},{\"text\":\"C.狗\",\"code\":\"C\"}]', 'A,B', '狗不会流汗', 1, 4, NULL, 20);
+INSERT INTO `exam_question_bank` VALUES (5, '2024-03-05 11:41:50', '世界上为什么不存在完美的圆？', '[]', '', '目前没有证据表明现实中存在完美的圆', 4, 5, NULL, 20);
+INSERT INTO `exam_question_bank` VALUES (6, '2024-03-05 11:55:11', '测试1', '[{\"text\":\"A.11\",\"code\":\"A\"},{\"text\":\"B.22\",\"code\":\"B\"},{\"text\":\"C.33\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 'B', '5', 0, 5, '111', 20);
+INSERT INTO `exam_question_bank` VALUES (7, '2024-03-05 11:55:35', '222', '[{\"text\":\"A.22\",\"code\":\"A\"},{\"text\":\"B.213\",\"code\":\"B\"},{\"text\":\"C.333\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 'A,B', '5', 1, 6, '111', 20);
+INSERT INTO `exam_question_bank` VALUES (8, '2024-03-05 11:55:43', '666', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '6', 2, 6, '111', 20);
+INSERT INTO `exam_question_bank` VALUES (9, '2024-03-05 11:55:50', '77', '[]', '7', '7', 3, 7, '111', 20);
+INSERT INTO `exam_question_bank` VALUES (10, '2024-03-05 11:55:56', '878', '[]', '', '8', 4, 8, '111', 20);
+INSERT INTO `exam_question_bank` VALUES (11, '2024-03-05 11:56:05', '878', '[]', '8', '8', 3, 8, '111', 20);
 
 -- ----------------------------
 -- Table structure for exam_record
