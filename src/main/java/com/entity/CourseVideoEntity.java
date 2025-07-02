@@ -70,12 +70,6 @@ public class CourseVideoEntity<T> implements Serializable {
 	private String tUsername;
 	
 	/**
-	 * 教师姓名
-	 */
-	@TableField("t_name")
-	private String tName;
-	
-	/**
 	 * 教学视频
 	 */
 					
@@ -189,18 +183,7 @@ public class CourseVideoEntity<T> implements Serializable {
 	public String gettUsername() {
 		return tUsername;
 	}
-	/**
-	 * 设置：教师姓名
-	 */
-	public void settName(String tName) {
-		this.tName=tName;
-	}
-	/**
-	 * 获取：教师姓名
-	 */
-	public String gettName() {
-		return tName;
-	}
+
 	/**
 	 * 设置：教学视频
 	 */

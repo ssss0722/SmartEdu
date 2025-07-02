@@ -9,9 +9,8 @@
         <result property="course" column="course"/>
         <result property="cover" column="cover"/>
         <result property="tUsername" column="t_username"/>
-        <result property="tName" column="t_name"/>
         <result property="video" column="video"/>
-        <result property="publishAt" column="publish_at"/>
+        <result property="publishedAt" column="published_at"/>
         <result property="intro" column="intro"/>
         <result property="clicktime" column="clicktime"/>
         <result property="clicknum" column="clicknum"/>
@@ -19,30 +18,69 @@
         <result property="storeupnum" column="storeupnum"/>
     </resultMap>
 
-	<select id="selectListVO"
-		resultType="com.entity.vo.CourseVideoVO" >
-		SELECT * FROM course_video cv
-        <where> 1=1 ${ew.sqlSegment}</where>
-	</select>
-	
-	<select id="selectVO"
-		resultType="com.entity.vo.CourseVideoVO" >
-		SELECT  cv.* FROM course_video cv
- 		<where> 1=1 ${ew.sqlSegment}</where>
+	<resultMap id="courseVideoViewMap" type="com.entity.view.CourseVideoView" extends="courseVideoMap">
+		<result property="tName" column="t_name"/>
+	</resultMap>
+
+	<select id="selectListVO" resultType="com.entity.vo.CourseVideoVO">
+		SELECT
+		cv.id,
+		cv.title,
+		cv.course,
+		cv.cover,
+		cv.t_username AS tUsername,
+		ut.t_name AS tName,
+		cv.video,
+		cv.published_at AS publishedAt,
+		cv.intro,
+		cv.clicktime,
+		cv.clicknum,
+		cv.discussnum,
+		cv.storeupnum
+		FROM course_video cv
+		LEFT JOIN user_teacher ut ON cv.t_username = ut.t_username
+		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
-    <select id="selectListView"
-		resultType="com.entity.view.CourseVideoView" >
+	<select id="selectVO" resultType="com.entity.vo.CourseVideoVO">
+		SELECT
+		cv.id,
+		cv.title,
+		cv.course,
+		cv.cover,
+		cv.t_username AS tUsername,
+		ut.t_name AS tName,
+		cv.video,
+		cv.published_at AS publishedAt,
+		cv.intro,
+		cv.clicktime,
+		cv.clicknum,
+		cv.discussnum,
+		cv.storeupnum
+		FROM course_video cv
+		LEFT JOIN user_teacher ut ON cv.t_username = ut.t_username
+		<where> 1=1 ${ew.sqlSegment}</where>
+	</select>
 
-		SELECT  cv.* FROM course_video cv
-        <where> 1=1 ${ew.sqlSegment}</where>
+	<select id="selectListView" resultMap="courseVideoViewMap">
+		SELECT
+		cv.*,
+		ut.t_name
+		FROM course_video cv
+		LEFT JOIN user_teacher ut ON cv.t_username = ut.t_username
+		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
-	
-	<select id="selectView"
-		resultType="com.entity.view.CourseVideoView" >
-		SELECT * FROM course_video cv <where> 1=1 ${ew.sqlSegment}</where>
+
+	<select id="selectView" resultMap="courseVideoViewMap">
+		SELECT
+		cv.*,
+		ut.t_name
+		FROM course_video cv
+		LEFT JOIN user_teacher ut ON cv.t_username = ut.t_username
+		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
-	
+
+
 
 
 </mapper>

@@ -57,7 +57,7 @@ public class CourseMaterialController {
         EntityWrapper<CourseMaterialEntity> ew = new EntityWrapper<>();
         if(role.equals("teacher")) {
             TeacherEntity teacher=teacherService.selectById(id);
-            ew.eq("t_username", teacher.getT_username());
+            ew.eq("cm.t_username", teacher.getT_username());
             ew = (EntityWrapper<CourseMaterialEntity>) MPUtil.likeOrEq(ew, courseMaterial);
             ew = (EntityWrapper<CourseMaterialEntity>) MPUtil.between(ew, params);
             ew = (EntityWrapper<CourseMaterialEntity>) MPUtil.sort(ew, params);
@@ -98,7 +98,7 @@ public class CourseMaterialController {
     @RequestMapping("/query")
     public R query(@RequestBody CourseMaterialEntity courseMaterial){
         EntityWrapper<CourseMaterialEntity> ew = new EntityWrapper<CourseMaterialEntity>();
- 		ew.allEq(MPUtil.allEQMapPre( courseMaterial, "cm"));
+ 		ew.allEq(MPUtil.allEQMapPre(courseMaterial, "cm"));
 		CourseMaterialView courseMaterialView =  courseMaterialService.selectView(ew);
 		return R.ok("查询教学资料成功").put("data", courseMaterialView);
     }
@@ -112,7 +112,7 @@ public class CourseMaterialController {
 		courseMaterial.setClicknum(courseMaterial.getClicknum()+1);
 		courseMaterial.setClicktime(new Date());
 		courseMaterialService.updateById(courseMaterial);
-        courseMaterial = courseMaterialService.selectView(new EntityWrapper<CourseMaterialEntity>().eq("id", id));
+        courseMaterial = courseMaterialService.selectView(new EntityWrapper<CourseMaterialEntity>().eq("cm.id", id));
         return R.ok().put("data", courseMaterial);
     }
 
@@ -126,7 +126,7 @@ public class CourseMaterialController {
 		courseMaterial.setClicknum(courseMaterial.getClicknum()+1);
 		courseMaterial.setClicktime(new Date());
 		courseMaterialService.updateById(courseMaterial);
-        courseMaterial = courseMaterialService.selectView(new EntityWrapper<CourseMaterialEntity>().eq("id", id));
+        courseMaterial = courseMaterialService.selectView(new EntityWrapper<CourseMaterialEntity>().eq("cm.id", id));
         return R.ok().put("data", courseMaterial);
     }
 
@@ -141,7 +141,6 @@ public class CourseMaterialController {
         Long teacherId=JwtUtils.getUserIdFromToken(token);
         TeacherEntity teacher=teacherService.selectById(teacherId);
         courseMaterial.settUsername(teacher.getT_username());
-        courseMaterial.settName(teacher.getT_name());
         Date publish_at=new Date();
         courseMaterial.setPublishAt(publish_at);
         courseMaterialService.insert(courseMaterial);

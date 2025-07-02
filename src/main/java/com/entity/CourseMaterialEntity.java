@@ -74,13 +74,10 @@ public class CourseMaterialEntity<T> implements Serializable {
 	 */
 	@TableField("t_username")
 	private String tUsername;
-	
-	/**
-	 * 教师姓名
-	 */
-	@TableField("t_name")
-	private String tName;
-	
+
+	@TableField(exist = false)
+	private String tName; // 关联字段，非数据库字段
+
 	/**
 	 * 发布时间
 	 */
@@ -140,6 +137,15 @@ public class CourseMaterialEntity<T> implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public String gettName() {
+		return tName;
+	}
+
+	public void settName(String tName) {
+		this.tName = tName;
+	}
+
 	/**
 	 * 设置：标题
 	 */
@@ -199,18 +205,6 @@ public class CourseMaterialEntity<T> implements Serializable {
 	 */
 	public String gettUsername() {
 		return tUsername;
-	}
-	/**
-	 * 设置：教师姓名
-	 */
-	public void settName(String tName) {
-		this.tName=tName;
-	}
-	/**
-	 * 获取：教师姓名
-	 */
-	public String gettName() {
-		return tName;
 	}
 	/**
 	 * 设置：发布时间

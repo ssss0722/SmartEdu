@@ -59,15 +59,25 @@ public class CourseVideoController {
      */
     @RequestMapping("/page")
     public R page(@RequestParam Map<String, Object> params, CourseVideoEntity courseVideo,
-                  String token,String tableName){
+                  String token){
         Long id= JwtUtils.getUserIdFromToken(token);
-		if(tableName.equals("user_teacher")) {
-			courseVideo.settUsername(teacherService.selectById(id).getT_username());
-		}
-        EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<CourseVideoEntity>();
+        String role=JwtUtils.getRoleFromToken(token);
 
-		PageUtils page = courseVideoService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, courseVideo), params), params));
+        // 创建带别名的条件构造器
+        EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<>();
 
+        // 使用带表别名的方法构建条件
+        ew = (EntityWrapper<CourseVideoEntity>) MPUtil.likeOrEqWithAlias(ew, courseVideo, "cv");
+        ew = (EntityWrapper<CourseVideoEntity>) MPUtil.betweenWithAlias(ew, params, "cv");
+        ew = (EntityWrapper<CourseVideoEntity>) MPUtil.sortWithAlias(ew, params, "cv");
+
+        // 添加教师专属条件
+        if(role.equals("teacher")) {
+            String tUsername = teacherService.selectById(id).getT_username();
+            ew.eq("cv.t_username", tUsername);  // 明确指定表别名
+        }
+
+        PageUtils page = courseVideoService.queryPage(params, ew);
         return R.ok().put("data", page);
     }
     
@@ -114,7 +124,9 @@ public class CourseVideoController {
 		courseVideo.setClicknum(courseVideo.getClicknum()+1);
 		courseVideo.setClicktime(new Date());
 		courseVideoService.updateById(courseVideo);
-        courseVideo = courseVideoService.selectView(new EntityWrapper<CourseVideoEntity>().eq("id", id));
+        EntityWrapper<CourseVideoEntity> wrapper = new EntityWrapper<>();
+        wrapper.eq("cv.id", id);
+        courseVideo = courseVideoService.selectView(wrapper);
         return R.ok().put("data", courseVideo);
     }
 
@@ -128,7 +140,9 @@ public class CourseVideoController {
 		courseVideo.setClicknum(courseVideo.getClicknum()+1);
 		courseVideo.setClicktime(new Date());
 		courseVideoService.updateById(courseVideo);
-        courseVideo = courseVideoService.selectView(new EntityWrapper<CourseVideoEntity>().eq("id", id));
+        EntityWrapper<CourseVideoEntity> wrapper = new EntityWrapper<>();
+        wrapper.eq("cv.id", id);
+        courseVideo = courseVideoService.selectView(wrapper);
         return R.ok().put("data", courseVideo);
     }
     
@@ -145,7 +159,6 @@ public class CourseVideoController {
         if(role.equals("teacher"))
         {
             courseVideo.settUsername(teacherService.selectById(id).getT_username());
-            courseVideo.settName(teacherService.selectById(id).getT_name());
         }
         courseVideo.setPublishedAt(new Date());
         courseVideoService.insert(courseVideo);
