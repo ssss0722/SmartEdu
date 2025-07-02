@@ -14,12 +14,12 @@ import com.utils.Query;
 
 import com.dao.CourseHomeworkReviewDao;
 import com.entity.CourseHomeworkReviewEntity;
-import com.service.ZuoyepigaiService;
-import com.entity.vo.ZuoyepigaiVO;
+import com.service.CourseHomeworkReviewService;
+import com.entity.vo.CourseHomeworkReviewVO;
 import com.entity.view.CourseHomeworkReviewView;
 
-@Service("zuoyepigaiService")
-public class ZuoyepigaiServiceImpl extends ServiceImpl<CourseHomeworkReviewDao, CourseHomeworkReviewEntity> implements ZuoyepigaiService {
+@Service("CourseHomeworkReviewService")
+public class CourseHomeworkReviewServiceImpl extends ServiceImpl<CourseHomeworkReviewDao, CourseHomeworkReviewEntity> implements CourseHomeworkReviewService {
 	
 	
     @Override
@@ -41,12 +41,12 @@ public class ZuoyepigaiServiceImpl extends ServiceImpl<CourseHomeworkReviewDao, 
 
     
     @Override
-	public List<ZuoyepigaiVO> selectListVO(Wrapper<CourseHomeworkReviewEntity> wrapper) {
+	public List<CourseHomeworkReviewVO> selectListVO(Wrapper<CourseHomeworkReviewEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public ZuoyepigaiVO selectVO(Wrapper<CourseHomeworkReviewEntity> wrapper) {
+	public CourseHomeworkReviewVO selectVO(Wrapper<CourseHomeworkReviewEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	

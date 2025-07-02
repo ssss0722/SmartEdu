@@ -17,9 +17,13 @@ import java.io.Serializable;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-@TableName("zuoyepigai")
+@TableName("course_homework_review")
 public class CourseHomeworkReviewView extends CourseHomeworkReviewEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private String homework;
+	private String tName;
+	private String sName;
 
 	public CourseHomeworkReviewView(){
 	}
@@ -34,5 +38,27 @@ public class CourseHomeworkReviewView extends CourseHomeworkReviewEntity impleme
  		
 	}
 
+	public String getHomework() {
+		return homework;
+	}
 
+	public void setHomework(String homework) {
+		this.homework = homework;
+	}
+
+	public String gettName() {
+		return tName;
+	}
+
+	public void settName(String tName) {
+		this.tName = tName;
+	}
+
+	public String getsName() {
+		return sName;
+	}
+
+	public void setsName(String sName) {
+		this.sName = sName;
+	}
 }

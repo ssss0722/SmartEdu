@@ -14,12 +14,12 @@ import com.utils.Query;
 
 import com.dao.CourseVideoDao;
 import com.entity.CourseVideoEntity;
-import com.service.JiaoxueshipinService;
-import com.entity.vo.JiaoxueshipinVO;
+import com.service.CourseVideoService;
+import com.entity.vo.CourseVideoVO;
 import com.entity.view.CourseVideoView;
 
-@Service("jiaoxueshipinService")
-public class JiaoxueshipinServiceImpl extends ServiceImpl<CourseVideoDao, CourseVideoEntity> implements JiaoxueshipinService {
+@Service("CourseVideoService")
+public class CourseVideoServiceImpl extends ServiceImpl<CourseVideoDao, CourseVideoEntity> implements CourseVideoService {
 	
 	
     @Override
@@ -41,12 +41,12 @@ public class JiaoxueshipinServiceImpl extends ServiceImpl<CourseVideoDao, Course
 
     
     @Override
-	public List<JiaoxueshipinVO> selectListVO(Wrapper<CourseVideoEntity> wrapper) {
+	public List<CourseVideoVO> selectListVO(Wrapper<CourseVideoEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public JiaoxueshipinVO selectVO(Wrapper<CourseVideoEntity> wrapper) {
+	public CourseVideoVO selectVO(Wrapper<CourseVideoEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	

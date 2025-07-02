@@ -9,6 +9,12 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.entity.StudentEntity;
+import com.entity.TeacherEntity;
+import com.service.StudentService;
+import com.service.TeacherService;
+import com.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +28,7 @@ import com.annotation.IgnoreAuth;
 import com.entity.CourseHomeworkReviewEntity;
 import com.entity.view.CourseHomeworkReviewView;
 
-import com.service.ZuoyepigaiService;
+import com.service.CourseHomeworkReviewService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
@@ -35,35 +41,59 @@ import com.utils.MPUtil;
  * @date 2024-03-05 11:41:24
  */
 @RestController
-@RequestMapping("/zuoyepigai")
+@RequestMapping("/courseHomeworkReview")
 public class CourseHomeworkReviewController {
     @Autowired
-    private ZuoyepigaiService zuoyepigaiService;
+    private CourseHomeworkReviewService courseHomeworkReviewService;
 
+    @Autowired
+    private StudentService studentService;
 
-
-
-    
-
+    @Autowired
+    private TeacherService teacherService;
 
 
     /**
      * 后端列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params, CourseHomeworkReviewEntity zuoyepigai,
-                  HttpServletRequest request){
-		String tableName = request.getSession().getAttribute("tableName").toString();
-		if(tableName.equals("jiaoshi")) {
-			zuoyepigai.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
-		}
-		if(tableName.equals("xuesheng")) {
-			zuoyepigai.setXueshengzhanghao((String)request.getSession().getAttribute("username"));
-		}
-        EntityWrapper<CourseHomeworkReviewEntity> ew = new EntityWrapper<CourseHomeworkReviewEntity>();
+    public R page(@RequestParam Map<String, Object> params,
+                  CourseHomeworkReviewEntity courseHomeworkReview,
+                  @RequestParam(required = false) String tableName,
+                  String token) {
 
-		PageUtils page = zuoyepigaiService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, zuoyepigai), params), params));
+        // 1. 安全处理token和tableName
+        if (token == null) {
+            return R.error("token不能为空");
+        }
+        Long id = JwtUtils.getUserIdFromToken(token);
+        if (id == null) {
+            return R.error("无效的token");
+        }
 
+        // 2. 避免空指针 - 使用常量在前的方式比较字符串
+        if ("user_teacher".equals(tableName)) {
+            TeacherEntity teacher = teacherService.selectById(id);
+            if (teacher != null && teacher.getT_username() != null) {
+                courseHomeworkReview.settUsername(teacher.getT_username());
+            }
+        }
+        else if ("user_student".equals(tableName)) {
+            StudentEntity student = studentService.selectById(id);
+            if (student != null && student.getsUsername() != null) {
+                courseHomeworkReview.setsUsername(student.getsUsername());
+            }
+        }
+
+        // 3. 创建EntityWrapper并添加表别名
+        EntityWrapper<CourseHomeworkReviewEntity> ew = new EntityWrapper<>();
+
+        // 4. 增强MPUtil - 添加表别名支持
+        ew = (EntityWrapper<CourseHomeworkReviewEntity>) MPUtil.likeOrEqWithAlias(ew, courseHomeworkReview, "chr");
+        ew = (EntityWrapper<CourseHomeworkReviewEntity>) MPUtil.betweenWithAlias(ew, params, "chr");
+        ew = (EntityWrapper<CourseHomeworkReviewEntity>) MPUtil.sortWithAlias(ew, params, "chr");
+
+        PageUtils page = courseHomeworkReviewService.queryPage(params, ew);
         return R.ok().put("data", page);
     }
     
@@ -72,11 +102,10 @@ public class CourseHomeworkReviewController {
      */
 	@IgnoreAuth
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params, CourseHomeworkReviewEntity zuoyepigai,
-                  HttpServletRequest request){
+    public R list(@RequestParam Map<String, Object> params, CourseHomeworkReviewEntity homeworkReview){
         EntityWrapper<CourseHomeworkReviewEntity> ew = new EntityWrapper<CourseHomeworkReviewEntity>();
 
-		PageUtils page = zuoyepigaiService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, zuoyepigai), params), params));
+		PageUtils page = courseHomeworkReviewService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew,homeworkReview), params), params));
         return R.ok().put("data", page);
     }
 
@@ -86,21 +115,21 @@ public class CourseHomeworkReviewController {
      * 列表
      */
     @RequestMapping("/lists")
-    public R list( CourseHomeworkReviewEntity zuoyepigai){
+    public R list( CourseHomeworkReviewEntity homeworkReview){
        	EntityWrapper<CourseHomeworkReviewEntity> ew = new EntityWrapper<CourseHomeworkReviewEntity>();
-      	ew.allEq(MPUtil.allEQMapPre( zuoyepigai, "zuoyepigai")); 
-        return R.ok().put("data", zuoyepigaiService.selectListView(ew));
+      	ew.allEq(MPUtil.allEQMapPre( homeworkReview, "chr"));
+        return R.ok().put("data", courseHomeworkReviewService.selectListView(ew));
     }
 
 	 /**
      * 查询
      */
     @RequestMapping("/query")
-    public R query(CourseHomeworkReviewEntity zuoyepigai){
+    public R query(CourseHomeworkReviewEntity homeworkReview){
         EntityWrapper<CourseHomeworkReviewEntity> ew = new EntityWrapper<CourseHomeworkReviewEntity>();
- 		ew.allEq(MPUtil.allEQMapPre( zuoyepigai, "zuoyepigai")); 
-		CourseHomeworkReviewView zuoyepigaiView =  zuoyepigaiService.selectView(ew);
-		return R.ok("查询作业批改成功").put("data", zuoyepigaiView);
+ 		ew.allEq(MPUtil.allEQMapPre( homeworkReview, "chr"));
+		CourseHomeworkReviewView homeworkReviewView =  courseHomeworkReviewService.selectView(ew);
+		return R.ok("查询作业批改成功").put("data", homeworkReviewView);
     }
 	
     /**
@@ -108,7 +137,7 @@ public class CourseHomeworkReviewController {
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
-        CourseHomeworkReviewEntity zuoyepigai = zuoyepigaiService.selectById(id);
+        CourseHomeworkReviewEntity zuoyepigai = courseHomeworkReviewService.selectById(id);
         return R.ok().put("data", zuoyepigai);
     }
 
@@ -118,8 +147,8 @@ public class CourseHomeworkReviewController {
 	@IgnoreAuth
     @RequestMapping("/detail/{id}")
     public R detail(@PathVariable("id") Long id){
-        CourseHomeworkReviewEntity zuoyepigai = zuoyepigaiService.selectById(id);
-        return R.ok().put("data", zuoyepigai);
+        CourseHomeworkReviewEntity homeworkReview = courseHomeworkReviewService.selectById(id);
+        return R.ok().put("data", homeworkReview);
     }
     
 
@@ -128,25 +157,17 @@ public class CourseHomeworkReviewController {
     /**
      * 后端保存
      */
-    @RequestMapping("/save")
-    public R save(@RequestBody CourseHomeworkReviewEntity zuoyepigai, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(zuoyepigai);
-        zuoyepigaiService.insert(zuoyepigai);
-        return R.ok();
-    }
-    
-    /**
-     * 前端保存
-     */
     @RequestMapping("/add")
-    public R add(@RequestBody CourseHomeworkReviewEntity zuoyepigai, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(zuoyepigai);
-        zuoyepigaiService.insert(zuoyepigai);
+    public R save(@RequestBody CourseHomeworkReviewEntity homeworkReview,String token){
+        Long id=JwtUtils.getUserIdFromToken(token);
+        String role=JwtUtils.getRoleFromToken(token);
+        if(role.equals("teacher")){
+            homeworkReview.settUsername(teacherService.selectById(id).getT_username());
+        }
+        homeworkReview.setReviewedAt(new Date());
+        courseHomeworkReviewService.insert(homeworkReview);
         return R.ok();
     }
-
-
-
 
 
     /**
@@ -154,22 +175,17 @@ public class CourseHomeworkReviewController {
      */
     @RequestMapping("/update")
     @Transactional
-    public R update(@RequestBody CourseHomeworkReviewEntity zuoyepigai, HttpServletRequest request){
-        //ValidatorUtils.validateEntity(zuoyepigai);
-        zuoyepigaiService.updateById(zuoyepigai);//全部更新
+    public R update(@RequestBody CourseHomeworkReviewEntity homeworkReview){
+        courseHomeworkReviewService.updateById(homeworkReview);//全部更新
         return R.ok();
     }
-
-
-
-    
 
     /**
      * 删除
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids){
-        zuoyepigaiService.deleteBatchIds(Arrays.asList(ids));
+        courseHomeworkReviewService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
     }
     
@@ -196,7 +212,7 @@ public class CourseHomeworkReviewController {
 		if(tableName.equals("xuesheng")) {
             ew.eq("xueshengzhanghao", (String)request.getSession().getAttribute("username"));
 		}
-        List<Map<String, Object>> result = zuoyepigaiService.selectValue(params, ew);
+        List<Map<String, Object>> result = courseHomeworkReviewService.selectValue(params, ew);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for(Map<String, Object> m : result) {
             for(String k : m.keySet()) {
@@ -228,7 +244,7 @@ public class CourseHomeworkReviewController {
         }
         for(int i=0;i<yColumnNames.length;i++) {
             params.put("yColumn", yColumnNames[i]);
-            List<Map<String, Object>> result = zuoyepigaiService.selectValue(params, ew);
+            List<Map<String, Object>> result = courseHomeworkReviewService.selectValue(params, ew);
             for(Map<String, Object> m : result) {
                 for(String k : m.keySet()) {
                     if(m.get(k) instanceof Date) {
@@ -258,7 +274,7 @@ public class CourseHomeworkReviewController {
         if(tableName.equals("xuesheng")) {
             ew.eq("xueshengzhanghao", (String)request.getSession().getAttribute("username"));
         }
-        List<Map<String, Object>> result = zuoyepigaiService.selectTimeStatValue(params, ew);
+        List<Map<String, Object>> result = courseHomeworkReviewService.selectTimeStatValue(params, ew);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for(Map<String, Object> m : result) {
             for(String k : m.keySet()) {
@@ -291,7 +307,7 @@ public class CourseHomeworkReviewController {
         }
         for(int i=0;i<yColumnNames.length;i++) {
             params.put("yColumn", yColumnNames[i]);
-            List<Map<String, Object>> result = zuoyepigaiService.selectTimeStatValue(params, ew);
+            List<Map<String, Object>> result = courseHomeworkReviewService.selectTimeStatValue(params, ew);
             for(Map<String, Object> m : result) {
                 for(String k : m.keySet()) {
                     if(m.get(k) instanceof Date) {
@@ -319,7 +335,7 @@ public class CourseHomeworkReviewController {
         if(tableName.equals("xuesheng")) {
             ew.eq("xueshengzhanghao", (String)request.getSession().getAttribute("username"));
         }
-        List<Map<String, Object>> result = zuoyepigaiService.selectGroup(params, ew);
+        List<Map<String, Object>> result = courseHomeworkReviewService.selectGroup(params, ew);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for(Map<String, Object> m : result) {
             for(String k : m.keySet()) {

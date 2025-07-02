@@ -76,7 +76,7 @@ public class TeacherController {
 		Long uId = new Date().getTime();
 		teacher.setId(uId);
         teacherService.insert(teacher);
-        return R.ok("注册成功");
+        return R.ok("注册成功").put("data",teacher);
     }
 
 	

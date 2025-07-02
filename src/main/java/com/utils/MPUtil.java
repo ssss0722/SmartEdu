@@ -1,12 +1,8 @@
 package com.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.apache.commons.lang3.StringUtils;
 
 import cn.hutool.core.bean.BeanUtil;
@@ -18,6 +14,75 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
  */
 public class MPUtil {
 	public static final char UNDERLINE = '_';
+
+	public static EntityWrapper<?> likeOrEqWithAlias(EntityWrapper<?> wrapper, Object bean, String alias) {
+		if (bean == null) return wrapper;
+
+		Map<String, Object> map = BeanUtil.beanToMap(bean, true, true);
+		Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
+		int i = 0;
+		while (it.hasNext()) {
+			if (i > 0) wrapper.and();
+			Map.Entry<String, Object> entry = it.next();
+			String key = alias + "." + camelToUnderline(entry.getKey());
+
+			if (entry.getValue() != null) {
+				String value = entry.getValue().toString();
+				if (value.contains("%")) {
+					wrapper.like(key, value.replace("%", ""));
+				} else {
+					wrapper.eq(key, value);
+				}
+			}
+			i++;
+		}
+		return wrapper;
+	}
+
+	// 新增方法：带表别名的between
+	public static EntityWrapper<?> betweenWithAlias(EntityWrapper<?> wrapper, Map<String, Object> params, String alias) {
+		for (String key : params.keySet()) {
+			String columnName = "";
+			if (key.endsWith("_start")) {
+				columnName = key.substring(0, key.indexOf("_start"));
+				if (StringUtils.isNotBlank(params.get(key).toString())) {
+					wrapper.ge(alias + "." + columnName, params.get(key));
+				}
+			}
+			if (key.endsWith("_end")) {
+				columnName = key.substring(0, key.indexOf("_end"));
+				if (StringUtils.isNotBlank(params.get(key).toString())) {
+					wrapper.le(alias + "." + columnName, params.get(key));
+				}
+			}
+		}
+		return wrapper;
+	}
+
+	// 新增方法：带表别名的sort
+	public static EntityWrapper<?> sortWithAlias(EntityWrapper<?> wrapper, Map<String, Object> params, String alias) {
+		List<String> orderList = new ArrayList<>();
+		List<String> sortList = new ArrayList<>();
+
+		if (params.get("order") != null && StringUtils.isNotBlank(params.get("order").toString())) {
+			orderList = Arrays.asList(params.get("order").toString().split(","));
+		}
+		if (params.get("sort") != null && StringUtils.isNotBlank(params.get("sort").toString())) {
+			sortList = Arrays.asList(params.get("sort").toString().split(","));
+		}
+
+		if (orderList.size() == sortList.size()) {
+			for (int i = 0; i < orderList.size(); i++) {
+				String sortColumn = alias + "." + sortList.get(i);
+				if (orderList.get(i).equalsIgnoreCase("desc")) {
+					wrapper.orderDesc(Collections.singleton(sortColumn));
+				} else {
+					wrapper.orderAsc(Collections.singleton(sortColumn));
+				}
+			}
+		}
+		return wrapper;
+	}
 
 	
 	//mybatis plus allEQ 表达式转换

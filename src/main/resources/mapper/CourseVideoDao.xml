@@ -4,15 +4,15 @@
 <mapper namespace="com.dao.CourseVideoDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.entity.CourseVideoEntity" id="jiaoxueshipinMap">
-        <result property="biaoti" column="biaoti"/>
-        <result property="kechengleibie" column="kechengleibie"/>
-        <result property="fengmian" column="fengmian"/>
-        <result property="jiaoshigonghao" column="jiaoshigonghao"/>
-        <result property="jiaoshixingming" column="jiaoshixingming"/>
-        <result property="jiaoxueshipin" column="jiaoxueshipin"/>
-        <result property="fabushijian" column="fabushijian"/>
-        <result property="jibenjieshao" column="jibenjieshao"/>
+    <resultMap type="com.entity.CourseVideoEntity" id="courseVideoMap">
+        <result property="title" column="title"/>
+        <result property="course" column="course"/>
+        <result property="cover" column="cover"/>
+        <result property="tUsername" column="t_username"/>
+        <result property="tName" column="t_name"/>
+        <result property="video" column="video"/>
+        <result property="publishAt" column="publish_at"/>
+        <result property="intro" column="intro"/>
         <result property="clicktime" column="clicktime"/>
         <result property="clicknum" column="clicknum"/>
         <result property="discussnum" column="discussnum"/>
@@ -20,27 +20,27 @@
     </resultMap>
 
 	<select id="selectListVO"
-		resultType="com.entity.vo.JiaoxueshipinVO" >
-		SELECT * FROM jiaoxueshipin  jiaoxueshipin         
+		resultType="com.entity.vo.CourseVideoVO" >
+		SELECT * FROM course_video cv
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
-		resultType="com.entity.vo.JiaoxueshipinVO" >
-		SELECT  jiaoxueshipin.* FROM jiaoxueshipin  jiaoxueshipin 	
+		resultType="com.entity.vo.CourseVideoVO" >
+		SELECT  cv.* FROM course_video cv
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
     <select id="selectListView"
 		resultType="com.entity.view.CourseVideoView" >
 
-		SELECT  jiaoxueshipin.* FROM jiaoxueshipin  jiaoxueshipin 	        
+		SELECT  cv.* FROM course_video cv
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
 		resultType="com.entity.view.CourseVideoView" >
-		SELECT * FROM jiaoxueshipin  jiaoxueshipin <where> 1=1 ${ew.sqlSegment}</where>
+		SELECT * FROM course_video cv <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 

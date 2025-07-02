@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -21,7 +22,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-@TableName("kechengzuoye")
+@TableName("course_homework")
 public class CourseHomeworkEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -48,51 +49,54 @@ public class CourseHomeworkEntity<T> implements Serializable {
 	 * 课程名称
 	 */
 					
-	private String kechengmingcheng;
+	private String course;
 	
 	/**
 	 * 作业名称
 	 */
 					
-	private String zuoyemingcheng;
+	private String homework;
 	
 	/**
 	 * 图片
 	 */
 					
-	private String tupian;
+	private String picture;
 	
 	/**
 	 * 相关附件
 	 */
 					
-	private String xiangguanfujian;
+	private String attachment;
 	
 	/**
 	 * 教师工号
 	 */
-					
-	private String jiaoshigonghao;
+
+	@TableField("t_username")
+	private String tUsername;
 	
 	/**
 	 * 教师姓名
 	 */
-					
-	private String jiaoshixingming;
+
+	@TableField("t_name")
+	private String tName;
 	
 	/**
 	 * 发布时间
 	 */
 				
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
-	@DateTimeFormat 		
-	private Date fabushijian;
+	@DateTimeFormat
+	@TableField("publish_at")
+	private Date publishAt;
 	
 	/**
 	 * 作业内容
 	 */
-					
-	private String zuoyeneirong;
+
+	private String contxt;
 	
 	/**
 	 * 评论数
@@ -128,98 +132,98 @@ public class CourseHomeworkEntity<T> implements Serializable {
 	/**
 	 * 设置：课程名称
 	 */
-	public void setKechengmingcheng(String kechengmingcheng) {
-		this.kechengmingcheng = kechengmingcheng;
+	public void setCourse(String course) {
+		this.course=course;
 	}
 	/**
 	 * 获取：课程名称
 	 */
-	public String getKechengmingcheng() {
-		return kechengmingcheng;
+	public String getCourse() {
+		return course;
 	}
 	/**
 	 * 设置：作业名称
 	 */
-	public void setZuoyemingcheng(String zuoyemingcheng) {
-		this.zuoyemingcheng = zuoyemingcheng;
+	public void setHomework(String homework) {
+		this.homework=homework;
 	}
 	/**
 	 * 获取：作业名称
 	 */
-	public String getZuoyemingcheng() {
-		return zuoyemingcheng;
+	public String getHomework() {
+		return homework;
 	}
 	/**
 	 * 设置：图片
 	 */
-	public void setTupian(String tupian) {
-		this.tupian = tupian;
+	public void setPicture(String picture) {
+		this.picture=picture;
 	}
 	/**
 	 * 获取：图片
 	 */
-	public String getTupian() {
-		return tupian;
+	public String getPicture() {
+		return picture;
 	}
 	/**
 	 * 设置：相关附件
 	 */
-	public void setXiangguanfujian(String xiangguanfujian) {
-		this.xiangguanfujian = xiangguanfujian;
+	public void setAttachment(String attachment) {
+		this.attachment=attachment;
 	}
 	/**
 	 * 获取：相关附件
 	 */
-	public String getXiangguanfujian() {
-		return xiangguanfujian;
+	public String getAttachment() {
+		return attachment;
 	}
 	/**
 	 * 设置：教师工号
 	 */
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void settUsername(String username) {
+		this.tUsername=username;
 	}
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String gettUsername() {
+		return tUsername;
 	}
 	/**
 	 * 设置：教师姓名
 	 */
-	public void setJiaoshixingming(String jiaoshixingming) {
-		this.jiaoshixingming = jiaoshixingming;
+	public void settName(String tName) {
+		this.tName=tName;
 	}
 	/**
 	 * 获取：教师姓名
 	 */
-	public String getJiaoshixingming() {
-		return jiaoshixingming;
+	public String gettName() {
+		return tName;
 	}
 	/**
 	 * 设置：发布时间
 	 */
-	public void setFabushijian(Date fabushijian) {
-		this.fabushijian = fabushijian;
+	public void setPublishAt(Date publishAt) {
+		this.publishAt=publishAt;
 	}
 	/**
 	 * 获取：发布时间
 	 */
-	public Date getFabushijian() {
-		return fabushijian;
+	public Date getPublishAt() {
+		return publishAt;
 	}
 	/**
 	 * 设置：作业内容
 	 */
-	public void setZuoyeneirong(String zuoyeneirong) {
-		this.zuoyeneirong = zuoyeneirong;
+	public void setContxt(String contxt) {
+		this.contxt=contxt;
 	}
 	/**
 	 * 获取：作业内容
 	 */
-	public String getZuoyeneirong() {
-		return zuoyeneirong;
+	public String getContxt() {
+		return contxt;
 	}
 	/**
 	 * 设置：评论数

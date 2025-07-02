@@ -6,7 +6,7 @@ import com.utils.PageUtils;
 import com.entity.CourseVideoEntity;
 import java.util.List;
 import java.util.Map;
-import com.entity.vo.JiaoxueshipinVO;
+import com.entity.vo.CourseVideoVO;
 import org.apache.ibatis.annotations.Param;
 import com.entity.view.CourseVideoView;
 
@@ -18,13 +18,13 @@ import com.entity.view.CourseVideoView;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-public interface JiaoxueshipinService extends IService<CourseVideoEntity> {
+public interface CourseVideoService extends IService<CourseVideoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<JiaoxueshipinVO> selectListVO(Wrapper<CourseVideoEntity> wrapper);
+   	List<CourseVideoVO> selectListVO(Wrapper<CourseVideoEntity> wrapper);
    	
-   	JiaoxueshipinVO selectVO(@Param("ew") Wrapper<CourseVideoEntity> wrapper);
+   	CourseVideoVO selectVO(@Param("ew") Wrapper<CourseVideoEntity> wrapper);
    	
    	List<CourseVideoView> selectListView(Wrapper<CourseVideoEntity> wrapper);
    	

@@ -8,32 +8,26 @@ import java.io.Serializable;
  
 
 /**
- * 课程作业
+ * 教学视频
  * @author 
  * @email 
- * @date 2024-03-05 11:41:24
+ * @date 2024-03-05 11:41:23
  */
-public class KechengzuoyeVO  implements Serializable {
+public class CourseVideoVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	 			
 	/**
-	 * 作业名称
+	 * 课程类别
 	 */
 	
-	private String zuoyemingcheng;
+	private String kechengleibie;
 		
 	/**
-	 * 图片
+	 * 封面
 	 */
 	
-	private String tupian;
-		
-	/**
-	 * 相关附件
-	 */
-	
-	private String xiangguanfujian;
+	private String fengmian;
 		
 	/**
 	 * 教师工号
@@ -48,6 +42,12 @@ public class KechengzuoyeVO  implements Serializable {
 	private String jiaoshixingming;
 		
 	/**
+	 * 教学视频
+	 */
+	
+	private String jiaoxueshipin;
+		
+	/**
 	 * 发布时间
 	 */
 		
@@ -56,10 +56,24 @@ public class KechengzuoyeVO  implements Serializable {
 	private Date fabushijian;
 		
 	/**
-	 * 作业内容
+	 * 基本介绍
 	 */
 	
-	private String zuoyeneirong;
+	private String jibenjieshao;
+		
+	/**
+	 * 最近点击时间
+	 */
+		
+	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat 
+	private Date clicktime;
+		
+	/**
+	 * 点击次数
+	 */
+	
+	private Integer clicknum;
 		
 	/**
 	 * 评论数
@@ -75,50 +89,34 @@ public class KechengzuoyeVO  implements Serializable {
 				
 	
 	/**
-	 * 设置：作业名称
+	 * 设置：课程类别
 	 */
 	 
-	public void setZuoyemingcheng(String zuoyemingcheng) {
-		this.zuoyemingcheng = zuoyemingcheng;
+	public void setKechengleibie(String kechengleibie) {
+		this.kechengleibie = kechengleibie;
 	}
 	
 	/**
-	 * 获取：作业名称
+	 * 获取：课程类别
 	 */
-	public String getZuoyemingcheng() {
-		return zuoyemingcheng;
+	public String getKechengleibie() {
+		return kechengleibie;
 	}
 				
 	
 	/**
-	 * 设置：图片
+	 * 设置：封面
 	 */
 	 
-	public void setTupian(String tupian) {
-		this.tupian = tupian;
+	public void setFengmian(String fengmian) {
+		this.fengmian = fengmian;
 	}
 	
 	/**
-	 * 获取：图片
+	 * 获取：封面
 	 */
-	public String getTupian() {
-		return tupian;
-	}
-				
-	
-	/**
-	 * 设置：相关附件
-	 */
-	 
-	public void setXiangguanfujian(String xiangguanfujian) {
-		this.xiangguanfujian = xiangguanfujian;
-	}
-	
-	/**
-	 * 获取：相关附件
-	 */
-	public String getXiangguanfujian() {
-		return xiangguanfujian;
+	public String getFengmian() {
+		return fengmian;
 	}
 				
 	
@@ -155,6 +153,22 @@ public class KechengzuoyeVO  implements Serializable {
 				
 	
 	/**
+	 * 设置：教学视频
+	 */
+	 
+	public void setJiaoxueshipin(String jiaoxueshipin) {
+		this.jiaoxueshipin = jiaoxueshipin;
+	}
+	
+	/**
+	 * 获取：教学视频
+	 */
+	public String getJiaoxueshipin() {
+		return jiaoxueshipin;
+	}
+				
+	
+	/**
 	 * 设置：发布时间
 	 */
 	 
@@ -171,18 +185,50 @@ public class KechengzuoyeVO  implements Serializable {
 				
 	
 	/**
-	 * 设置：作业内容
+	 * 设置：基本介绍
 	 */
 	 
-	public void setZuoyeneirong(String zuoyeneirong) {
-		this.zuoyeneirong = zuoyeneirong;
+	public void setJibenjieshao(String jibenjieshao) {
+		this.jibenjieshao = jibenjieshao;
 	}
 	
 	/**
-	 * 获取：作业内容
+	 * 获取：基本介绍
 	 */
-	public String getZuoyeneirong() {
-		return zuoyeneirong;
+	public String getJibenjieshao() {
+		return jibenjieshao;
+	}
+				
+	
+	/**
+	 * 设置：最近点击时间
+	 */
+	 
+	public void setClicktime(Date clicktime) {
+		this.clicktime = clicktime;
+	}
+	
+	/**
+	 * 获取：最近点击时间
+	 */
+	public Date getClicktime() {
+		return clicktime;
+	}
+				
+	
+	/**
+	 * 设置：点击次数
+	 */
+	 
+	public void setClicknum(Integer clicknum) {
+		this.clicknum = clicknum;
+	}
+	
+	/**
+	 * 获取：点击次数
+	 */
+	public Integer getClicknum() {
+		return clicknum;
 	}
 				
 	

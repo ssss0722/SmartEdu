@@ -5,40 +5,40 @@
 
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.entity.CourseHomeworkEntity" id="kechengzuoyeMap">
-        <result property="kechengmingcheng" column="kechengmingcheng"/>
-        <result property="zuoyemingcheng" column="zuoyemingcheng"/>
-        <result property="tupian" column="tupian"/>
-        <result property="xiangguanfujian" column="xiangguanfujian"/>
-        <result property="jiaoshigonghao" column="jiaoshigonghao"/>
-        <result property="jiaoshixingming" column="jiaoshixingming"/>
-        <result property="fabushijian" column="fabushijian"/>
-        <result property="zuoyeneirong" column="zuoyeneirong"/>
+        <result property="course" column="course"/>
+        <result property="homework" column="homework"/>
+        <result property="picture" column="picture"/>
+        <result property="attachment" column="attachment"/>
+        <result property="tUsername" column="t_username"/>
+        <result property="tName" column="t_name"/>
+        <result property="publishAt" column="publish_at"/>
+        <result property="contxt" column="contxt"/>
         <result property="discussnum" column="discussnum"/>
         <result property="storeupnum" column="storeupnum"/>
     </resultMap>
 
 	<select id="selectListVO"
-		resultType="com.entity.vo.KechengzuoyeVO" >
-		SELECT * FROM kechengzuoye  kechengzuoye         
+		resultType="com.entity.vo.CourseHomeworkVO" >
+		SELECT * FROM course_homework ch
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
-		resultType="com.entity.vo.KechengzuoyeVO" >
-		SELECT  kechengzuoye.* FROM kechengzuoye  kechengzuoye 	
+		resultType="com.entity.vo.CourseHomeworkVO" >
+		SELECT  ch.* FROM course_homework ch
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
     <select id="selectListView"
 		resultType="com.entity.view.CourseHomeworkView" >
 
-		SELECT  kechengzuoye.* FROM kechengzuoye  kechengzuoye 	        
+		SELECT  ch.* FROM course_homework ch
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
 		resultType="com.entity.view.CourseHomeworkView" >
-		SELECT * FROM kechengzuoye  kechengzuoye <where> 1=1 ${ew.sqlSegment}</where>
+		SELECT * FROM course_homework ch <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 
