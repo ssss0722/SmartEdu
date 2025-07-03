@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.HomeworkRecordDao">
+
+
+    <select id="selectGroupBy" resultType="com.entity.view.HomeworkRecordView">
+        SELECT
+        ch.id AS homework_id,
+        ch.homework AS homeworkName,
+        ch.course AS course,
+        eqb.id AS questionId,
+        eqb.title AS title,
+        eqb.options AS options,
+        eqb.answer AS answer,
+        eqb.analysis AS analysis,
+        eqb.type AS type,
+        eqb.score AS score,
+        COUNT(1) AS total,
+        ROUND(SUM(CASE WHEN chr.myscore > 0 THEN 1 ELSE 0 END) / COUNT(1), 2) AS accuracy,
+        SUM(CASE WHEN chr.myanswer LIKE '%A%' THEN 1 ELSE 0 END) AS anum,
+        SUM(CASE WHEN chr.myanswer LIKE '%B%' THEN 1 ELSE 0 END) AS bnum,
+        SUM(CASE WHEN chr.myanswer LIKE '%C%' THEN 1 ELSE 0 END) AS cnum,
+        SUM(CASE WHEN chr.myanswer LIKE '%D%' THEN 1 ELSE 0 END) AS dnum
+        FROM course_homework_record chr
+        LEFT JOIN course_homework ch ON chr.homework_id = ch.id
+        LEFT JOIN exam_question_bank eqb ON chr.question_id = eqb.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+        GROUP BY
+        ch.id, ch.homework, ch.course,
+        eqb.id, eqb.title, eqb.options, eqb.answer,
+        eqb.analysis, eqb.type, eqb.score
+    </select>
+    <select id="selectOptionsNum" resultType="com.entity.view.HomeworkRecordView">
+        SELECT
+        ch.id AS homework_id,
+        ch.homework AS homeworkName,
+        ch.course AS course,
+        eqb.id AS questionId,
+        eqb.title AS title,
+        eqb.options AS options,
+        eqb.answer AS answer,
+        eqb.analysis AS analysis,
+        eqb.type AS type,
+        eqb.score AS score,
+        COUNT(1) AS total,
+        ROUND(SUM(CASE WHEN chr.myscore > 0 THEN 1 ELSE 0 END) / COUNT(1), 2) AS accuracy,
+        SUM(CASE WHEN chr.myanswer LIKE '%A%' THEN 1 ELSE 0 END) AS anum,
+        SUM(CASE WHEN chr.myanswer LIKE '%B%' THEN 1 ELSE 0 END) AS bnum,
+        SUM(CASE WHEN chr.myanswer LIKE '%C%' THEN 1 ELSE 0 END) AS cnum,
+        SUM(CASE WHEN chr.myanswer LIKE '%D%' THEN 1 ELSE 0 END) AS dnum
+        FROM course_homework_record chr
+        LEFT JOIN course_homework ch ON chr.homework_id = ch.id
+        LEFT JOIN exam_question_bank eqb ON chr.question_id = eqb.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+        GROUP BY
+        ch.id, ch.homework, ch.course,
+        eqb.id, eqb.title, eqb.options, eqb.answer,
+        eqb.analysis, eqb.type, eqb.score
+    </select>
+    <select id="selectListView" resultType="com.entity.view.HomeworkRecordView">
+        SELECT
+        chr.*,
+        ch.homework AS homeworkName,
+        ch.course AS course,
+        eqb.title AS title,
+        eqb.options AS options,
+        eqb.answer AS answer,
+        eqb.analysis AS analysis,
+        eqb.type AS type,
+        eqb.score AS score
+        FROM course_homework_record chr
+        LEFT JOIN course_homework ch ON chr.homework_id = ch.id
+        LEFT JOIN exam_question_bank eqb ON chr.question_id = eqb.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+    <select id="selectView" resultType="com.entity.view.HomeworkRecordView">
+        SELECT
+        chr.*,
+        ch.homework AS homeworkName,
+        ch.course AS course,
+        eqb.title AS title,
+        eqb.options AS options,
+        eqb.answer AS answer,
+        eqb.analysis AS analysis,
+        eqb.type AS type,
+        eqb.score AS score
+        FROM course_homework_record chr
+        LEFT JOIN course_homework ch ON chr.homework_id = ch.id
+        LEFT JOIN exam_question_bank eqb ON chr.question_id = eqb.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+</mapper>

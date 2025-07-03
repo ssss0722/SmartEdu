@@ -51,14 +51,18 @@ public class TeacherController {
 	 */
 	@IgnoreAuth
 	@RequestMapping(value = "/login")
-	public R login(String username, String password) {
+	public R login(String username, String password,String role) {
 		TeacherEntity u = teacherService.selectOne(new EntityWrapper<TeacherEntity>().eq("t_username", username));
-		if(u==null || !u.getPassword().equals(password)) {
+		if(u==null || !u.getPassword().equals(password) ||!u.getRole().equals(role)) {
 			return R.error("账号或密码不正确");
 		}
-
-        String token = JwtUtils.generateToken(u.getId(), username, "teacher", "teacher");
-        return R.ok().put("token", token);
+        if(role.equals("teacher")){
+            String token = JwtUtils.generateToken(u.getId(), username, "teacher", "teacher");
+            return R.ok().put("token", token);
+        } else{
+            String token = JwtUtils.generateToken(u.getId(), username, "teacher", "teacher");
+            return R.ok().put("token", token);
+        }
 	}
 
 
@@ -76,7 +80,7 @@ public class TeacherController {
 		Long uId = new Date().getTime();
 		teacher.setId(uId);
         teacherService.insert(teacher);
-        return R.ok("注册成功");
+        return R.ok("注册成功").put("data",teacher);
     }
 
 	

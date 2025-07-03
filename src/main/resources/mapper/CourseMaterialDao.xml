@@ -10,7 +10,6 @@
         <result property="picture" column="picture"/>
         <result property="attachment" column="attachment"/>
         <result property="tUsername" column="t_username"/>
-        <result property="tName" column="t_name"/>
         <result property="publishAt" column="publish_at"/>
         <result property="content" column="content"/>
         <result property="clicktime" column="clicktime"/>
@@ -21,26 +20,34 @@
 
 	<select id="selectListVO"
 		resultType="com.entity.vo.CourseMaterialVO" >
-		SELECT * FROM course_material cm
+        SELECT cm.*, ut.t_name AS tName
+        FROM course_material cm
+        LEFT JOIN user_teacher ut ON cm.t_username = ut.t_username
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
 		resultType="com.entity.vo.CourseMaterialVO" >
-		SELECT  cm.* FROM course_material cm
+        SELECT cm.*, ut.t_name AS tName
+        FROM course_material cm
+        LEFT JOIN user_teacher ut ON cm.t_username = ut.t_username
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
     <select id="selectListView"
 		resultType="com.entity.view.CourseMaterialView" >
 
-		SELECT  cm.* FROM course_material cm
+        SELECT cm.*, ut.t_name AS tName
+        FROM course_material cm
+        LEFT JOIN user_teacher ut ON cm.t_username = ut.t_username
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
 		resultType="com.entity.view.CourseMaterialView" >
-		SELECT * FROM course_material cm <where> 1=1 ${ew.sqlSegment}</where>
+        SELECT cm.*, ut.t_name AS tName
+        FROM course_material cm
+        LEFT JOIN user_teacher ut ON cm.t_username = ut.t_username <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 

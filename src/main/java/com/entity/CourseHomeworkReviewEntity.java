@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -21,7 +22,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-@TableName("zuoyepigai")
+@TableName("course_homework_review")
 public class CourseHomeworkReviewEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -48,57 +49,49 @@ public class CourseHomeworkReviewEntity<T> implements Serializable {
 	 * 课程名称
 	 */
 					
-	private String kechengmingcheng;
+	private String course;
 	
 	/**
-	 * 作业名称
+	 * 作业id
 	 */
-					
-	private String zuoyemingcheng;
+	@TableField("homework_id")
+	private Long homeworkId;
 	
 	/**
 	 * 教师工号
 	 */
-					
-	private String jiaoshigonghao;
-	
-	/**
-	 * 教师姓名
-	 */
-					
-	private String jiaoshixingming;
-	
+
+	@TableField("t_username")
+	private String tUsername;
+
 	/**
 	 * 学生账号
 	 */
-					
-	private String xueshengzhanghao;
-	
-	/**
-	 * 学生姓名
-	 */
-					
-	private String xueshengxingming;
-	
+
+	@TableField("s_username")
+	private String sUsername;
+
 	/**
 	 * 作业评分
 	 */
-					
-	private String zuoyepingfen;
+
+	private String grade;
 	
 	/**
 	 * 批改时间
 	 */
 				
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
-	@DateTimeFormat 		
-	private Date pigaishijian;
+	@DateTimeFormat
+	@TableField("reviewed_at")
+	private Date reviewedAt;
 	
 	/**
 	 * 教师评语
 	 */
-					
-	private String jiaoshipingyu;
+
+	@TableField("teacher_comment")
+	private String teacherComment;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -122,110 +115,88 @@ public class CourseHomeworkReviewEntity<T> implements Serializable {
 	/**
 	 * 设置：课程名称
 	 */
-	public void setKechengmingcheng(String kechengmingcheng) {
-		this.kechengmingcheng = kechengmingcheng;
+	public void setCourse(String course) {
+		this.course=course;
 	}
 	/**
 	 * 获取：课程名称
 	 */
-	public String getKechengmingcheng() {
-		return kechengmingcheng;
+	public String getCourse() {
+		return course;
 	}
 	/**
-	 * 设置：作业名称
+	 * 设置：作业id
 	 */
-	public void setZuoyemingcheng(String zuoyemingcheng) {
-		this.zuoyemingcheng = zuoyemingcheng;
+	public void setHomeworkId(Long id) {
+		this.homeworkId=id;
 	}
 	/**
-	 * 获取：作业名称
+	 * 获取：作业id
 	 */
-	public String getZuoyemingcheng() {
-		return zuoyemingcheng;
+	public Long getHomeworkId() {
+		return homeworkId;
 	}
 	/**
 	 * 设置：教师工号
 	 */
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void settUsername(String tUsername) {
+		this.tUsername=tUsername;
 	}
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String gettUsername() {
+		return tUsername;
 	}
-	/**
-	 * 设置：教师姓名
-	 */
-	public void setJiaoshixingming(String jiaoshixingming) {
-		this.jiaoshixingming = jiaoshixingming;
-	}
-	/**
-	 * 获取：教师姓名
-	 */
-	public String getJiaoshixingming() {
-		return jiaoshixingming;
-	}
+
 	/**
 	 * 设置：学生账号
 	 */
-	public void setXueshengzhanghao(String xueshengzhanghao) {
-		this.xueshengzhanghao = xueshengzhanghao;
+	public void setsUsername(String sUsername) {
+		this.sUsername=sUsername;
 	}
 	/**
 	 * 获取：学生账号
 	 */
-	public String getXueshengzhanghao() {
-		return xueshengzhanghao;
+	public String getsUsername() {
+		return sUsername;
 	}
-	/**
-	 * 设置：学生姓名
-	 */
-	public void setXueshengxingming(String xueshengxingming) {
-		this.xueshengxingming = xueshengxingming;
-	}
-	/**
-	 * 获取：学生姓名
-	 */
-	public String getXueshengxingming() {
-		return xueshengxingming;
-	}
+
 	/**
 	 * 设置：作业评分
 	 */
-	public void setZuoyepingfen(String zuoyepingfen) {
-		this.zuoyepingfen = zuoyepingfen;
+	public void setGrade(String grade) {
+		this.grade=grade;
 	}
 	/**
 	 * 获取：作业评分
 	 */
-	public String getZuoyepingfen() {
-		return zuoyepingfen;
+	public String getGrade() {
+		return grade;
 	}
 	/**
 	 * 设置：批改时间
 	 */
-	public void setPigaishijian(Date pigaishijian) {
-		this.pigaishijian = pigaishijian;
+	public void setReviewedAt(Date reviewedAt) {
+		this.reviewedAt=reviewedAt;
 	}
 	/**
 	 * 获取：批改时间
 	 */
-	public Date getPigaishijian() {
-		return pigaishijian;
+	public Date getReviewedAt() {
+		return reviewedAt;
 	}
 	/**
 	 * 设置：教师评语
 	 */
-	public void setJiaoshipingyu(String jiaoshipingyu) {
-		this.jiaoshipingyu = jiaoshipingyu;
+	public void setTeacherComment(String teacherComment) {
+		this.teacherComment=teacherComment;
 	}
 	/**
 	 * 获取：教师评语
 	 */
-	public String getJiaoshipingyu() {
-		return jiaoshipingyu;
+	public String getTeacherComment() {
+		return teacherComment;
 	}
 
 }

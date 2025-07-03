@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -21,7 +22,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-@TableName("jiaoxueshipin")
+@TableName("course_video")
 public class CourseVideoEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -48,51 +49,46 @@ public class CourseVideoEntity<T> implements Serializable {
 	 * 标题
 	 */
 					
-	private String biaoti;
+	private String title;
 	
 	/**
 	 * 课程类别
 	 */
 					
-	private String kechengleibie;
+	private String course;
 	
 	/**
 	 * 封面
 	 */
 					
-	private String fengmian;
+	private String cover;
 	
 	/**
 	 * 教师工号
 	 */
-					
-	private String jiaoshigonghao;
-	
-	/**
-	 * 教师姓名
-	 */
-					
-	private String jiaoshixingming;
+	@TableField("t_username")
+	private String tUsername;
 	
 	/**
 	 * 教学视频
 	 */
 					
-	private String jiaoxueshipin;
+	private String video;
 	
 	/**
 	 * 发布时间
 	 */
 				
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
-	@DateTimeFormat 		
-	private Date fabushijian;
+	@DateTimeFormat
+	@TableField("published_at")
+	private Date publishedAt;
 	
 	/**
 	 * 基本介绍
 	 */
 					
-	private String jibenjieshao;
+	private String intro;
 	
 	/**
 	 * 最近点击时间
@@ -142,98 +138,87 @@ public class CourseVideoEntity<T> implements Serializable {
 	/**
 	 * 设置：标题
 	 */
-	public void setBiaoti(String biaoti) {
-		this.biaoti = biaoti;
+	public void setTitle(String title) {
+		this.title=title;
 	}
 	/**
 	 * 获取：标题
 	 */
-	public String getBiaoti() {
-		return biaoti;
+	public String getTitle() {
+		return title;
 	}
 	/**
 	 * 设置：课程类别
 	 */
-	public void setKechengleibie(String kechengleibie) {
-		this.kechengleibie = kechengleibie;
+	public void setCourse(String course) {
+		this.course=course;
 	}
 	/**
 	 * 获取：课程类别
 	 */
-	public String getKechengleibie() {
-		return kechengleibie;
+	public String getCourse() {
+		return course;
 	}
 	/**
 	 * 设置：封面
 	 */
-	public void setFengmian(String fengmian) {
-		this.fengmian = fengmian;
+	public void setCover(String cover) {
+		this.cover=cover;
 	}
 	/**
 	 * 获取：封面
 	 */
-	public String getFengmian() {
-		return fengmian;
+	public String getCover() {
+		return cover;
 	}
 	/**
 	 * 设置：教师工号
 	 */
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void settUsername(String tUsername) {
+		this.tUsername=tUsername;
 	}
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String gettUsername() {
+		return tUsername;
 	}
-	/**
-	 * 设置：教师姓名
-	 */
-	public void setJiaoshixingming(String jiaoshixingming) {
-		this.jiaoshixingming = jiaoshixingming;
-	}
-	/**
-	 * 获取：教师姓名
-	 */
-	public String getJiaoshixingming() {
-		return jiaoshixingming;
-	}
+
 	/**
 	 * 设置：教学视频
 	 */
-	public void setJiaoxueshipin(String jiaoxueshipin) {
-		this.jiaoxueshipin = jiaoxueshipin;
+	public void setVideo(String video) {
+		this.video=video;
 	}
 	/**
 	 * 获取：教学视频
 	 */
-	public String getJiaoxueshipin() {
-		return jiaoxueshipin;
+	public String getVideo() {
+		return video;
 	}
 	/**
 	 * 设置：发布时间
 	 */
-	public void setFabushijian(Date fabushijian) {
-		this.fabushijian = fabushijian;
+	public void setPublishedAt(Date publishAt) {
+		this.publishedAt=publishAt;
 	}
 	/**
 	 * 获取：发布时间
 	 */
-	public Date getFabushijian() {
-		return fabushijian;
+	public Date getPublishedAt() {
+		return publishedAt;
 	}
 	/**
 	 * 设置：基本介绍
 	 */
-	public void setJibenjieshao(String jibenjieshao) {
-		this.jibenjieshao = jibenjieshao;
+	public void setIntro(String intro) {
+		this.intro=intro;
 	}
 	/**
 	 * 获取：基本介绍
 	 */
-	public String getJibenjieshao() {
-		return jibenjieshao;
+	public String getIntro() {
+		return intro;
 	}
 	/**
 	 * 设置：最近点击时间

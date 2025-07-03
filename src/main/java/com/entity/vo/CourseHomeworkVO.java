@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public class KechengzuoyeVO  implements Serializable {
+public class CourseHomeworkVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	 			

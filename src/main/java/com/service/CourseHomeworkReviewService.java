@@ -6,7 +6,7 @@ import com.utils.PageUtils;
 import com.entity.CourseHomeworkReviewEntity;
 import java.util.List;
 import java.util.Map;
-import com.entity.vo.ZuoyepigaiVO;
+import com.entity.vo.CourseHomeworkReviewVO;
 import org.apache.ibatis.annotations.Param;
 import com.entity.view.CourseHomeworkReviewView;
 
@@ -18,13 +18,13 @@ import com.entity.view.CourseHomeworkReviewView;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public interface ZuoyepigaiService extends IService<CourseHomeworkReviewEntity> {
+public interface CourseHomeworkReviewService extends IService<CourseHomeworkReviewEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<ZuoyepigaiVO> selectListVO(Wrapper<CourseHomeworkReviewEntity> wrapper);
+   	List<CourseHomeworkReviewVO> selectListVO(Wrapper<CourseHomeworkReviewEntity> wrapper);
    	
-   	ZuoyepigaiVO selectVO(@Param("ew") Wrapper<CourseHomeworkReviewEntity> wrapper);
+   	CourseHomeworkReviewVO selectVO(@Param("ew") Wrapper<CourseHomeworkReviewEntity> wrapper);
    	
    	List<CourseHomeworkReviewView> selectListView(Wrapper<CourseHomeworkReviewEntity> wrapper);
    	

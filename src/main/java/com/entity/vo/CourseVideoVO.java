@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-public class JiaoxueshipinVO  implements Serializable {
+public class CourseVideoVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	 			
@@ -21,31 +21,31 @@ public class JiaoxueshipinVO  implements Serializable {
 	 * 课程类别
 	 */
 	
-	private String kechengleibie;
+	private String course;
 		
 	/**
 	 * 封面
 	 */
 	
-	private String fengmian;
+	private String cover;
 		
 	/**
 	 * 教师工号
 	 */
 	
-	private String jiaoshigonghao;
+	private String tUsername;
 		
 	/**
 	 * 教师姓名
 	 */
 	
-	private String jiaoshixingming;
+	private String tName;
 		
 	/**
 	 * 教学视频
 	 */
 	
-	private String jiaoxueshipin;
+	private String video;
 		
 	/**
 	 * 发布时间
@@ -53,13 +53,13 @@ public class JiaoxueshipinVO  implements Serializable {
 		
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat 
-	private Date fabushijian;
+	private Date publishedAt;
 		
 	/**
 	 * 基本介绍
 	 */
 	
-	private String jibenjieshao;
+	private String intro;
 		
 	/**
 	 * 最近点击时间
@@ -92,15 +92,15 @@ public class JiaoxueshipinVO  implements Serializable {
 	 * 设置：课程类别
 	 */
 	 
-	public void setKechengleibie(String kechengleibie) {
-		this.kechengleibie = kechengleibie;
+	public void setCourse(String course) {
+		this.course=course;
 	}
 	
 	/**
 	 * 获取：课程类别
 	 */
-	public String getKechengleibie() {
-		return kechengleibie;
+	public String getCourse() {
+		return course;
 	}
 				
 	
@@ -108,15 +108,15 @@ public class JiaoxueshipinVO  implements Serializable {
 	 * 设置：封面
 	 */
 	 
-	public void setFengmian(String fengmian) {
-		this.fengmian = fengmian;
+	public void setCover(String cover) {
+		this.cover=cover;
 	}
 	
 	/**
 	 * 获取：封面
 	 */
-	public String getFengmian() {
-		return fengmian;
+	public String getCover() {
+		return cover;
 	}
 				
 	
@@ -124,15 +124,15 @@ public class JiaoxueshipinVO  implements Serializable {
 	 * 设置：教师工号
 	 */
 	 
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void settUsername(String tUsername) {
+		this.tUsername=tUsername;
 	}
 	
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String gettUsername() {
+		return tUsername;
 	}
 				
 	
@@ -140,15 +140,15 @@ public class JiaoxueshipinVO  implements Serializable {
 	 * 设置：教师姓名
 	 */
 	 
-	public void setJiaoshixingming(String jiaoshixingming) {
-		this.jiaoshixingming = jiaoshixingming;
+	public void settName(String tName) {
+		this.tName=tName;
 	}
 	
 	/**
 	 * 获取：教师姓名
 	 */
-	public String getJiaoshixingming() {
-		return jiaoshixingming;
+	public String gettName() {
+		return tName;
 	}
 				
 	
@@ -156,15 +156,15 @@ public class JiaoxueshipinVO  implements Serializable {
 	 * 设置：教学视频
 	 */
 	 
-	public void setJiaoxueshipin(String jiaoxueshipin) {
-		this.jiaoxueshipin = jiaoxueshipin;
+	public void setVideo(String video) {
+		this.video=video;
 	}
 	
 	/**
 	 * 获取：教学视频
 	 */
-	public String getJiaoxueshipin() {
-		return jiaoxueshipin;
+	public String getVideo() {
+		return video;
 	}
 				
 	
@@ -172,15 +172,15 @@ public class JiaoxueshipinVO  implements Serializable {
 	 * 设置：发布时间
 	 */
 	 
-	public void setFabushijian(Date fabushijian) {
-		this.fabushijian = fabushijian;
+	public void setPublishedAt(Date publishedAt) {
+		this.publishedAt=publishedAt;
 	}
 	
 	/**
 	 * 获取：发布时间
 	 */
-	public Date getFabushijian() {
-		return fabushijian;
+	public Date getPublishedAt() {
+		return publishedAt;
 	}
 				
 	
@@ -188,15 +188,15 @@ public class JiaoxueshipinVO  implements Serializable {
 	 * 设置：基本介绍
 	 */
 	 
-	public void setJibenjieshao(String jibenjieshao) {
-		this.jibenjieshao = jibenjieshao;
+	public void setIntro(String intro) {
+		this.intro=intro;
 	}
 	
 	/**
 	 * 获取：基本介绍
 	 */
-	public String getJibenjieshao() {
-		return jibenjieshao;
+	public String getIntro() {
+		return intro;
 	}
 				
 	

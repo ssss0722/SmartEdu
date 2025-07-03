@@ -7,8 +7,9 @@ import java.util.List;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
+import com.entity.vo.CourseVideoVO;
 import org.apache.ibatis.annotations.Param;
-import com.entity.vo.JiaoxueshipinVO;
+import com.entity.vo.CourseVideoVO;
 import com.entity.view.CourseVideoView;
 
 
@@ -21,9 +22,9 @@ import com.entity.view.CourseVideoView;
  */
 public interface CourseVideoDao extends BaseMapper<CourseVideoEntity> {
 	
-	List<JiaoxueshipinVO> selectListVO(@Param("ew") Wrapper<CourseVideoEntity> wrapper);
+	List<CourseVideoVO> selectListVO(@Param("ew") Wrapper<CourseVideoEntity> wrapper);
 	
-	JiaoxueshipinVO selectVO(@Param("ew") Wrapper<CourseVideoEntity> wrapper);
+	CourseVideoVO selectVO(@Param("ew") Wrapper<CourseVideoEntity> wrapper);
 	
 	List<CourseVideoView> selectListView(@Param("ew") Wrapper<CourseVideoEntity> wrapper);
 

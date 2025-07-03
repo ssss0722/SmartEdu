@@ -1,5 +1,6 @@
 package com.entity.view;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.entity.CourseMaterialEntity;
 
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -17,9 +18,12 @@ import java.io.Serializable;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-@TableName("jiaoxueziliao")
+@TableName("course_material")
 public class CourseMaterialView extends CourseMaterialEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@TableField("t_name")
+	private String tName;
 
 	public CourseMaterialView(){
 	}
@@ -34,5 +38,11 @@ public class CourseMaterialView extends CourseMaterialEntity implements Serializ
  		
 	}
 
+	public String gettName() {
+		return tName;
+	}
 
+	public void settName(String tName) {
+		this.tName = tName;
+	}
 }

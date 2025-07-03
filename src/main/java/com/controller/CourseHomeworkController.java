@@ -1,26 +1,23 @@
 package com.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
+import com.entity.TeacherEntity;
+import com.service.TeacherService;
+import com.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.annotation.IgnoreAuth;
 
 import com.entity.CourseHomeworkEntity;
 import com.entity.view.CourseHomeworkView;
 
-import com.service.KechengzuoyeService;
-import com.utils.PageUtils;
-import com.utils.R;
-import com.utils.MPUtil;
+import com.service.CourseHomeworkService;
 import com.service.StoreupService;
 
 /**
@@ -31,33 +28,31 @@ import com.service.StoreupService;
  * @date 2024-03-05 11:41:24
  */
 @RestController
-@RequestMapping("/kechengzuoye")
+@RequestMapping("/courseHomework")
 public class CourseHomeworkController {
     @Autowired
-    private KechengzuoyeService kechengzuoyeService;
+    private CourseHomeworkService courseHomeworkService;
 
     @Autowired
     private StoreupService storeupService;
 
-
-
-    
-
+    @Autowired
+    private TeacherService teacherService;
 
 
     /**
      * 后端列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params, CourseHomeworkEntity kechengzuoye,
-                  HttpServletRequest request){
-		String tableName = request.getSession().getAttribute("tableName").toString();
-		if(tableName.equals("jiaoshi")) {
-			kechengzuoye.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+    public R page(@RequestParam Map<String, Object> params, CourseHomeworkEntity courseHomework,
+                  String tableName,String token){
+        Long id= JwtUtils.getUserIdFromToken(token);
+		if(tableName.equals("user_teacher")) {
+			courseHomework.settUsername(teacherService.selectById(id).getT_username());
 		}
         EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
 
-		PageUtils page = kechengzuoyeService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, kechengzuoye), params), params));
+		PageUtils page = courseHomeworkService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, courseHomework), params), params));
 
         return R.ok().put("data", page);
     }
@@ -67,35 +62,32 @@ public class CourseHomeworkController {
      */
 	@IgnoreAuth
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params, CourseHomeworkEntity kechengzuoye,
-                  HttpServletRequest request){
+    public R list(@RequestParam Map<String, Object> params, CourseHomeworkEntity courseHomework){
         EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
-
-		PageUtils page = kechengzuoyeService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, kechengzuoye), params), params));
+		PageUtils page = courseHomeworkService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, courseHomework), params), params));
         return R.ok().put("data", page);
     }
-
 
 
 	/**
      * 列表
      */
     @RequestMapping("/lists")
-    public R list( CourseHomeworkEntity kechengzuoye){
+    public R list(CourseHomeworkEntity courseHomework){
        	EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
-      	ew.allEq(MPUtil.allEQMapPre( kechengzuoye, "kechengzuoye")); 
-        return R.ok().put("data", kechengzuoyeService.selectListView(ew));
+      	ew.allEq(MPUtil.allEQMapPre( courseHomework, "ch"));
+        return R.ok().put("data", courseHomeworkService.selectListView(ew));
     }
 
 	 /**
      * 查询
      */
     @RequestMapping("/query")
-    public R query(CourseHomeworkEntity kechengzuoye){
+    public R query(CourseHomeworkEntity courseHomework){
         EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
- 		ew.allEq(MPUtil.allEQMapPre( kechengzuoye, "kechengzuoye")); 
-		CourseHomeworkView kechengzuoyeView =  kechengzuoyeService.selectView(ew);
-		return R.ok("查询课程作业成功").put("data", kechengzuoyeView);
+ 		ew.allEq(MPUtil.allEQMapPre(courseHomework, "ch"));
+		CourseHomeworkView courseHomeworkView =  courseHomeworkService.selectView(ew);
+		return R.ok("查询课程作业成功").put("data", courseHomeworkView);
     }
 	
     /**
@@ -103,8 +95,8 @@ public class CourseHomeworkController {
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
-        CourseHomeworkEntity kechengzuoye = kechengzuoyeService.selectById(id);
-        return R.ok().put("data", kechengzuoye);
+        CourseHomeworkEntity courseHomework = courseHomeworkService.selectById(id);
+        return R.ok().put("data", courseHomework);
     }
 
     /**
@@ -112,60 +104,56 @@ public class CourseHomeworkController {
      */
 	@IgnoreAuth
     @RequestMapping("/detail/{id}")
-    public R detail(@PathVariable("id") Long id){
-        CourseHomeworkEntity kechengzuoye = kechengzuoyeService.selectById(id);
-        return R.ok().put("data", kechengzuoye);
+    public R detail(@PathVariable("id") Long id) {
+        CourseHomeworkEntity courseHomework = courseHomeworkService.selectById(id);
+        return R.ok().put("data", courseHomework);
     }
-    
-
-
 
     /**
      * 后端保存
      */
-    @RequestMapping("/save")
-    public R save(@RequestBody CourseHomeworkEntity kechengzuoye, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(kechengzuoye);
-        kechengzuoyeService.insert(kechengzuoye);
-        return R.ok();
-    }
-    
-    /**
-     * 前端保存
-     */
     @RequestMapping("/add")
-    public R add(@RequestBody CourseHomeworkEntity kechengzuoye, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(kechengzuoye);
-        kechengzuoyeService.insert(kechengzuoye);
-        return R.ok();
+    public R save(@RequestBody CourseHomeworkEntity courseHomework,String token){
+        Long id=JwtUtils.getUserIdFromToken(token);
+        String role=JwtUtils.getRoleFromToken(token);
+        if(role.equals("teacher")){
+            courseHomework.settUsername(teacherService.selectById(id).getT_username());
+        }
+        courseHomework.setPublishAt(new Date());
+        courseHomeworkService.insert(courseHomework);
+        return R.ok("保存成功");
     }
-
-
-
-
 
     /**
      * 修改
      */
     @RequestMapping("/update")
     @Transactional
-    public R update(@RequestBody CourseHomeworkEntity kechengzuoye, HttpServletRequest request){
-        //ValidatorUtils.validateEntity(kechengzuoye);
-        kechengzuoyeService.updateById(kechengzuoye);//全部更新
-        return R.ok();
+    public R update(@RequestBody CourseHomeworkEntity courseHomework,String token){
+        Long id=JwtUtils.getUserIdFromToken(token);
+        String role=JwtUtils.getRoleFromToken(token);
+        TeacherEntity teacher=teacherService.selectById(id);
+        CourseHomeworkEntity target=courseHomeworkService.selectById(courseHomework.getId());
+        if(role.equals("teacher")){
+            if(target.gettUsername().equals(teacher.getT_username())) {
+                courseHomeworkService.updateById(courseHomework);//全部更新
+                return R.ok("修改成功");
+            }else{
+                return R.error("无权限");
+            }
+        }else{
+            courseHomeworkService.updateById(courseHomework);//全部更新
+            return R.ok("修改成功");
+        }
     }
-
-
-
-    
 
     /**
      * 删除
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids){
-        kechengzuoyeService.deleteBatchIds(Arrays.asList(ids));
-        return R.ok();
+        courseHomeworkService.deleteBatchIds(Arrays.asList(ids));
+        return R.ok("删除成功");
     }
     
 	

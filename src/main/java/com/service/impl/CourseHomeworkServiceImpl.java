@@ -14,12 +14,12 @@ import com.utils.Query;
 
 import com.dao.CourseHomeworkDao;
 import com.entity.CourseHomeworkEntity;
-import com.service.KechengzuoyeService;
-import com.entity.vo.KechengzuoyeVO;
+import com.service.CourseHomeworkService;
+import com.entity.vo.CourseHomeworkVO;
 import com.entity.view.CourseHomeworkView;
 
-@Service("kechengzuoyeService")
-public class KechengzuoyeServiceImpl extends ServiceImpl<CourseHomeworkDao, CourseHomeworkEntity> implements KechengzuoyeService {
+@Service("CourseHomeworkService")
+public class CourseHomeworkServiceImpl extends ServiceImpl<CourseHomeworkDao, CourseHomeworkEntity> implements CourseHomeworkService {
 	
 	
     @Override
@@ -41,12 +41,12 @@ public class KechengzuoyeServiceImpl extends ServiceImpl<CourseHomeworkDao, Cour
 
     
     @Override
-	public List<KechengzuoyeVO> selectListVO(Wrapper<CourseHomeworkEntity> wrapper) {
+	public List<CourseHomeworkVO> selectListVO(Wrapper<CourseHomeworkEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public KechengzuoyeVO selectVO(Wrapper<CourseHomeworkEntity> wrapper) {
+	public CourseHomeworkVO selectVO(Wrapper<CourseHomeworkEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	

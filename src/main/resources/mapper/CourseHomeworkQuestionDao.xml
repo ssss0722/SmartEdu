@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.CourseHomeworkQuestionDao">
+
+    <select id="selectListView" resultType="com.entity.view.CourseHomeworkQuestionView">
+        SELECT
+        chq.id,
+        chq.addtime,
+        chq.homework_id,
+        chq.question_id,
+        chq.t_username,
+        eqb.title AS question_name,
+        eqb.options,
+        eqb.score,
+        eqb.answer,
+        eqb.analysis,
+        eqb.type,
+        eqb.sequence,
+        ch.homework AS homework,
+        ut.t_name AS tName,
+        cc.course AS course
+        FROM course_homework_question chq
+        LEFT JOIN exam_question_bank eqb ON chq.question_id = eqb.id
+        LEFT JOIN course_homework ch ON chq.homework_id = ch.id
+        LEFT JOIN user_teacher ut ON chq.t_username = ut.t_username
+        LEFT JOIN course_categories cc ON ch.course = cc.course
+        <where> 1=1 ${ew.sqlSegment}</where>
+    </select>
+    <select id="selectView" resultType="com.entity.view.CourseHomeworkQuestionView">
+        SELECT
+        chq.id,
+        chq.addtime,
+        chq.homework_id,
+        chq.question_id,
+        chq.t_username,
+        eqb.title AS question_name,
+        eqb.options,
+        eqb.score,
+        eqb.answer,
+        eqb.analysis,
+        eqb.type,
+        eqb.sequence,
+        ch.homework AS homework,
+        ut.t_name AS tName,
+        cc.course AS course
+        FROM course_homework_question chq
+        LEFT JOIN exam_question_bank eqb ON chq.question_id = eqb.id
+        LEFT JOIN course_homework ch ON chq.homework_id = ch.id
+        LEFT JOIN user_teacher ut ON chq.t_username = ut.t_username
+        LEFT JOIN course_categories cc ON ch.course = cc.course
+        <where> 1=1 ${ew.sqlSegment}</where>
+    </select>
+</mapper>

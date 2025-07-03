@@ -79,6 +79,12 @@ public class TeacherEntity<T> implements Serializable {
 	 */
 					
 	private String course;
+
+	/**
+	 * 角色
+	 */
+
+	private String role;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -184,4 +190,16 @@ public class TeacherEntity<T> implements Serializable {
 		return course;
 	}
 
+	/**
+	 * 设置：角色
+	 */
+	public void setRole(String role) {
+		this.role=role;
+	}
+	/**
+	 * 获取：角色
+	 */
+	public String getRole() {
+		return role;
+	}
 }

@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import com.service.TeacherService;
+import com.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +25,7 @@ import com.annotation.IgnoreAuth;
 import com.entity.CourseVideoEntity;
 import com.entity.view.CourseVideoView;
 
-import com.service.JiaoxueshipinService;
+import com.service.CourseVideoService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
@@ -38,16 +40,16 @@ import com.entity.StoreUpEntity;
  * @date 2024-03-05 11:41:23
  */
 @RestController
-@RequestMapping("/jiaoxueshipin")
+@RequestMapping("/courseVideo")
 public class CourseVideoController {
     @Autowired
-    private JiaoxueshipinService jiaoxueshipinService;
+    private CourseVideoService courseVideoService;
 
     @Autowired
     private StoreupService storeupService;
 
-
-
+    @Autowired
+    private TeacherService teacherService;
     
 
 
@@ -56,16 +58,26 @@ public class CourseVideoController {
      * 后端列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params, CourseVideoEntity jiaoxueshipin,
-                  HttpServletRequest request){
-		String tableName = request.getSession().getAttribute("tableName").toString();
-		if(tableName.equals("jiaoshi")) {
-			jiaoxueshipin.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
-		}
-        EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<CourseVideoEntity>();
+    public R page(@RequestParam Map<String, Object> params, CourseVideoEntity courseVideo,
+                  String token){
+        Long id= JwtUtils.getUserIdFromToken(token);
+        String role=JwtUtils.getRoleFromToken(token);
 
-		PageUtils page = jiaoxueshipinService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, jiaoxueshipin), params), params));
+        // 创建带别名的条件构造器
+        EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<>();
 
+        // 使用带表别名的方法构建条件
+        ew = (EntityWrapper<CourseVideoEntity>) MPUtil.likeOrEqWithAlias(ew, courseVideo, "cv");
+        ew = (EntityWrapper<CourseVideoEntity>) MPUtil.betweenWithAlias(ew, params, "cv");
+        ew = (EntityWrapper<CourseVideoEntity>) MPUtil.sortWithAlias(ew, params, "cv");
+
+        // 添加教师专属条件
+        if(role.equals("teacher")) {
+            String tUsername = teacherService.selectById(id).getT_username();
+            ew.eq("cv.t_username", tUsername);  // 明确指定表别名
+        }
+
+        PageUtils page = courseVideoService.queryPage(params, ew);
         return R.ok().put("data", page);
     }
     
@@ -74,11 +86,9 @@ public class CourseVideoController {
      */
 	@IgnoreAuth
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params, CourseVideoEntity jiaoxueshipin,
-                  HttpServletRequest request){
+    public R list(@RequestParam Map<String, Object> params, CourseVideoEntity courseVideo){
         EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<CourseVideoEntity>();
-
-		PageUtils page = jiaoxueshipinService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, jiaoxueshipin), params), params));
+		PageUtils page = courseVideoService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, courseVideo), params), params));
         return R.ok().put("data", page);
     }
 
@@ -88,21 +98,21 @@ public class CourseVideoController {
      * 列表
      */
     @RequestMapping("/lists")
-    public R list( CourseVideoEntity jiaoxueshipin){
+    public R list(CourseVideoEntity courseVideo){
        	EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<CourseVideoEntity>();
-      	ew.allEq(MPUtil.allEQMapPre( jiaoxueshipin, "jiaoxueshipin")); 
-        return R.ok().put("data", jiaoxueshipinService.selectListView(ew));
+      	ew.allEq(MPUtil.allEQMapPre( courseVideo, "cv"));
+        return R.ok().put("data", courseVideoService.selectListView(ew));
     }
 
 	 /**
      * 查询
      */
     @RequestMapping("/query")
-    public R query(CourseVideoEntity jiaoxueshipin){
+    public R query(CourseVideoEntity courseVideo){
         EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<CourseVideoEntity>();
- 		ew.allEq(MPUtil.allEQMapPre( jiaoxueshipin, "jiaoxueshipin")); 
-		CourseVideoView jiaoxueshipinView =  jiaoxueshipinService.selectView(ew);
-		return R.ok("查询教学视频成功").put("data", jiaoxueshipinView);
+ 		ew.allEq(MPUtil.allEQMapPre( courseVideo, "cv"));
+		CourseVideoView courseVideoView =  courseVideoService.selectView(ew);
+		return R.ok("查询教学视频成功").put("data", courseVideoView);
     }
 	
     /**
@@ -110,12 +120,14 @@ public class CourseVideoController {
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
-        CourseVideoEntity jiaoxueshipin = jiaoxueshipinService.selectById(id);
-		jiaoxueshipin.setClicknum(jiaoxueshipin.getClicknum()+1);
-		jiaoxueshipin.setClicktime(new Date());
-		jiaoxueshipinService.updateById(jiaoxueshipin);
-        jiaoxueshipin = jiaoxueshipinService.selectView(new EntityWrapper<CourseVideoEntity>().eq("id", id));
-        return R.ok().put("data", jiaoxueshipin);
+        CourseVideoEntity courseVideo = courseVideoService.selectById(id);
+		courseVideo.setClicknum(courseVideo.getClicknum()+1);
+		courseVideo.setClicktime(new Date());
+		courseVideoService.updateById(courseVideo);
+        EntityWrapper<CourseVideoEntity> wrapper = new EntityWrapper<>();
+        wrapper.eq("cv.id", id);
+        courseVideo = courseVideoService.selectView(wrapper);
+        return R.ok().put("data", courseVideo);
     }
 
     /**
@@ -124,12 +136,14 @@ public class CourseVideoController {
 	@IgnoreAuth
     @RequestMapping("/detail/{id}")
     public R detail(@PathVariable("id") Long id){
-        CourseVideoEntity jiaoxueshipin = jiaoxueshipinService.selectById(id);
-		jiaoxueshipin.setClicknum(jiaoxueshipin.getClicknum()+1);
-		jiaoxueshipin.setClicktime(new Date());
-		jiaoxueshipinService.updateById(jiaoxueshipin);
-        jiaoxueshipin = jiaoxueshipinService.selectView(new EntityWrapper<CourseVideoEntity>().eq("id", id));
-        return R.ok().put("data", jiaoxueshipin);
+        CourseVideoEntity courseVideo = courseVideoService.selectById(id);
+		courseVideo.setClicknum(courseVideo.getClicknum()+1);
+		courseVideo.setClicktime(new Date());
+		courseVideoService.updateById(courseVideo);
+        EntityWrapper<CourseVideoEntity> wrapper = new EntityWrapper<>();
+        wrapper.eq("cv.id", id);
+        courseVideo = courseVideoService.selectView(wrapper);
+        return R.ok().put("data", courseVideo);
     }
     
 
@@ -138,49 +152,36 @@ public class CourseVideoController {
     /**
      * 后端保存
      */
-    @RequestMapping("/save")
-    public R save(@RequestBody CourseVideoEntity jiaoxueshipin, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(jiaoxueshipin);
-        jiaoxueshipinService.insert(jiaoxueshipin);
-        return R.ok();
-    }
-    
-    /**
-     * 前端保存
-     */
     @RequestMapping("/add")
-    public R add(@RequestBody CourseVideoEntity jiaoxueshipin, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(jiaoxueshipin);
-        jiaoxueshipinService.insert(jiaoxueshipin);
-        return R.ok();
+    public R save(@RequestBody CourseVideoEntity courseVideo,String token){
+        Long id=JwtUtils.getUserIdFromToken(token);
+        String role=JwtUtils.getRoleFromToken(token);
+        if(role.equals("teacher"))
+        {
+            courseVideo.settUsername(teacherService.selectById(id).getT_username());
+        }
+        courseVideo.setPublishedAt(new Date());
+        courseVideoService.insert(courseVideo);
+        return R.ok("添加成功");
     }
-
-
-
-
 
     /**
      * 修改
      */
     @RequestMapping("/update")
     @Transactional
-    public R update(@RequestBody CourseVideoEntity jiaoxueshipin, HttpServletRequest request){
-        //ValidatorUtils.validateEntity(jiaoxueshipin);
-        jiaoxueshipinService.updateById(jiaoxueshipin);//全部更新
-        return R.ok();
+    public R update(@RequestBody CourseVideoEntity courseVideo){
+        courseVideoService.updateById(courseVideo);//全部更新
+        return R.ok("更新成功");
     }
-
-
-
-    
 
     /**
      * 删除
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids){
-        jiaoxueshipinService.deleteBatchIds(Arrays.asList(ids));
-        return R.ok();
+        courseVideoService.deleteBatchIds(Arrays.asList(ids));
+        return R.ok("删除成功");
     }
     
 	
@@ -208,7 +209,7 @@ public class CourseVideoController {
 		}
 		params.put("sort", "clicknum");
         params.put("order", "desc");
-		PageUtils page = jiaoxueshipinService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, jiaoxueshipin), params), params));
+		PageUtils page = courseVideoService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, jiaoxueshipin), params), params));
         return R.ok().put("data", page);
     }
 
@@ -227,13 +228,13 @@ public class CourseVideoController {
         //去重
         if(storeups!=null && storeups.size()>0) {
             for(StoreUpEntity s : storeups) {
-                jiaoxueshipinList.addAll(jiaoxueshipinService.selectList(new EntityWrapper<CourseVideoEntity>().eq(inteltypeColumn, s.getInteltype())));
+                jiaoxueshipinList.addAll(courseVideoService.selectList(new EntityWrapper<CourseVideoEntity>().eq(inteltypeColumn, s.getInteltype())));
             }
         }
         EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<CourseVideoEntity>();
         params.put("sort", "id");
         params.put("order", "desc");
-        PageUtils page = jiaoxueshipinService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, jiaoxueshipin), params), params));
+        PageUtils page = courseVideoService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, jiaoxueshipin), params), params));
         List<CourseVideoEntity> pageList = (List<CourseVideoEntity>)page.getList();
         if(jiaoxueshipinList.size()<limit) {
             int toAddNum = (limit-jiaoxueshipinList.size())<=pageList.size()?(limit-jiaoxueshipinList.size()):pageList.size();

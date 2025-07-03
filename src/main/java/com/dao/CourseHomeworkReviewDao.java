@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import org.apache.ibatis.annotations.Param;
-import com.entity.vo.ZuoyepigaiVO;
+import com.entity.vo.CourseHomeworkReviewVO;
 import com.entity.view.CourseHomeworkReviewView;
 
 
@@ -21,9 +21,9 @@ import com.entity.view.CourseHomeworkReviewView;
  */
 public interface CourseHomeworkReviewDao extends BaseMapper<CourseHomeworkReviewEntity> {
 	
-	List<ZuoyepigaiVO> selectListVO(@Param("ew") Wrapper<CourseHomeworkReviewEntity> wrapper);
+	List<CourseHomeworkReviewVO> selectListVO(@Param("ew") Wrapper<CourseHomeworkReviewEntity> wrapper);
 	
-	ZuoyepigaiVO selectVO(@Param("ew") Wrapper<CourseHomeworkReviewEntity> wrapper);
+	CourseHomeworkReviewVO selectVO(@Param("ew") Wrapper<CourseHomeworkReviewEntity> wrapper);
 	
 	List<CourseHomeworkReviewView> selectListView(@Param("ew") Wrapper<CourseHomeworkReviewEntity> wrapper);
 
