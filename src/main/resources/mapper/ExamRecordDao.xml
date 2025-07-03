@@ -23,13 +23,13 @@
     </resultMap>
 
 	<select id="selectListVO"
-		resultType="com.entity.vo.ExamrecordVO" >
+		resultType="com.entity.vo.ExamRecordVO" >
 		SELECT * FROM examrecord  examrecord         
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
-		resultType="com.entity.vo.ExamrecordVO" >
+		resultType="com.entity.vo.ExamRecordVO" >
 		SELECT  examrecord.* FROM examrecord  examrecord 	
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>

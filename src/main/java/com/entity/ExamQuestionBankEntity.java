@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -48,7 +49,7 @@ public class ExamQuestionBankEntity<T> implements Serializable {
 	 * 试题名称
 	 */
 					
-	private String questionname;
+	private String title;
 	
 	/**
 	 * 选项，json字符串
@@ -89,8 +90,8 @@ public class ExamQuestionBankEntity<T> implements Serializable {
 	/**
 	 * 教师工号
 	 */
-					
-	private String jiaoshigonghao;
+	@TableField("t_username")
+	private String tUsername;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -114,14 +115,14 @@ public class ExamQuestionBankEntity<T> implements Serializable {
 	/**
 	 * 设置：试题名称
 	 */
-	public void setQuestionname(String questionname) {
-		this.questionname = questionname;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	/**
 	 * 获取：试题名称
 	 */
-	public String getQuestionname() {
-		return questionname;
+	public String getTitle() {
+		return title;
 	}
 	/**
 	 * 设置：选项，json字符串
@@ -198,14 +199,14 @@ public class ExamQuestionBankEntity<T> implements Serializable {
 	/**
 	 * 设置：教师工号
 	 */
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void setT_username(String username) {
+		this.tUsername=username;
 	}
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String getT_username() {
+		return tUsername;
 	}
 
 }

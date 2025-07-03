@@ -44,7 +44,7 @@ import com.entity.ExamRecordEntity;
  * @date 2024-03-05 11:41:24
  */
 @RestController
-@RequestMapping("/exampaper")
+@RequestMapping("/api/paper")
 public class ExamPaperController {
     @Autowired
     private ExampaperService exampaperService;
@@ -67,12 +67,12 @@ public class ExamPaperController {
     /**
      * 后端列表
      */
-    @RequestMapping("/page")
+    @RequestMapping("/list")
     public R page(@RequestParam Map<String, Object> params, ExamPaperEntity exampaper,
                   HttpServletRequest request){
 		String tableName = request.getSession().getAttribute("tableName").toString();
-		if(tableName.equals("jiaoshi")) {
-			exampaper.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+		if(tableName.equals("user_teacher")) {
+			exampaper.setT_username((String)request.getSession().getAttribute("username"));
 		}
         EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
 
@@ -85,7 +85,7 @@ public class ExamPaperController {
      * 前端列表
      */
 	@IgnoreAuth
-    @RequestMapping("/list")
+    @RequestMapping("/managerlist")
     public R list(@RequestParam Map<String, Object> params, ExamPaperEntity exampaper,
                   HttpServletRequest request){
         EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
@@ -146,29 +146,12 @@ public class ExamPaperController {
     public R save(@RequestBody ExamPaperEntity exampaper, HttpServletRequest request){
     	//ValidatorUtils.validateEntity(exampaper);
         String tableName = request.getSession().getAttribute("tableName").toString();
-        if(tableName.equals("jiaoshi")) {
-            exampaper.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+        if(tableName.equals("user_teacher")) {
+            exampaper.setT_username((String)request.getSession().getAttribute("username"));
         }
         exampaperService.insert(exampaper);
         return R.ok();
     }
-    
-    /**
-     * 前端保存
-     */
-    @RequestMapping("/add")
-    public R add(@RequestBody ExamPaperEntity exampaper, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(exampaper);
-        String tableName = request.getSession().getAttribute("tableName").toString();
-        if(tableName.equals("jiaoshi")) {
-            exampaper.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
-        }
-        exampaperService.insert(exampaper);
-        return R.ok();
-    }
-
-
-
      /**
      * 获取用户密保
      */
@@ -193,16 +176,17 @@ public class ExamPaperController {
     }
 
 
-
-    
-
     /**
-     * 删除
+     * 单独删除试卷
      */
     @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-        exampaperService.deleteBatchIds(Arrays.asList(ids));
-        return R.ok();
+    public R delete(@RequestBody Long id){
+        boolean removed = exampaperService.deleteById(id);
+        if (removed) {
+            return R.ok();
+        } else {
+            return R.error("删除失败，试卷不存在");
+        }
     }
     
 	
@@ -234,99 +218,95 @@ public class ExamPaperController {
         return R.ok().put("data", page);
     }
 
-
-
-
-
-
-
-
-
     /**
-     * 组卷
+     * 创建试卷和组卷
      */
-    @RequestMapping("/compose")
-    public R compose(HttpServletRequest request,@RequestParam Long paperid, @RequestParam String papername, @RequestParam Integer radioNum,
-        @RequestParam Integer multipleChoiceNum, @RequestParam Integer determineNum, @RequestParam Integer fillNum, @RequestParam Integer subjectivityNum){
-        //如果已存在考试记录，不能进行重新组卷
-        if(examrecordService.selectCount(new EntityWrapper<ExamRecordEntity>().eq("paperid", paperid))>0) {
-            return R.error("已存在考试记录，无法重新组卷");
-        }
-        //组卷之前删除该试卷之前的所有题目
-        examquestionService.deleteByMap(new MapUtils().put("paperid", paperid));
+    @RequestMapping("/create")
+    public R compose(HttpServletRequest request,  @RequestParam String title, @RequestParam Integer single,
+                     @RequestParam Integer multiple, @RequestParam Integer judge, @RequestParam Integer blank, @RequestParam Integer subjective){
         List<ExamQuestionBankEntity> questionList = new ArrayList<ExamQuestionBankEntity>();
         String tableName = request.getSession().getAttribute("tableName").toString();
+        //创建试卷对象
+        ExamPaperEntity exampaper = new ExamPaperEntity();
+        exampaper.setTitle(title);
+        exampaper.setAddtime(new Date());
+        if(tableName.equals("user_teacher")) {
+            exampaper.setT_username((String)request.getSession().getAttribute("username"));
+        }
+        // 插入试卷，自动回填ID
+        exampaperService.insert(exampaper);
+        Long paperid = exampaper.getId();  // 获取回填的主键ID
         //单选题
-        if(radioNum>0) {
-            Integer radioSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 0));
-            if(radioSize<radioNum) {
+        if(single>0) {
+            Integer singleSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 0));
+            if(singleSize<single) {
                 return R.error("单选题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("jiaoshi")) {
-                    ew.eq("jiaoshigonghao", (String)request.getSession().getAttribute("username"));
+                if(tableName.equals("user_teacher")) {
+                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
                 }
-                ew.eq("type", 0).orderBy("RAND()").last("limit "+radioNum);
+                ew.eq("type", 0).orderBy("RAND()").last("limit "+single);
                 List<ExamQuestionBankEntity> radioList = examquestionbankService.selectList(ew);
                 questionList.addAll(radioList);
             }
         }
         //多选题
-        if(multipleChoiceNum>0) {
+        if(multiple>0) {
             Integer multipleChoiceSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 1));
-            if(multipleChoiceSize<multipleChoiceNum) {
+            if(multipleChoiceSize<multiple) {
                 return R.error("多选题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("jiaoshi")) {
-                    ew.eq("jiaoshigonghao", (String)request.getSession().getAttribute("username"));
+                if(tableName.equals("user_teacher")) {
+                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
                 }
-                ew.eq("type", 1).orderBy("RAND()").last("limit "+multipleChoiceNum);
+                ew.eq("type", 1).orderBy("RAND()").last("limit "+multiple);
                 List<ExamQuestionBankEntity> multipleChoiceList = examquestionbankService.selectList(ew);
                 questionList.addAll(multipleChoiceList);
             }
         }
         //判断题
-        if(determineNum>0) {
-            Integer determineSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 2));
-            if(determineSize<determineNum) {
+        if(judge>0) {
+            Integer judgeSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 2));
+            if(judgeSize<judge) {
                 return R.error("判断题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("jiaoshi")) {
-                    ew.eq("jiaoshigonghao", (String)request.getSession().getAttribute("username"));
+                if(tableName.equals("user_teacher")) {
+                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
                 }
-                ew.eq("type", 2).orderBy("RAND()").last("limit "+determineNum);
+                ew.eq("type", 2).orderBy("RAND()").last("limit "+judge);
                 List<ExamQuestionBankEntity> determineList = examquestionbankService.selectList(ew);
                 questionList.addAll(determineList);
             }
         }
         //填空题
-        if(fillNum>0) {
-            Integer fillSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 3));
-            if(fillSize<fillNum) {
+        if(blank>0) {
+            Integer blankSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 3));
+            if(blankSize<blank) {
                 return R.error("填空题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("jiaoshi")) {
-                    ew.eq("jiaoshigonghao", (String)request.getSession().getAttribute("username"));
+                if(tableName.equals("user_teacher")) {
+                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
                 }
-                ew.eq("type", 3).orderBy("RAND()").last("limit "+fillNum);
+                ew.eq("type", 3).orderBy("RAND()").last("limit "+blank);
                 List<ExamQuestionBankEntity> fillList = examquestionbankService.selectList(ew);
                 questionList.addAll(fillList);
             }
         }
         //主观题
-        if(subjectivityNum>0) {
-            Integer subjectivitySize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 4));
-            if(subjectivitySize<subjectivityNum) {
+        if(subjective>0) {
+            Integer subjectiveSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 4));
+            if(subjectiveSize<subjective) {
                 return R.error("主观题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("jiaoshi")) {
-                    ew.eq("jiaoshigonghao", (String)request.getSession().getAttribute("username"));
+                if(tableName.equals("user_teacher")) {
+                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
                 }
-                ew.eq("type", 4).orderBy("RAND()").last("limit "+subjectivityNum);
+                ew.eq("type", 4).orderBy("RAND()").last("limit "+subjective);
                 List<ExamQuestionBankEntity> subjectivityList = examquestionbankService.selectList(ew);
                 questionList.addAll(subjectivityList);
             }
@@ -335,23 +315,16 @@ public class ExamPaperController {
             long seq = 0;
             for(ExamQuestionBankEntity q : questionList) {
                 ExamQuestionEntity examquestion = new ExamQuestionEntity();
-                examquestion.setId(new Date().getTime()+new Double(Math.floor(Math.random()*1000)).longValue());
+                examquestion.setId(System.currentTimeMillis()+(long)Math.floor(Math.random()*1000));
                 examquestion.setPaperid(paperid);
-                examquestion.setPapername(papername);
-                examquestion.setQuestionname(q.getQuestionname());
-                examquestion.setOptions(q.getOptions());
-                examquestion.setScore(q.getScore());
-                examquestion.setAnswer(q.getAnswer());
-                examquestion.setAnalysis(q.getAnalysis());
-                examquestion.setType(q.getType());
+                examquestion.setQuestionId(q.getId());
                 examquestion.setSequence(++seq);
-                if(tableName.equals("jiaoshi")) {
-                    examquestion.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+                if(tableName.equals("user_teacher")) {
+                    examquestion.setT_username((String)request.getSession().getAttribute("username"));
                 }
                 examquestionService.insert(examquestion);
             }
         }
         return R.ok();
     }
-
 }

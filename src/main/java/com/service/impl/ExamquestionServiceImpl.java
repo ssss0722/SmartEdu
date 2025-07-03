@@ -15,7 +15,7 @@ import com.utils.Query;
 import com.dao.ExamQuestionDao;
 import com.entity.ExamQuestionEntity;
 import com.service.ExamquestionService;
-import com.entity.vo.ExamquestionVO;
+import com.entity.vo.ExamQuestionVO;
 import com.entity.view.ExamQuestionView;
 
 @Service("examquestionService")
@@ -41,12 +41,12 @@ public class ExamquestionServiceImpl extends ServiceImpl<ExamQuestionDao, ExamQu
 
     
     @Override
-	public List<ExamquestionVO> selectListVO(Wrapper<ExamQuestionEntity> wrapper) {
+	public List<ExamQuestionVO> selectListVO(Wrapper<ExamQuestionEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public ExamquestionVO selectVO(Wrapper<ExamQuestionEntity> wrapper) {
+	public ExamQuestionVO selectVO(Wrapper<ExamQuestionEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	

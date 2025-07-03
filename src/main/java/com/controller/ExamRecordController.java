@@ -1,9 +1,6 @@
 package com.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -168,7 +165,7 @@ public class ExamRecordController {
     	//ValidatorUtils.validateEntity(examrecord);
     	examrecord.setUserid((Long)request.getSession().getAttribute("userId"));
         ExamPaperEntity exampaper = exampaperService.selectById(examrecord.getPaperid());
-        examrecord.setJiaoshigonghao(exampaper.getJiaoshigonghao());
+        examrecord.setJiaoshigonghao(exampaper.getT_username());
         examrecordService.insert(examrecord);
         return R.ok();
     }
@@ -181,7 +178,7 @@ public class ExamRecordController {
     	//ValidatorUtils.validateEntity(examrecord);
     	examrecord.setUserid((Long)request.getSession().getAttribute("userId"));
         ExamPaperEntity exampaper = exampaperService.selectById(examrecord.getPaperid());
-        examrecord.setJiaoshigonghao(exampaper.getJiaoshigonghao());
+        examrecord.setJiaoshigonghao(exampaper.getT_username());
         examrecordService.insert(examrecord);
         return R.ok();
     }
@@ -253,8 +250,42 @@ public class ExamRecordController {
         return R.ok().put("data", page);
     }
 
+    /**
+     * 对于某一次考试学生成绩分析
+     */
+    @RequestMapping("/analysis/{paperId}")
+    public R analyzeScore(@PathVariable("paperId") Long paperId){
+        List<ExamRecordEntity> records =examrecordService.selectList(
+                new EntityWrapper<ExamRecordEntity>()
+                        .eq("paperid",paperId)
+        );
+        // 构建成绩分布区间，如 [0-60], [60-70], ...
+        int[] ranges = {60, 70, 80, 90, 100}; // 分段上限
+        Map<String, Integer> distribution = new LinkedHashMap<>();
+        distribution.put("0-60", 0);
+        distribution.put("60-70", 0);
+        distribution.put("70-80", 0);
+        distribution.put("80-90", 0);
+        distribution.put("90-100", 0);
 
+        for (ExamRecordEntity r : records) {
+            double score = r.getScore();
+            if (score < 60) {
+                distribution.put("0-60", distribution.get("0-60") + 1);
+            } else if (score < 70) {
+                distribution.put("60-70", distribution.get("60-70") + 1);
+            } else if (score < 80) {
+                distribution.put("70-80", distribution.get("70-80") + 1);
+            } else if (score < 90) {
+                distribution.put("80-90", distribution.get("80-90") + 1);
+            } else {
+                distribution.put("90-100", distribution.get("90-100") + 1);
+            }
+        }
 
+        return R.ok().put("distribution", distribution);
+
+    }
     /**
      * 当重新考试时，删除考生的某个试卷的所有考试记录
      */
@@ -263,11 +294,4 @@ public class ExamRecordController {
     	examrecordService.delete(new EntityWrapper<ExamRecordEntity>().eq("paperid", paperid).eq("userid", userid));
         return R.ok();
     }
-
-
-
-
-
-
-
 }

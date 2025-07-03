@@ -6,7 +6,7 @@ import com.utils.PageUtils;
 import com.entity.ExamRecordEntity;
 import java.util.List;
 import java.util.Map;
-import com.entity.vo.ExamrecordVO;
+import com.entity.vo.ExamRecordVO;
 import org.apache.ibatis.annotations.Param;
 import com.entity.view.ExamRecordView;
 
@@ -22,9 +22,9 @@ public interface ExamrecordService extends IService<ExamRecordEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<ExamrecordVO> selectListVO(Wrapper<ExamRecordEntity> wrapper);
+   	List<ExamRecordVO> selectListVO(Wrapper<ExamRecordEntity> wrapper);
    	
-   	ExamrecordVO selectVO(@Param("ew") Wrapper<ExamRecordEntity> wrapper);
+   	ExamRecordVO selectVO(@Param("ew") Wrapper<ExamRecordEntity> wrapper);
    	
    	List<ExamRecordView> selectListView(Wrapper<ExamRecordEntity> wrapper);
    	

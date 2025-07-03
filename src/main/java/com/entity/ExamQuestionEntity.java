@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -49,48 +50,20 @@ public class ExamQuestionEntity<T> implements Serializable {
 	 */
 					
 	private Long paperid;
-	
+
 	/**
-	 * 在线考试名称
+	 * 题目ID（关联题库表）
 	 */
-					
-	private String papername;
-	
-	/**
-	 * 试题名称
-	 */
-					
-	private String questionname;
-	
-	/**
-	 * 选项，json字符串
-	 */
-					
-	private String options;
-	
+	@TableField("question_id")
+	private Long questionId;
 	/**
 	 * 分值
 	 */
 					
 	private Long score;
-	
-	/**
-	 * 正确答案
-	 */
-					
-	private String answer;
-	
-	/**
-	 * 答案解析
-	 */
-					
-	private String analysis;
-	
-	/**
-	 * 试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）4:主观题
-	 */
-					
-	private Long type;
+
+
+
 	
 	/**
 	 * 试题排序，值越大排越前面
@@ -101,8 +74,8 @@ public class ExamQuestionEntity<T> implements Serializable {
 	/**
 	 * 教师工号
 	 */
-					
-	private String jiaoshigonghao;
+	@TableField("t_username")
+	private String tUsername;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -136,41 +109,19 @@ public class ExamQuestionEntity<T> implements Serializable {
 		return paperid;
 	}
 	/**
-	 * 设置：在线考试名称
+	 * 获取：题目id（外键）
 	 */
-	public void setPapername(String papername) {
-		this.papername = papername;
+	public Long getQuestionId() {
+		return questionId;
 	}
 	/**
-	 * 获取：在线考试名称
+	 * 设置：题目id（外键）
 	 */
-	public String getPapername() {
-		return papername;
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
 	}
-	/**
-	 * 设置：试题名称
-	 */
-	public void setQuestionname(String questionname) {
-		this.questionname = questionname;
-	}
-	/**
-	 * 获取：试题名称
-	 */
-	public String getQuestionname() {
-		return questionname;
-	}
-	/**
-	 * 设置：选项，json字符串
-	 */
-	public void setOptions(String options) {
-		this.options = options;
-	}
-	/**
-	 * 获取：选项，json字符串
-	 */
-	public String getOptions() {
-		return options;
-	}
+
+
 	/**
 	 * 设置：分值
 	 */
@@ -183,42 +134,7 @@ public class ExamQuestionEntity<T> implements Serializable {
 	public Long getScore() {
 		return score;
 	}
-	/**
-	 * 设置：正确答案
-	 */
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-	/**
-	 * 获取：正确答案
-	 */
-	public String getAnswer() {
-		return answer;
-	}
-	/**
-	 * 设置：答案解析
-	 */
-	public void setAnalysis(String analysis) {
-		this.analysis = analysis;
-	}
-	/**
-	 * 获取：答案解析
-	 */
-	public String getAnalysis() {
-		return analysis;
-	}
-	/**
-	 * 设置：试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）4:主观题
-	 */
-	public void setType(Long type) {
-		this.type = type;
-	}
-	/**
-	 * 获取：试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）4:主观题
-	 */
-	public Long getType() {
-		return type;
-	}
+
 	/**
 	 * 设置：试题排序，值越大排越前面
 	 */
@@ -234,14 +150,14 @@ public class ExamQuestionEntity<T> implements Serializable {
 	/**
 	 * 设置：教师工号
 	 */
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void setT_username(String username) {
+		this.tUsername = username;
 	}
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String getT_username() {
+		return tUsername;
 	}
 
 }

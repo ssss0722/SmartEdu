@@ -4,15 +4,27 @@ import java.io.Serializable;
  
 
 /**
- * 试题库表
+ * 试题表
  * @author 
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public class ExamquestionbankVO  implements Serializable {
+public class ExamQuestionVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	 			
+	/**
+	 * 在线考试名称
+	 */
+	
+	private String papername;
+		
+	/**
+	 * 试题名称
+	 */
+	
+	private String questionname;
+		
 	/**
 	 * 选项，json字符串
 	 */
@@ -38,7 +50,7 @@ public class ExamquestionbankVO  implements Serializable {
 	private String analysis;
 		
 	/**
-	 * 试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题
+	 * 试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）4:主观题
 	 */
 	
 	private Long type;
@@ -54,6 +66,38 @@ public class ExamquestionbankVO  implements Serializable {
 	 */
 	
 	private String jiaoshigonghao;
+				
+	
+	/**
+	 * 设置：在线考试名称
+	 */
+	 
+	public void setPapername(String papername) {
+		this.papername = papername;
+	}
+	
+	/**
+	 * 获取：在线考试名称
+	 */
+	public String getPapername() {
+		return papername;
+	}
+				
+	
+	/**
+	 * 设置：试题名称
+	 */
+	 
+	public void setQuestionname(String questionname) {
+		this.questionname = questionname;
+	}
+	
+	/**
+	 * 获取：试题名称
+	 */
+	public String getQuestionname() {
+		return questionname;
+	}
 				
 	
 	/**
@@ -121,7 +165,7 @@ public class ExamquestionbankVO  implements Serializable {
 				
 	
 	/**
-	 * 设置：试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题
+	 * 设置：试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）4:主观题
 	 */
 	 
 	public void setType(Long type) {
@@ -129,7 +173,7 @@ public class ExamquestionbankVO  implements Serializable {
 	}
 	
 	/**
-	 * 获取：试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题
+	 * 获取：试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）4:主观题
 	 */
 	public Long getType() {
 		return type;

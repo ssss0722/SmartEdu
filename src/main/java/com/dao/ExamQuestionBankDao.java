@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import org.apache.ibatis.annotations.Param;
-import com.entity.vo.ExamquestionbankVO;
+import com.entity.vo.ExamQuestionbankVO;
 import com.entity.view.ExamQuestionBankView;
 
 
@@ -21,9 +21,9 @@ import com.entity.view.ExamQuestionBankView;
  */
 public interface ExamQuestionBankDao extends BaseMapper<ExamQuestionBankEntity> {
 	
-	List<ExamquestionbankVO> selectListVO(@Param("ew") Wrapper<ExamQuestionBankEntity> wrapper);
+	List<ExamQuestionbankVO> selectListVO(@Param("ew") Wrapper<ExamQuestionBankEntity> wrapper);
 	
-	ExamquestionbankVO selectVO(@Param("ew") Wrapper<ExamQuestionBankEntity> wrapper);
+	ExamQuestionbankVO selectVO(@Param("ew") Wrapper<ExamQuestionBankEntity> wrapper);
 	
 	List<ExamQuestionBankView> selectListView(@Param("ew") Wrapper<ExamQuestionBankEntity> wrapper);
 

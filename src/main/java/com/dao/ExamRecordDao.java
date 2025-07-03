@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import org.apache.ibatis.annotations.Param;
-import com.entity.vo.ExamrecordVO;
+import com.entity.vo.ExamRecordVO;
 import com.entity.view.ExamRecordView;
 
 
@@ -21,9 +21,9 @@ import com.entity.view.ExamRecordView;
  */
 public interface ExamRecordDao extends BaseMapper<ExamRecordEntity> {
 	
-	List<ExamrecordVO> selectListVO(@Param("ew") Wrapper<ExamRecordEntity> wrapper);
+	List<ExamRecordVO> selectListVO(@Param("ew") Wrapper<ExamRecordEntity> wrapper);
 	
-	ExamrecordVO selectVO(@Param("ew") Wrapper<ExamRecordEntity> wrapper);
+	ExamRecordVO selectVO(@Param("ew") Wrapper<ExamRecordEntity> wrapper);
 	
 	List<ExamRecordView> selectListView(@Param("ew") Wrapper<ExamRecordEntity> wrapper);
 

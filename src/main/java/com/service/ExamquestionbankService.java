@@ -6,7 +6,7 @@ import com.utils.PageUtils;
 import com.entity.ExamQuestionBankEntity;
 import java.util.List;
 import java.util.Map;
-import com.entity.vo.ExamquestionbankVO;
+import com.entity.vo.ExamQuestionbankVO;
 import org.apache.ibatis.annotations.Param;
 import com.entity.view.ExamQuestionBankView;
 
@@ -22,9 +22,9 @@ public interface ExamquestionbankService extends IService<ExamQuestionBankEntity
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<ExamquestionbankVO> selectListVO(Wrapper<ExamQuestionBankEntity> wrapper);
+   	List<ExamQuestionbankVO> selectListVO(Wrapper<ExamQuestionBankEntity> wrapper);
    	
-   	ExamquestionbankVO selectVO(@Param("ew") Wrapper<ExamQuestionBankEntity> wrapper);
+   	ExamQuestionbankVO selectVO(@Param("ew") Wrapper<ExamQuestionBankEntity> wrapper);
    	
    	List<ExamQuestionBankView> selectListView(Wrapper<ExamQuestionBankEntity> wrapper);
    	

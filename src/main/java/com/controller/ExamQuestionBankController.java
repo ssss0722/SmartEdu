@@ -33,7 +33,7 @@ import com.utils.MPUtil;
  * @date 2024-03-05 11:41:24
  */
 @RestController
-@RequestMapping("/examquestionbank")
+@RequestMapping("/api/questionbank")
 public class ExamQuestionBankController {
     @Autowired
     private ExamquestionbankService examquestionbankService;
@@ -48,12 +48,12 @@ public class ExamQuestionBankController {
     /**
      * 后端列表
      */
-    @RequestMapping("/page")
+    @RequestMapping("/list")
     public R page(@RequestParam Map<String, Object> params, ExamQuestionBankEntity examquestionbank,
                   HttpServletRequest request){
 		String tableName = request.getSession().getAttribute("tableName").toString();
-		if(tableName.equals("jiaoshi")) {
-			examquestionbank.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+		if(tableName.equals("user_teacher")) {
+			examquestionbank.setT_username((String)request.getSession().getAttribute("username"));
 		}
         EntityWrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
 
@@ -66,7 +66,7 @@ public class ExamQuestionBankController {
      * 前端列表
      */
 	@IgnoreAuth
-    @RequestMapping("/list")
+    @RequestMapping("/managerlist")
     public R list(@RequestParam Map<String, Object> params, ExamQuestionBankEntity examquestionbank,
                   HttpServletRequest request){
         EntityWrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
@@ -127,8 +127,8 @@ public class ExamQuestionBankController {
     public R save(@RequestBody ExamQuestionBankEntity examquestionbank, HttpServletRequest request){
     	//ValidatorUtils.validateEntity(examquestionbank);
         String tableName = request.getSession().getAttribute("tableName").toString();
-        if(tableName.equals("jiaoshi")) {
-            examquestionbank.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+        if(tableName.equals("user_teacher")) {
+            examquestionbank.setT_username((String)request.getSession().getAttribute("username"));
         }
         examquestionbankService.insert(examquestionbank);
         return R.ok();
@@ -137,12 +137,12 @@ public class ExamQuestionBankController {
     /**
      * 前端保存
      */
-    @RequestMapping("/add")
+    @RequestMapping("/create")
     public R add(@RequestBody ExamQuestionBankEntity examquestionbank, HttpServletRequest request){
     	//ValidatorUtils.validateEntity(examquestionbank);
         String tableName = request.getSession().getAttribute("tableName").toString();
-        if(tableName.equals("jiaoshi")) {
-            examquestionbank.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+        if(tableName.equals("user_teacher")) {
+            examquestionbank.setT_username((String)request.getSession().getAttribute("username"));
         }
         examquestionbankService.insert(examquestionbank);
         return R.ok();
@@ -173,14 +173,26 @@ public class ExamQuestionBankController {
         return R.ok();
     }
 
+    /**
+     * 删除单个试题
+     */
+    @RequestMapping("/delete")
+    public R delete(@RequestParam Long id) {
+        boolean removed = examquestionbankService.deleteById(id);
+        if (removed) {
+            return R.ok();
+        } else {
+            return R.error("删除失败，试题不存在");
+        }
+    }
 
 
     
 
     /**
-     * 删除
+     * 批量删除试题
      */
-    @RequestMapping("/delete")
+    @RequestMapping("/delete_batch")
     public R delete(@RequestBody Long[] ids){
         examquestionbankService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
@@ -214,14 +226,4 @@ public class ExamQuestionBankController {
 		PageUtils page = examquestionbankService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, examquestionbank), params), params));
         return R.ok().put("data", page);
     }
-
-
-
-
-
-
-
-
-
-
 }

@@ -16,13 +16,13 @@
     </resultMap>
 
 	<select id="selectListVO"
-		resultType="com.entity.vo.ExamquestionbankVO" >
+		resultType="com.entity.vo.ExamQuestionbankVO" >
 		SELECT * FROM examquestionbank  examquestionbank         
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
-		resultType="com.entity.vo.ExamquestionbankVO" >
+		resultType="com.entity.vo.ExamQuestionbankVO" >
 		SELECT  examquestionbank.* FROM examquestionbank  examquestionbank 	
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>

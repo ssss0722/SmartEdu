@@ -52,8 +52,8 @@ public class ExamQuestionController {
     public R page(@RequestParam Map<String, Object> params, ExamQuestionEntity examquestion,
                   HttpServletRequest request){
 		String tableName = request.getSession().getAttribute("tableName").toString();
-		if(tableName.equals("jiaoshi")) {
-			examquestion.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+		if(tableName.equals("user_teacher")) {
+			examquestion.setT_username((String)request.getSession().getAttribute("username"));
 		}
         EntityWrapper<ExamQuestionEntity> ew = new EntityWrapper<ExamQuestionEntity>();
 
@@ -127,8 +127,8 @@ public class ExamQuestionController {
     public R save(@RequestBody ExamQuestionEntity examquestion, HttpServletRequest request){
     	//ValidatorUtils.validateEntity(examquestion);
         String tableName = request.getSession().getAttribute("tableName").toString();
-        if(tableName.equals("jiaoshi")) {
-            examquestion.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+        if(tableName.equals("user_teacher")) {
+            examquestion.setT_username((String)request.getSession().getAttribute("username"));
         }
         examquestionService.insert(examquestion);
         return R.ok();
@@ -141,8 +141,8 @@ public class ExamQuestionController {
     public R add(@RequestBody ExamQuestionEntity examquestion, HttpServletRequest request){
     	//ValidatorUtils.validateEntity(examquestion);
         String tableName = request.getSession().getAttribute("tableName").toString();
-        if(tableName.equals("jiaoshi")) {
-            examquestion.setJiaoshigonghao((String)request.getSession().getAttribute("username"));
+        if(tableName.equals("user_teacher")) {
+            examquestion.setT_username((String)request.getSession().getAttribute("username"));
         }
         examquestionService.insert(examquestion);
         return R.ok();

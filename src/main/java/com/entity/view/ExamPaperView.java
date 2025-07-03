@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-@TableName("exampaper")
+@TableName("exam_paper")
 public class ExamPaperView extends ExamPaperEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

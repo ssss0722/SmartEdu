@@ -6,7 +6,7 @@ import com.utils.PageUtils;
 import com.entity.ExamPaperEntity;
 import java.util.List;
 import java.util.Map;
-import com.entity.vo.ExampaperVO;
+import com.entity.vo.ExamPaperVO;
 import org.apache.ibatis.annotations.Param;
 import com.entity.view.ExamPaperView;
 
@@ -22,9 +22,9 @@ public interface ExampaperService extends IService<ExamPaperEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<ExampaperVO> selectListVO(Wrapper<ExamPaperEntity> wrapper);
+   	List<ExamPaperVO> selectListVO(Wrapper<ExamPaperEntity> wrapper);
    	
-   	ExampaperVO selectVO(@Param("ew") Wrapper<ExamPaperEntity> wrapper);
+   	ExamPaperVO selectVO(@Param("ew") Wrapper<ExamPaperEntity> wrapper);
    	
    	List<ExamPaperView> selectListView(Wrapper<ExamPaperEntity> wrapper);
    	

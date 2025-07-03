@@ -15,7 +15,7 @@ import com.utils.Query;
 import com.dao.ExamPaperDao;
 import com.entity.ExamPaperEntity;
 import com.service.ExampaperService;
-import com.entity.vo.ExampaperVO;
+import com.entity.vo.ExamPaperVO;
 import com.entity.view.ExamPaperView;
 
 @Service("exampaperService")
@@ -41,12 +41,12 @@ public class ExampaperServiceImpl extends ServiceImpl<ExamPaperDao, ExamPaperEnt
 
     
     @Override
-	public List<ExampaperVO> selectListVO(Wrapper<ExamPaperEntity> wrapper) {
+	public List<ExamPaperVO> selectListVO(Wrapper<ExamPaperEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public ExampaperVO selectVO(Wrapper<ExamPaperEntity> wrapper) {
+	public ExamPaperVO selectVO(Wrapper<ExamPaperEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	

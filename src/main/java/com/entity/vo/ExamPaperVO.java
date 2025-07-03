@@ -1,5 +1,7 @@
 package com.entity.vo;
 
+import com.baomidou.mybatisplus.annotations.TableField;
+
 import java.io.Serializable;
  
 
@@ -9,7 +11,7 @@ import java.io.Serializable;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public class ExampaperVO  implements Serializable {
+public class ExamPaperVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	 			
@@ -23,13 +25,13 @@ public class ExampaperVO  implements Serializable {
 	 * 在线考试状态
 	 */
 	
-	private Integer status;
-		
+	private String status;
+
 	/**
 	 * 教师工号
 	 */
-	
-	private String jiaoshigonghao;
+	@TableField("t_username")
+	private String tUsername;
 				
 	
 	/**
@@ -52,14 +54,14 @@ public class ExampaperVO  implements Serializable {
 	 * 设置：在线考试状态
 	 */
 	 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	
 	/**
 	 * 获取：在线考试状态
 	 */
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 				
@@ -68,15 +70,15 @@ public class ExampaperVO  implements Serializable {
 	 * 设置：教师工号
 	 */
 	 
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void setT_username(String username) {
+		this.tUsername = username;
 	}
 	
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String getT_username() {
+		return tUsername;
 	}
 			
 }

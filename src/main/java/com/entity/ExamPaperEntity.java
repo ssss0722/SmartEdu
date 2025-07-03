@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -19,9 +20,9 @@ import com.baomidou.mybatisplus.enums.IdType;
  * 数据库通用操作实体类（普通增删改查）
  * @author 
  * @email 
- * @date 2024-03-05 11:41:24
+ * @date 2025-07-01 10:41:24
  */
-@TableName("exampaper")
+@TableName("exam_paper")
 public class ExamPaperEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -48,25 +49,45 @@ public class ExamPaperEntity<T> implements Serializable {
 	 * 在线考试名称
 	 */
 					
-	private String name;
+	private String title;
 	
 	/**
-	 * 测试时长(分钟)
+	 * 测试开始时间(分钟)
 	 */
-					
-	private Integer time;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date startTime;
+	/**
+	 * 测试结束时间(分钟)
+	 */
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date endTime;
+	/**
+	 * 测试结束时间(分钟)
+	 */
+	@TableField(exist = false)
+	private String durationText;
+
+	public String getDurationText() {
+		return durationText;
+	}
+	public void setDurationText(String durationText) {
+		this.durationText = durationText;
+	}
+
 	
 	/**
 	 * 在线考试状态
 	 */
 					
-	private Integer status;
+	private String status;
 	
 	/**
 	 * 教师工号
 	 */
-					
-	private String jiaoshigonghao;
+@TableField("t_username")
+	private String tUsername;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -90,50 +111,62 @@ public class ExamPaperEntity<T> implements Serializable {
 	/**
 	 * 设置：在线考试名称
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	/**
 	 * 获取：在线考试名称
 	 */
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 	/**
-	 * 设置：测试时长(分钟)
+	 * 设置：测试开始时间
 	 */
-	public void setTime(Integer time) {
-		this.time = time;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 	/**
-	 * 获取：测试时长(分钟)
+	 * 获取：测试开始时间
 	 */
-	public Integer getTime() {
-		return time;
+	public Date getStartTime() {
+		return startTime;
+	}
+	/**
+	 * 设置：测试结束时间
+	 */
+	public void setEndTime(Date endTime) {
+		this.endTime =endTime ;
+	}
+	/**
+	 * 获取：测试结束时间
+	 */
+	public Date getEndTime() {
+		return endTime;
 	}
 	/**
 	 * 设置：在线考试状态
 	 */
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	/**
 	 * 获取：在线考试状态
 	 */
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 	/**
 	 * 设置：教师工号
 	 */
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void setT_username(String username) {
+		this.tUsername = username;
 	}
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String getT_username() {
+		return tUsername;
 	}
 
 }
