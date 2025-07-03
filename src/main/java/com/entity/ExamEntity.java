@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
@@ -41,6 +42,13 @@ public class ExamEntity implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
+
+    /**
+     *
+     * 考试的发布老师
+     */
+    @TableField("t_username")
+    private String tUsername;
     public Long getId() {
         return id;
     }
@@ -87,6 +95,18 @@ public class ExamEntity implements Serializable {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+    /**
+     * 设置：教师工号
+     */
+    public void setT_username(String username) {
+        this.tUsername = username;
+    }
+    /**
+     * 获取：教师工号
+     */
+    public String getT_username() {
+        return tUsername;
     }
 
 }

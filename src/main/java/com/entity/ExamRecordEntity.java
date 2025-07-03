@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -53,8 +54,8 @@ public class ExamRecordEntity<T> implements Serializable {
 	/**
 	 * 用户名
 	 */
-					
-	private String username;
+	@TableField("s_username")
+	private String sUsername;
 	
 	/**
 	 * 在线考试id（外键）
@@ -131,8 +132,8 @@ public class ExamRecordEntity<T> implements Serializable {
 	/**
 	 * 教师工号
 	 */
-					
-	private String jiaoshigonghao;
+	@TableField("t_username")
+	private String tUsername;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -168,14 +169,14 @@ public class ExamRecordEntity<T> implements Serializable {
 	/**
 	 * 设置：用户名
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setS_username(String username) {
+		this.sUsername = username;
 	}
 	/**
 	 * 获取：用户名
 	 */
-	public String getUsername() {
-		return username;
+	public String getS_username() {
+		return sUsername;
 	}
 	/**
 	 * 设置：在线考试id（外键）
@@ -324,14 +325,14 @@ public class ExamRecordEntity<T> implements Serializable {
 	/**
 	 * 设置：教师工号
 	 */
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
+	public void setT_username(String username) {
+		this.tUsername = username;
 	}
 	/**
 	 * 获取：教师工号
 	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
+	public String getT_username() {
+		return tUsername;
 	}
 
 }

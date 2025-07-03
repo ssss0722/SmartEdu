@@ -1,5 +1,7 @@
 package com.dto;
 
+import com.baomidou.mybatisplus.annotations.TableField;
+
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +11,8 @@ public class ExamRequestDTO {
     private Integer status;
     private Date startTime;
     private Date endTime;
+    @TableField("t_username")
+    private String tUsername;
     private List<Long> studentIds;
 
     public String getName() {
@@ -52,4 +56,6 @@ public class ExamRequestDTO {
     public void setStudentIds(List<Long> studentIds) {
         this.studentIds = studentIds;
     }
+    public void settUsername(String username){this.tUsername=username;}
+    public String gettUsername(){return tUsername;}
 }
