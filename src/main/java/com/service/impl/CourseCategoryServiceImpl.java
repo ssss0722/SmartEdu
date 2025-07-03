@@ -14,12 +14,12 @@ import com.utils.Query;
 
 import com.dao.CourseCategoriesDao;
 import com.entity.CourseCategoriesEntity;
-import com.service.KechengleibieService;
-import com.entity.vo.KechengleibieVO;
+import com.service.CourseCategoryService;
+import com.entity.vo.CourseCategoriesVO;
 import com.entity.view.CourseCategoriesView;
 
-@Service("kechengleibieService")
-public class KechengleibieServiceImpl extends ServiceImpl<CourseCategoriesDao, CourseCategoriesEntity> implements KechengleibieService {
+@Service("CourseCategoryService")
+public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoriesDao, CourseCategoriesEntity> implements CourseCategoryService {
 	
 	
     @Override
@@ -41,12 +41,12 @@ public class KechengleibieServiceImpl extends ServiceImpl<CourseCategoriesDao, C
 
     
     @Override
-	public List<KechengleibieVO> selectListVO(Wrapper<CourseCategoriesEntity> wrapper) {
+	public List<CourseCategoriesVO> selectListVO(Wrapper<CourseCategoriesEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public KechengleibieVO selectVO(Wrapper<CourseCategoriesEntity> wrapper) {
+	public CourseCategoriesVO selectVO(Wrapper<CourseCategoriesEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	

@@ -3,35 +3,35 @@
 
 <mapper namespace="com.dao.CourseCategoriesDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.entity.CourseCategoriesEntity" id="kechengleibieMap">
-        <result property="kechengleibie" column="kechengleibie"/>
-    </resultMap>
+<!--	&lt;!&ndash; 可根据自己的需求，是否要使用 &ndash;&gt;-->
+<!--    <resultMap type="com.entity.CourseCategoriesEntity" id="CourseCategoriesMap">-->
+<!--        <result property="course_categories" column="CourseCategories"/>-->
+<!--    </resultMap>-->
 
 	<select id="selectListVO"
-		resultType="com.entity.vo.KechengleibieVO" >
-		SELECT * FROM kechengleibie  kechengleibie         
+		resultType="com.entity.vo.CourseCategoriesVO" >
+		SELECT * FROM course_categories  course_categories
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
-	
+
 	<select id="selectVO"
-		resultType="com.entity.vo.KechengleibieVO" >
-		SELECT  kechengleibie.* FROM kechengleibie  kechengleibie 	
+		resultType="com.entity.vo.CourseCategoriesVO" >
+		SELECT  course_categories.* FROM course_categories  course_categories
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
     <select id="selectListView"
 		resultType="com.entity.view.CourseCategoriesView" >
 
-		SELECT  kechengleibie.* FROM kechengleibie  kechengleibie 	        
+		SELECT  course_categories.* FROM course_categories  course_categories
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
-	
+
 	<select id="selectView"
 		resultType="com.entity.view.CourseCategoriesView" >
-		SELECT * FROM kechengleibie  kechengleibie <where> 1=1 ${ew.sqlSegment}</where>
+		SELECT * FROM course_categories  course_categories <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
-	
+
 
 
 </mapper>

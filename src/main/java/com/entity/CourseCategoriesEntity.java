@@ -14,14 +14,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.baomidou.mybatisplus.enums.IdType;
 
 
-/**
- * 课程类别
- * 数据库通用操作实体类（普通增删改查）
- * @author 
- * @email 
- * @date 2024-03-05 11:41:23
- */
-@TableName("kechengleibie")
+@TableName("course_categories")
 public class CourseCategoriesEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +41,7 @@ public class CourseCategoriesEntity<T> implements Serializable {
 	 * 课程类别
 	 */
 					
-	private String kechengleibie;
+	private String course;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -72,14 +65,14 @@ public class CourseCategoriesEntity<T> implements Serializable {
 	/**
 	 * 设置：课程类别
 	 */
-	public void setKechengleibie(String kechengleibie) {
-		this.kechengleibie = kechengleibie;
+	public void setcourse(String course) {
+		this.course = course;
 	}
 	/**
 	 * 获取：课程类别
 	 */
-	public String getKechengleibie() {
-		return kechengleibie;
+	public String getCourse() {
+		return course;
 	}
 
 }
