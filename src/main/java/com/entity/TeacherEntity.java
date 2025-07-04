@@ -80,7 +80,7 @@ public class TeacherEntity<T> implements Serializable {
 	 */
 
 	@TableField(exist = false)
-	private List<Long> course;
+	private List<String> course;
 
 	/**
 	 * 角色
@@ -182,13 +182,13 @@ public class TeacherEntity<T> implements Serializable {
 	/**
 	 * 设置：课程名称
 	 */
-	public void setCourse(List<Long> course) {
+	public void setCourse(List<String> course) {
 		this.course=course;
 	}
 	/**
 	 * 获取：课程名称
 	 */
-	public List<Long> getCourse() {
+	public List<String> getCourse() {
 		return course;
 	}
 

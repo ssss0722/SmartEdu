@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.entity.AdminEntity;
+import com.entity.CourseCategoriesEntity;
 import com.entity.CourseTeacherEntity;
-import com.service.CourseTeacherService;
-import com.service.TokenBlacklistService;
+import com.service.*;
 import com.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,6 @@ import com.annotation.IgnoreAuth;
 
 import com.entity.TeacherEntity;
 import com.entity.view.TeacherView;
-
-import com.service.TeacherService;
-import com.service.TokenService;
 
 /**
  * 教师
@@ -48,6 +45,9 @@ public class TeacherController {
     @Autowired
     private CourseTeacherService courseTeacherService;
 
+    @Autowired
+    private CourseCategoryService courseCategoryService;
+
 	/**
 	 * 登录
 	 */
@@ -58,13 +58,15 @@ public class TeacherController {
 		if(u==null || !u.getPassword().equals(password) ||!u.getRole().equals(role)) {
 			return R.error("账号或密码不正确");
 		}
-        if(role.equals("teacher")){
-            String token = JwtUtils.generateToken(u.getId(), username, "teacher", "teacher");
-            return R.ok().put("token", token).put("data",u);
-        } else{
-            String token = JwtUtils.generateToken(u.getId(), username, "teacher", "teacher");
-            return R.ok().put("token", token).put("data",u);
+        String token = JwtUtils.generateToken(u.getId(), username, "teacher", "teacher");
+        List<CourseCategoriesEntity> list=courseCategoryService.selectByTeacher(u.getT_username());
+        List<String> result=new ArrayList<>();
+        for(CourseCategoriesEntity course:list){
+            String courseName=course.getCourse();
+            result.add(courseName);
         }
+        u.setCourse(result);
+        return R.ok().put("token", token).put("data",u);
 	}
 
 
@@ -82,10 +84,11 @@ public class TeacherController {
 		Long uId = new Date().getTime();
 		teacher.setId(uId);
         teacherService.insert(teacher);
-        List<Long> courseList=teacher.getCourse();
-        for(Long course:courseList){
+        List<String> courseList=teacher.getCourse();
+        for(String courseName:courseList){
             CourseTeacherEntity courseTeacher=new CourseTeacherEntity<>();
-            courseTeacher.setCourseId(course);
+            CourseCategoriesEntity course=courseCategoryService.selectByName(courseName);
+            courseTeacher.setCourseId(course.getId());
             courseTeacher.settUsername(teacherService.selectById(uId).getT_username());
             courseTeacherService.insert(courseTeacher);
         }
@@ -158,9 +161,17 @@ public class TeacherController {
             for (Object obj : page.getList()) {
                 if (obj instanceof TeacherEntity) {
                     ((TeacherEntity) obj).setPassword(null);
+                    List<CourseCategoriesEntity> list=courseCategoryService.selectByTeacher(((TeacherEntity) obj).getT_username());
+                    List<String> result=new ArrayList<>();
+                    for(CourseCategoriesEntity course:list){
+                        String name=course.getCourse();
+                        result.add(name);
+                    }
+                    ((TeacherEntity) obj).setCourse(result);
                 }
             }
         }
+
 
         return R.ok().put("data", page);
     }
@@ -223,6 +234,15 @@ public class TeacherController {
         // 移除密码字段
         list.forEach(u -> u.setPassword(null));
 
+        for(TeacherView teacherView:list){
+            List<CourseCategoriesEntity> courseList=courseCategoryService.selectByTeacher(teacherView.getT_username());
+            List<String> result=new ArrayList<>();
+            for(CourseCategoriesEntity course:courseList){
+                String name=course.getCourse();
+                result.add(name);
+            }
+            teacherView.setCourse(result);
+        }
         return R.ok().put("data", list);
     }
 
@@ -256,6 +276,20 @@ public class TeacherController {
         // 5. 查询列表 (原selectView改为分页查询)
         Page<TeacherEntity> pageResult = teacherService.selectPage(page, ew);
 
+        if (pageResult != null && pageResult.getRecords() != null) {
+            for (Object obj : pageResult.getRecords()) {
+                if (obj instanceof TeacherEntity) {
+                    List<CourseCategoriesEntity> list=courseCategoryService.selectByTeacher(((TeacherEntity) obj).getT_username());
+                    List<String> result=new ArrayList<>();
+                    for(CourseCategoriesEntity course:list){
+                        String name=course.getCourse();
+                        result.add(name);
+                    }
+                    ((TeacherEntity) obj).setCourse(result);
+                }
+            }
+        }
+
         return R.ok("查询教师成功")
                 .put("data", pageResult.getRecords())
                 .put("count", pageResult.getTotal());
@@ -269,6 +303,13 @@ public class TeacherController {
         try {
             Long userId = JwtUtils.getUserIdFromToken(token);
             TeacherEntity teacher = teacherService.selectById(userId);
+            List<CourseCategoriesEntity> list=courseCategoryService.selectByTeacher(teacherService.selectById(userId).getT_username());
+            List<String> result=new ArrayList<>();
+            for(CourseCategoriesEntity course:list){
+                String name=course.getCourse();
+                result.add(name);
+            }
+            teacher.setCourse(result);
             return R.ok().put("data", teacher);
         }catch (Exception e) {
             return R.error(401, "token解析失败");
@@ -307,7 +348,7 @@ public class TeacherController {
                 teacher.setPassword(originalUser.getPassword());
             }
         }
-        List<Long> courseList = teacher.getCourse();
+        List<String> courseList = teacher.getCourse();
         if (courseList != null && !courseList.isEmpty()) {
             // 5.1 先删除原有的课程关联
             Map<String, Object> deleteMap = new HashMap<>();
@@ -316,9 +357,9 @@ public class TeacherController {
 
             // 5.2 添加新的课程关联
             List<CourseTeacherEntity> relations = new ArrayList<>();
-            for (Long courseId : courseList) {
+            for (String course : courseList) {
                 CourseTeacherEntity relation = new CourseTeacherEntity();
-                relation.setCourseId(courseId);
+                relation.setCourseId(courseCategoryService.selectByName(course).getId());
                 relation.settUsername(teacher.getT_username());
                 relations.add(relation);
             }

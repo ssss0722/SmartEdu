@@ -42,4 +42,7 @@ public interface CourseCategoriesDao extends BaseMapper<CourseCategoriesEntity> 
 			"INNER JOIN user_teacher ut ON ct.t_username = ut.t_username " +
 			"WHERE ut.t_username = #{tUsername}")
 	List<CourseCategoriesEntity> selectByTeacher(String tUsername);
+
+	@Select("select * from course_categories where course=#{courseName}")
+	CourseCategoriesEntity selectByName(String courseName);
 }

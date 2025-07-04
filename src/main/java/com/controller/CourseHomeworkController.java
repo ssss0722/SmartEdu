@@ -161,10 +161,11 @@ public class CourseHomeworkController {
      * 创建作业和自动组卷
      */
     @RequestMapping("/create")
-    public R compose(@RequestParam String title, @RequestParam Integer single,
-                     @RequestParam Integer multiple, @RequestParam Integer judge,
-                     @RequestParam Integer blank, @RequestParam Integer subjective,
-                     String token){
+    public R compose(@RequestParam String title,@RequestParam String course,
+                     @RequestParam Integer single, @RequestParam Integer multiple,
+                     @RequestParam Integer judge, @RequestParam Integer blank,
+                     @RequestParam Integer subjective,
+                     String token,@RequestBody(required = false)List<ExamQuestionBankEntity> newQuestions){
         Long id=JwtUtils.getUserIdFromToken(token);
         String role=JwtUtils.getRoleFromToken(token);
         List<ExamQuestionBankEntity> questionList = new ArrayList<ExamQuestionBankEntity>();
@@ -172,12 +173,28 @@ public class CourseHomeworkController {
         CourseHomeworkEntity homework = new CourseHomeworkEntity();
         homework.setHomework(title);
         homework.setAddtime(new Date());
+        homework.setCourse(course);
+        homework.setPublishAt(new Date());
         if(role.equals("teacher")) {
             homework.settUsername(teacherService.selectById(id).getT_username());
         }
         // 插入试卷，自动回填ID
         courseHomeworkService.insert(homework);
         Long homeworkId = homework.getId();  // 获取回填的主键ID
+
+        if(!newQuestions.isEmpty()||newQuestions!=null){
+            questionList.addAll(newQuestions);
+            for(ExamQuestionBankEntity q:newQuestions){
+                q.setAddtime(new Date());
+                q.setT_username(teacherService.selectById(id).getT_username());
+                examquestionbankService.insert(q);
+
+                HomeworkQuestionEntity hq=new HomeworkQuestionEntity();
+                hq.setHomeworkId(homeworkId);
+                hq.setQuestionId(q.getId());
+                hq.settUsername(teacherService.selectById(id).getT_username());
+            }
+        }
         //单选题
         if(single>0) {
             Integer singleSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 0));
@@ -266,7 +283,7 @@ public class CourseHomeworkController {
                 courseHomeworkQuestionService.insert(question);
             }
         }
-        return R.ok();
+        return R.ok("创建成功").put("data",homework);
     }
 
 }

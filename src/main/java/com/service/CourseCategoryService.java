@@ -34,5 +34,7 @@ public interface CourseCategoryService extends IService<CourseCategoriesEntity> 
 
 
 	List<CourseCategoriesEntity> selectByTeacher(String tUsername);
+
+	CourseCategoriesEntity selectByName(String courseName);
 }
 

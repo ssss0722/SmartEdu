@@ -46,6 +46,11 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoriesDao, 
 		return baseMapper.selectByTeacher(tUsername);
 	}
 
+	@Override
+	public CourseCategoriesEntity selectByName(String courseName) {
+		return baseMapper.selectByName(courseName);
+	}
+
 
 	@Override
 	public List<CourseCategoriesVO> selectListVO(Wrapper<CourseCategoriesEntity> wrapper) {
