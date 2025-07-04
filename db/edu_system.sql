@@ -11,7 +11,7 @@
  Target Server Version : 80011 (8.0.11)
  File Encoding         : 65001
 
- Date: 02/07/2025 08:36:15
+ Date: 04/07/2025 16:18:01
 */
 
 SET NAMES utf8mb4;
@@ -66,7 +66,8 @@ CREATE TABLE `course_categories`  (
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `course` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '课程类别',
   PRIMARY KEY (`id`, `course`) USING BTREE,
-  UNIQUE INDEX `kechengleibie`(`course` ASC) USING BTREE
+  UNIQUE INDEX `kechengleibie`(`course` ASC) USING BTREE,
+  INDEX `id`(`id` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '课程类别' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -132,9 +133,9 @@ CREATE TABLE `course_homework_question`  (
   INDEX `t_ho_question`(`t_username` ASC) USING BTREE,
   INDEX `qu_ho`(`homework_id` ASC) USING BTREE,
   INDEX `bank_ho_qu`(`question_id` ASC) USING BTREE,
+  CONSTRAINT `bank_ho_qu` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `qu_ho` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `t_ho_question` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `bank_ho_qu` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `t_ho_question` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -284,6 +285,25 @@ INSERT INTO `course_material` VALUES (38, '2024-03-05 11:41:50', '标题8', '课
 INSERT INTO `course_material` VALUES (39, '2024-03-05 11:53:19', '初级编程', '编程', 'upload/1709610789808.jpg', 'upload/1709610795897.doc', '111', '2024-03-05 11:55:14', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2024-03-05 11:57:04', 1, 1, 1);
 
 -- ----------------------------
+-- Table structure for course_teacher
+-- ----------------------------
+DROP TABLE IF EXISTS `course_teacher`;
+CREATE TABLE `course_teacher`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键（教学班序号）',
+  `course_id` bigint(20) NOT NULL COMMENT '课程类别',
+  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '老师',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `co_t`(`t_username` ASC) USING BTREE,
+  INDEX `co_t_cate`(`course_id` ASC) USING BTREE,
+  CONSTRAINT `co_t` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `co_t_cate` FOREIGN KEY (`course_id`) REFERENCES `course_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of course_teacher
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for course_video
 -- ----------------------------
 DROP TABLE IF EXISTS `course_video`;
@@ -389,26 +409,49 @@ CREATE TABLE `discuss_course_video`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for exam
+-- ----------------------------
+DROP TABLE IF EXISTS `exam`;
+CREATE TABLE `exam`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '考试ID',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '考试名称',
+  `paper_id` bigint(20) NOT NULL COMMENT '关联试卷ID',
+  `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '考试状态：0 草稿，1 已发布',
+  `start_time` datetime NOT NULL COMMENT '考试开始时间',
+  `end_time` datetime NOT NULL COMMENT '考试结束时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_exam_paper`(`paper_id` ASC) USING BTREE,
+  CONSTRAINT `fk_exam_paper` FOREIGN KEY (`paper_id`) REFERENCES `exam_paper` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of exam
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for exam_paper
 -- ----------------------------
 DROP TABLE IF EXISTS `exam_paper`;
 CREATE TABLE `exam_paper`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '在线考试名称',
+  `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '在线考试名称',
   `time` int(11) NOT NULL COMMENT '测试时长(分钟)',
-  `status` int(11) NOT NULL DEFAULT 0 COMMENT '在线考试状态',
+  `status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '在线考试状态',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
+  `course_id` bigint(20) NULL DEFAULT NULL COMMENT '课程ID外键',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_ex_paper`(`t_username` ASC) USING BTREE,
+  INDEX `paper_co`(`course_id` ASC) USING BTREE,
+  CONSTRAINT `paper_co` FOREIGN KEY (`course_id`) REFERENCES `course_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_ex_paper` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '在线考试表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of exam_paper
 -- ----------------------------
-INSERT INTO `exam_paper` VALUES (1, '2024-03-05 11:41:50', '十万个为什么', 60, 1, NULL);
-INSERT INTO `exam_paper` VALUES (2, '2024-03-05 11:54:40', '编程', 30, 1, '111');
+INSERT INTO `exam_paper` VALUES (1, '2024-03-05 11:41:50', '十万个为什么', 60, '1', NULL, NULL);
+INSERT INTO `exam_paper` VALUES (2, '2024-03-05 11:54:40', '编程', 30, '1', '111', NULL);
 
 -- ----------------------------
 -- Table structure for exam_question
@@ -418,7 +461,6 @@ CREATE TABLE `exam_question`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `paperid` bigint(20) NOT NULL COMMENT '所属在线考试id（外键）',
-  `score` bigint(20) NULL DEFAULT 0 COMMENT '分值',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
   `question_id` bigint(20) NULL DEFAULT NULL COMMENT '试题序号（外键）',
   PRIMARY KEY (`id`) USING BTREE,
@@ -433,17 +475,17 @@ CREATE TABLE `exam_question`  (
 -- ----------------------------
 -- Records of exam_question
 -- ----------------------------
-INSERT INTO `exam_question` VALUES (1, '2024-03-05 11:41:50', 1, 20, NULL, 1);
-INSERT INTO `exam_question` VALUES (2, '2024-03-05 11:41:50', 1, 20, NULL, 2);
-INSERT INTO `exam_question` VALUES (3, '2024-03-05 11:41:50', 1, 30, NULL, 3);
-INSERT INTO `exam_question` VALUES (4, '2024-03-05 11:41:50', 1, 30, NULL, 4);
-INSERT INTO `exam_question` VALUES (5, '2024-03-05 11:41:50', 1, 30, NULL, 5);
-INSERT INTO `exam_question` VALUES (6, '2024-03-05 11:56:22', 2, 5, '111', 6);
-INSERT INTO `exam_question` VALUES (7, '2024-03-05 11:56:22', 2, 5, '111', 7);
-INSERT INTO `exam_question` VALUES (8, '2024-03-05 11:56:22', 2, 6, '111', 8);
-INSERT INTO `exam_question` VALUES (9, '2024-03-05 11:56:22', 2, 8, '111', 9);
-INSERT INTO `exam_question` VALUES (10, '2024-03-05 11:56:22', 2, 7, '111', 10);
-INSERT INTO `exam_question` VALUES (11, '2024-03-05 11:56:22', 2, 8, '111', 11);
+INSERT INTO `exam_question` VALUES (1, '2024-03-05 11:41:50', 1, NULL, 1);
+INSERT INTO `exam_question` VALUES (2, '2024-03-05 11:41:50', 1, NULL, 2);
+INSERT INTO `exam_question` VALUES (3, '2024-03-05 11:41:50', 1, NULL, 3);
+INSERT INTO `exam_question` VALUES (4, '2024-03-05 11:41:50', 1, NULL, 4);
+INSERT INTO `exam_question` VALUES (5, '2024-03-05 11:41:50', 1, NULL, 5);
+INSERT INTO `exam_question` VALUES (6, '2024-03-05 11:56:22', 2, '111', 6);
+INSERT INTO `exam_question` VALUES (7, '2024-03-05 11:56:22', 2, '111', 7);
+INSERT INTO `exam_question` VALUES (8, '2024-03-05 11:56:22', 2, '111', 8);
+INSERT INTO `exam_question` VALUES (9, '2024-03-05 11:56:22', 2, '111', 9);
+INSERT INTO `exam_question` VALUES (10, '2024-03-05 11:56:22', 2, '111', 10);
+INSERT INTO `exam_question` VALUES (11, '2024-03-05 11:56:22', 2, '111', 11);
 
 -- ----------------------------
 -- Table structure for exam_question_bank
@@ -452,7 +494,7 @@ DROP TABLE IF EXISTS `exam_question_bank`;
 CREATE TABLE `exam_question_bank`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `questionname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '试题名称',
+  `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '试题名称',
   `options` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '选项，json字符串',
   `answer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '正确答案',
   `analysis` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '答案解析',
@@ -508,7 +550,7 @@ CREATE TABLE `exam_record`  (
 -- ----------------------------
 -- Records of exam_record
 -- ----------------------------
-INSERT INTO `exam_record` VALUES (6, '2024-03-05 11:59:10', '222', 2, 8, 1, 6, 'B', '111');
+INSERT INTO `exam_record` VALUES (6, '2024-03-05 11:59:10', '222', 2, 8, 1, 88, 'B', '111');
 INSERT INTO `exam_record` VALUES (7, '2024-03-05 11:59:10', '222', 2, 11, 1, 1, '222', '111');
 INSERT INTO `exam_record` VALUES (8, '2024-03-05 11:59:10', '222', 2, 9, 1, 0, '22', '111');
 INSERT INTO `exam_record` VALUES (9, '2024-03-05 11:59:10', '222', 2, 7, 1, 0, 'D', '111');
