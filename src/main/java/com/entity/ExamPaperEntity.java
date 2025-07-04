@@ -88,11 +88,14 @@ public class ExamPaperEntity<T> implements Serializable {
 	 */
 @TableField("t_username")
 	private String tUsername;
-	
+
+private int courseId;
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat
 	private Date addtime;
+	public int getCourseId(){return courseId;}
+	public void setCourseId(int courseId){this.courseId=courseId;}
 
 	public Date getAddtime() {
 		return addtime;

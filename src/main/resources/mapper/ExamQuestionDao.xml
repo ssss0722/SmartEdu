@@ -6,15 +6,10 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.entity.ExamQuestionEntity" id="examquestionMap">
         <result property="paperid" column="paperid"/>
-        <result property="papername" column="papername"/>
-        <result property="questionname" column="questionname"/>
-        <result property="options" column="options"/>
+        <result property="questionId" column="question_id"/>
         <result property="score" column="score"/>
-        <result property="answer" column="answer"/>
-        <result property="analysis" column="analysis"/>
-        <result property="type" column="type"/>
         <result property="sequence" column="sequence"/>
-        <result property="jiaoshigonghao" column="jiaoshigonghao"/>
+        <result property="tUsername" column="t_username"/>
     </resultMap>
 
 	<select id="selectListVO"

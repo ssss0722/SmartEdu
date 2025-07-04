@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 
+import com.entity.TeacherEntity;
+import com.service.TeacherService;
+import com.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +40,8 @@ import com.utils.MPUtil;
 public class ExamQuestionBankController {
     @Autowired
     private ExamquestionbankService examquestionbankService;
+    @Autowired
+    private TeacherService teacherService;
 
 
 
@@ -50,11 +55,17 @@ public class ExamQuestionBankController {
      */
     @RequestMapping("/list")
     public R page(@RequestParam Map<String, Object> params, ExamQuestionBankEntity examquestionbank,
-                  HttpServletRequest request){
-		String tableName = request.getSession().getAttribute("tableName").toString();
-		if(tableName.equals("user_teacher")) {
-			examquestionbank.setT_username((String)request.getSession().getAttribute("username"));
-		}
+                  @RequestParam String token){
+        String role = JwtUtils.getRoleFromToken(token);
+        if ("user_teacher".equals(role)) {
+            // 教师只能查看自己发布的题库
+            Long teacherId = JwtUtils.getUserIdFromToken(token);
+            TeacherEntity teacher = teacherService.selectById(teacherId);
+            if (teacher == null) {
+                return R.error("无效教师身份");
+            }
+            examquestionbank.setT_username(teacher.getT_username());
+        }
         EntityWrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
 
 		PageUtils page = examquestionbankService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, examquestionbank), params), params));
@@ -67,8 +78,8 @@ public class ExamQuestionBankController {
      */
 	@IgnoreAuth
     @RequestMapping("/managerlist")
-    public R list(@RequestParam Map<String, Object> params, ExamQuestionBankEntity examquestionbank,
-                  HttpServletRequest request){
+    public R list(@RequestParam Map<String, Object> params, ExamQuestionBankEntity examquestionbank
+                  ){
         EntityWrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
 
 		PageUtils page = examquestionbankService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, examquestionbank), params), params));

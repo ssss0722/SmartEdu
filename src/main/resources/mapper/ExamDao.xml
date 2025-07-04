@@ -13,6 +13,7 @@
         <result property="status" column="status"/>
         <result property="startTime" column="start_time"/>
         <result property="endTime" column="end_time"/>
+        <result property="tUsername" column="t_username"/>
     </resultMap>
 
     <!-- 查询列表 VO -->

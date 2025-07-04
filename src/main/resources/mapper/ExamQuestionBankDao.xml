@@ -5,14 +5,14 @@
 
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.entity.ExamQuestionBankEntity" id="examquestionbankMap">
-        <result property="questionname" column="questionname"/>
+        <result property="title" column="title"/>
         <result property="options" column="options"/>
         <result property="score" column="score"/>
         <result property="answer" column="answer"/>
         <result property="analysis" column="analysis"/>
         <result property="type" column="type"/>
         <result property="sequence" column="sequence"/>
-        <result property="jiaoshigonghao" column="jiaoshigonghao"/>
+        <result property="tUsername" column="t_username"/>
     </resultMap>
 
 	<select id="selectListVO"

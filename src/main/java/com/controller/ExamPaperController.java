@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import com.entity.*;
+import com.service.*;
+import com.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,18 +24,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.annotation.IgnoreAuth;
 
-import com.entity.ExamPaperEntity;
 import com.entity.view.ExamPaperView;
-
-import com.service.ExampaperService;
-import com.utils.PageUtils;
-import com.utils.R;
-import com.utils.MPUtil;
-import com.service.ExamquestionService;
-import com.service.ExamquestionbankService;
-import com.service.ExamRecordService;
-import com.entity.ExamQuestionEntity;
-import com.entity.ExamQuestionBankEntity;
 
 /**
  * 在线考试表
@@ -57,6 +50,8 @@ public class ExamPaperController {
 
     @Autowired
     private ExamRecordService examrecordService;
+    @Autowired
+    private TeacherService teacherService;
     
 
 
@@ -66,11 +61,8 @@ public class ExamPaperController {
      */
     @RequestMapping("/list")
     public R page(@RequestParam Map<String, Object> params, ExamPaperEntity exampaper,
-                  HttpServletRequest request){
-		String tableName = request.getSession().getAttribute("tableName").toString();
-		if(tableName.equals("user_teacher")) {
-			exampaper.setT_username((String)request.getSession().getAttribute("username"));
-		}
+                   String tableName,String token){
+
         EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
 
 		PageUtils page = exampaperService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, exampaper), params), params));
@@ -84,7 +76,15 @@ public class ExamPaperController {
 	@IgnoreAuth
     @RequestMapping("/managerlist")
     public R list(@RequestParam Map<String, Object> params, ExamPaperEntity exampaper,
-                  HttpServletRequest request){
+                  String tableName,String token
+                 ){
+
+        // 若为教师用户，则只查询自己创建的试卷
+        if (tableName.equals("user_teacher")) {
+            Long teacherId = JwtUtils.getUserIdFromToken(token);
+            String tUsername = teacherService.selectById(teacherId).getT_username();
+            exampaper.setT_username(tUsername);
+        }
         EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
 
 		PageUtils page = exampaperService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, exampaper), params), params));
@@ -166,7 +166,7 @@ public class ExamPaperController {
     @RequestMapping("/update")
     @Transactional
     @IgnoreAuth
-    public R update(@RequestBody ExamPaperEntity exampaper, HttpServletRequest request){
+    public R update(@RequestBody ExamPaperEntity exampaper){
         //ValidatorUtils.validateEntity(exampaper);
         exampaperService.updateById(exampaper);//全部更新
         return R.ok();
@@ -219,17 +219,20 @@ public class ExamPaperController {
      * 创建试卷和组卷
      */
     @RequestMapping("/create")
-    public R compose(HttpServletRequest request,  @RequestParam String title, @RequestParam Integer single,
-                     @RequestParam Integer multiple, @RequestParam Integer judge, @RequestParam Integer blank, @RequestParam Integer subjective){
+    public R compose(@RequestParam Integer courseId,@RequestParam String title, @RequestParam Integer single,
+                     @RequestParam Integer multiple, @RequestParam Integer judge, @RequestParam Integer blank, @RequestParam Integer subjective,@RequestParam String token){
+        //获取当前用户身份（教师）
+        String tableName = JwtUtils.getRoleFromToken(token);
+        Long teacherId = JwtUtils.getUserIdFromToken(token);
+        // 获取教师信息
+        TeacherEntity teacher = teacherService.selectById(teacherId);
         List<ExamQuestionBankEntity> questionList = new ArrayList<ExamQuestionBankEntity>();
-        String tableName = request.getSession().getAttribute("tableName").toString();
         //创建试卷对象
         ExamPaperEntity exampaper = new ExamPaperEntity();
         exampaper.setTitle(title);
         exampaper.setAddtime(new Date());
-        if(tableName.equals("user_teacher")) {
-            exampaper.setT_username((String)request.getSession().getAttribute("username"));
-        }
+        exampaper.setCourseId(courseId);
+
         // 插入试卷，自动回填ID
         exampaperService.insert(exampaper);
         Long paperid = exampaper.getId();  // 获取回填的主键ID
@@ -241,7 +244,7 @@ public class ExamPaperController {
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
                 if(tableName.equals("user_teacher")) {
-                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
+                    ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 0).orderBy("RAND()").last("limit "+single);
                 List<ExamQuestionBankEntity> radioList = examquestionbankService.selectList(ew);
@@ -256,7 +259,7 @@ public class ExamPaperController {
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
                 if(tableName.equals("user_teacher")) {
-                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
+                    ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 1).orderBy("RAND()").last("limit "+multiple);
                 List<ExamQuestionBankEntity> multipleChoiceList = examquestionbankService.selectList(ew);
@@ -271,7 +274,7 @@ public class ExamPaperController {
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
                 if(tableName.equals("user_teacher")) {
-                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
+                    ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 2).orderBy("RAND()").last("limit "+judge);
                 List<ExamQuestionBankEntity> determineList = examquestionbankService.selectList(ew);
@@ -286,7 +289,7 @@ public class ExamPaperController {
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
                 if(tableName.equals("user_teacher")) {
-                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
+                    ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 3).orderBy("RAND()").last("limit "+blank);
                 List<ExamQuestionBankEntity> fillList = examquestionbankService.selectList(ew);
@@ -301,7 +304,7 @@ public class ExamPaperController {
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
                 if(tableName.equals("user_teacher")) {
-                    ew.eq("t_username", (String)request.getSession().getAttribute("username"));
+                    ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 4).orderBy("RAND()").last("limit "+subjective);
                 List<ExamQuestionBankEntity> subjectivityList = examquestionbankService.selectList(ew);
@@ -317,7 +320,7 @@ public class ExamPaperController {
                 examquestion.setQuestionId(q.getId());
                 examquestion.setSequence(++seq);
                 if(tableName.equals("user_teacher")) {
-                    examquestion.setT_username((String)request.getSession().getAttribute("username"));
+                    examquestion.setT_username(teacher.getT_username());
                 }
                 examquestionService.insert(examquestion);
             }

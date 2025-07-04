@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.annotation.IgnoreAuth;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.dto.ExamRequestDTO;
 import com.dto.ExamUpdateDTO;
@@ -7,10 +8,8 @@ import com.entity.ExamEntity;
 import com.entity.ExamPaperEntity;
 import com.entity.ExamStudentEntity;
 import com.entity.StudentEntity;
-import com.service.ExamService;
-import com.service.ExamStudentService;
-import com.service.ExampaperService;
-import com.service.StudentService;
+import com.service.*;
+import com.utils.JwtUtils;
 import com.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +28,28 @@ public class ExamController {
     private StudentService studentService;
     @Autowired
     private ExamStudentService examStudentService;
+    @Autowired
+    private TeacherService teacherService;
 //获取考试列表
+    @IgnoreAuth
     @RequestMapping("/list")
-    public R list(@RequestParam(required = false)String name,@RequestParam(required = false)String status){
+    public R list(@RequestParam(required = false)String name,@RequestParam(required = false)String status,@RequestParam String token,@RequestParam String tableName){
 
+        // 仅允许教师访问
+        if (!"user_teacher".equals(tableName)) {
+            return R.error("无权限访问考试列表");
+        }
+
+        // 获取当前教师用户名
+        Long teacherId = JwtUtils.getUserIdFromToken(token);
+        if (teacherId == null) {
+            return R.error("无效的 token");
+        }
+        String tUsername = teacherService.selectById(teacherId).getT_username();
         // 构建查询条件
         EntityWrapper<ExamEntity> wrapper = new EntityWrapper<>();
+        //限制只看自己发布的
+        wrapper.eq("t_username",tUsername);
         if (name != null && !name.trim().isEmpty()) {
             wrapper.like("name", name);
         }
@@ -122,6 +137,8 @@ public class ExamController {
         exam.setStatus(request.getStatus());
         exam.setStartTime(request.getStartTime());
         exam.setEndTime(request.getEndTime());
+        exam.setT_username(request.gettUsername());
+
         // 2. 保存考试（假设是插入操作，id自动生成）
         examService.insert(exam);
 
