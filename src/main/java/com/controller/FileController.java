@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import com.utils.AliOSSUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ import com.entity.EIException;
 import com.service.ConfigService;
 import com.utils.R;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 上传文件映射表
  */
@@ -42,6 +45,11 @@ import com.utils.R;
 public class FileController{
 	@Autowired
     private ConfigService configService;
+
+	@Autowired
+	private AliOSSUtils aliOSSUtils;
+
+
 	/**
 	 * 上传文件
 	 */
@@ -51,35 +59,8 @@ public class FileController{
 		if (file.isEmpty()) {
 			throw new EIException("上传文件不能为空");
 		}
-		String fileExt = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
-		File path = new File(ResourceUtils.getURL("classpath:static").getPath());
-		if(!path.exists()) {
-		    path = new File("");
-		}
-		File upload = new File(path.getAbsolutePath(),"/upload/");
-		if(!upload.exists()) {
-		    upload.mkdirs();
-		}
-		String fileName = new Date().getTime()+"."+fileExt;
-        if(StringUtils.isNotBlank(type) && type.contains("_template")) {
-            fileName = type + "."+fileExt;
-            new File(upload.getAbsolutePath()+"/"+fileName).deleteOnExit();
-        }
-		File dest = new File(upload.getAbsolutePath()+"/"+fileName);
-		file.transferTo(dest);
-		FileUtils.copyFile(dest, new File("D:\\SmartEdu\\src\\main\\resources\\static\\upload"+"/"+fileName)); /**修改了路径以后请将该行最前面的//注释去掉**/
-		if(StringUtils.isNotBlank(type) && type.equals("1")) {
-			ConfigEntity configEntity = configService.selectOne(new EntityWrapper<ConfigEntity>().eq("name", "faceFile"));
-			if(configEntity==null) {
-				configEntity = new ConfigEntity();
-				configEntity.setName("faceFile");
-				configEntity.setValue(fileName);
-			} else {
-				configEntity.setValue(fileName);
-			}
-			configService.insertOrUpdate(configEntity);
-		}
-		return R.ok().put("file", fileName);
+		String url= aliOSSUtils.upload(file);
+		return R.ok().put("url",url);
 	}
 	
 	/**
@@ -87,30 +68,14 @@ public class FileController{
 	 */
 	@IgnoreAuth
 	@RequestMapping("/download")
-	public ResponseEntity<byte[]> download(@RequestParam String fileName) {
+	public void download(@RequestParam String fileName, HttpServletResponse response) {
 		try {
-			File path = new File(ResourceUtils.getURL("classpath:static").getPath());
-			if(!path.exists()) {
-			    path = new File("");
-			}
-			File upload = new File(path.getAbsolutePath(),"/upload/");
-			if(!upload.exists()) {
-			    upload.mkdirs();
-			}
-			File file = new File(upload.getAbsolutePath()+"/"+fileName);
-			if(file.exists()){
-				/*if(!fileService.canRead(file, SessionManager.getSessionUser())){
-					getResponse().sendError(403);
-				}*/
-				HttpHeaders headers = new HttpHeaders();
-			    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);    
-			    headers.setContentDispositionFormData("attachment", fileName);    
-			    return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
-			}
+			aliOSSUtils.downloadFile(fileName, response);
 		} catch (IOException e) {
-			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			// 可添加日志记录
 		}
-		return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
 	
 }

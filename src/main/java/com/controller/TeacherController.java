@@ -1,13 +1,12 @@
 package com.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Date;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.entity.AdminEntity;
+import com.entity.CourseTeacherEntity;
+import com.service.CourseTeacherService;
 import com.service.TokenBlacklistService;
 import com.utils.*;
 import org.apache.commons.lang3.StringUtils;
@@ -45,7 +44,10 @@ public class TeacherController {
     
 	@Autowired
 	private TokenService tokenService;
-	
+
+    @Autowired
+    private CourseTeacherService courseTeacherService;
+
 	/**
 	 * 登录
 	 */
@@ -58,10 +60,10 @@ public class TeacherController {
 		}
         if(role.equals("teacher")){
             String token = JwtUtils.generateToken(u.getId(), username, "teacher", "teacher");
-            return R.ok().put("token", token);
+            return R.ok().put("token", token).put("data",u);
         } else{
             String token = JwtUtils.generateToken(u.getId(), username, "teacher", "teacher");
-            return R.ok().put("token", token);
+            return R.ok().put("token", token).put("data",u);
         }
 	}
 
@@ -80,6 +82,13 @@ public class TeacherController {
 		Long uId = new Date().getTime();
 		teacher.setId(uId);
         teacherService.insert(teacher);
+        List<Long> courseList=teacher.getCourse();
+        for(Long course:courseList){
+            CourseTeacherEntity courseTeacher=new CourseTeacherEntity<>();
+            courseTeacher.setCourseId(course);
+            courseTeacher.settUsername(teacherService.selectById(uId).getT_username());
+            courseTeacherService.insert(courseTeacher);
+        }
         return R.ok("注册成功").put("data",teacher);
     }
 
@@ -297,6 +306,23 @@ public class TeacherController {
             if (originalUser != null) {
                 teacher.setPassword(originalUser.getPassword());
             }
+        }
+        List<Long> courseList = teacher.getCourse();
+        if (courseList != null && !courseList.isEmpty()) {
+            // 5.1 先删除原有的课程关联
+            Map<String, Object> deleteMap = new HashMap<>();
+            deleteMap.put("t_username", teacher.getT_username());
+            courseTeacherService.deleteByMap(deleteMap);
+
+            // 5.2 添加新的课程关联
+            List<CourseTeacherEntity> relations = new ArrayList<>();
+            for (Long courseId : courseList) {
+                CourseTeacherEntity relation = new CourseTeacherEntity();
+                relation.setCourseId(courseId);
+                relation.settUsername(teacher.getT_username());
+                relations.add(relation);
+            }
+            courseTeacherService.insertBatch(relations);
         }
 
         teacherService.updateById(teacher);

@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import com.entity.vo.CourseCategoriesVO;
 import com.entity.view.CourseCategoriesView;
+import org.apache.ibatis.annotations.Select;
 
 
 /**
@@ -33,6 +34,12 @@ public interface CourseCategoriesDao extends BaseMapper<CourseCategoriesEntity> 
 
 
 	CourseCategoriesView selectView(@Param("ew") Wrapper<CourseCategoriesEntity> wrapper);
-	
 
+
+	@Select("SELECT cc.id, cc.course,cc.addtime " +
+			"FROM course_categories cc " +
+			"INNER JOIN course_teacher ct ON cc.id = ct.course_id " +
+			"INNER JOIN user_teacher ut ON ct.t_username = ut.t_username " +
+			"WHERE ut.t_username = #{tUsername}")
+	List<CourseCategoriesEntity> selectByTeacher(String tUsername);
 }

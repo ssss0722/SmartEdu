@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
+import com.interceptor.JwtInterceptor;
+import com.service.CourseTeacherService;
+import com.service.TeacherService;
+import com.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,14 +38,20 @@ public class CourseCategoriesController {
     @Autowired
     private CourseCategoryService courseCategoryService;
 
+    @Autowired
+    private CourseTeacherService courseTeacherService;
+    @Autowired
+    private JwtInterceptor jwtInterceptor;
+
+    @Autowired
+    private TeacherService teacherService;
+
     /**
      * 后端列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params, CourseCategoriesEntity courseEntity,
-                  HttpServletRequest request){
+    public R page(@RequestParam Map<String, Object> params, CourseCategoriesEntity courseEntity){
         EntityWrapper<CourseCategoriesEntity> ew = new EntityWrapper<CourseCategoriesEntity>();
-
         PageUtils page = courseCategoryService.queryPage(params,
                 MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, courseEntity), params), params));
 
@@ -173,5 +183,12 @@ public class CourseCategoriesController {
     public R delete(@RequestBody Long[] ids){
         courseCategoryService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
+    }
+
+    @RequestMapping("/teacherCourse")
+    public R teacherCourse(String token){
+        Long id= JwtUtils.getUserIdFromToken(token);
+        List<CourseCategoriesEntity> list=courseCategoryService.selectByTeacher(teacherService.selectById(id).getT_username());
+        return R.ok("查找成功").put("data",list);
     }
 }

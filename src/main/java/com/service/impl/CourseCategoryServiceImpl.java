@@ -1,6 +1,8 @@
 package com.service.impl;
 
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.Map;
 import java.util.List;
 
@@ -39,8 +41,13 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoriesDao, 
 	    	return pageUtil;
  	}
 
-    
-    @Override
+	@Override
+	public List<CourseCategoriesEntity> selectByTeacher(String tUsername) {
+		return baseMapper.selectByTeacher(tUsername);
+	}
+
+
+	@Override
 	public List<CourseCategoriesVO> selectListVO(Wrapper<CourseCategoriesEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}

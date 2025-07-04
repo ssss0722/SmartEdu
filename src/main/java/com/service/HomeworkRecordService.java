@@ -21,4 +21,6 @@ public interface HomeworkRecordService extends IService<HomeworkRecordEntity> {
     List<HomeworkRecordView> selectListView(@Param("ew") EntityWrapper<HomeworkRecordEntity> ew);
 
     HomeworkRecordView selectView(@Param("ew") EntityWrapper<HomeworkRecordEntity> ew);
+
+    int calculateTotalScore(String sUsername, Long homeworkId);
 }

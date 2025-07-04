@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -73,12 +74,13 @@ public class TeacherEntity<T> implements Serializable {
 	 */
 					
 	private String tel;
-	
+
 	/**
 	 * 课程名称
 	 */
-					
-	private String course;
+
+	@TableField(exist = false)
+	private List<Long> course;
 
 	/**
 	 * 角色
@@ -180,13 +182,13 @@ public class TeacherEntity<T> implements Serializable {
 	/**
 	 * 设置：课程名称
 	 */
-	public void setCourse(String course) {
+	public void setCourse(List<Long> course) {
 		this.course=course;
 	}
 	/**
 	 * 获取：课程名称
 	 */
-	public String getCourse() {
+	public List<Long> getCourse() {
 		return course;
 	}
 

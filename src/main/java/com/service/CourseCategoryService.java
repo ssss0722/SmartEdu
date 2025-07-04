@@ -32,7 +32,7 @@ public interface CourseCategoryService extends IService<CourseCategoriesEntity> 
    	
    	PageUtils queryPage(Map<String, Object> params,Wrapper<CourseCategoriesEntity> wrapper);
 
-   	
 
+	List<CourseCategoriesEntity> selectByTeacher(String tUsername);
 }
 

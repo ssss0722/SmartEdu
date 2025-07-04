@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.entity.*;
 import com.entity.view.ExamRecordView;
 import com.entity.view.HomeworkRecordView;
-import com.service.CourseHomeworkService;
-import com.service.HomeworkRecordService;
-import com.service.StudentService;
-import com.service.TeacherService;
+import com.service.*;
 import com.utils.JwtUtils;
 import com.utils.MPUtil;
 import com.utils.PageUtils;
@@ -36,6 +33,9 @@ public class HomeworkRecordController {
 
     @Autowired
     private CourseHomeworkService courseHomeworkService;
+
+    @Autowired
+    private ExamquestionbankService examquestionbankService;
 
     /**
      * 作业记录接口
@@ -221,6 +221,25 @@ public class HomeworkRecordController {
         if (id == null) {
             return R.error("无效的token");
         }
+        ExamQuestionBankEntity question=examquestionbankService.selectById(record.getQuestionId());
+        /**
+         * 试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题
+         */
+        Long type=question.getType();
+        if(type!=4){
+            String answer= question.getAnswer();
+            if(answer.equals(record.getMyanswer())){
+                record.setIsmark(Long.valueOf(1));
+                record.setMyscore(question.getScore());
+            }
+            else {
+                record.setIsmark(Long.valueOf(1));
+                record.setMyscore(Long.valueOf(0));
+            }
+        }else{
+            record.setIsmark(Long.valueOf(0));
+            record.setMyscore(Long.valueOf(0));
+        }
         record.setsUsername(studentService.selectById(id).getsUsername());
         CourseHomeworkEntity homework = courseHomeworkService.selectById(record.getHomeworkId());
         record.settUsername(homework.gettUsername());
@@ -249,7 +268,7 @@ public class HomeworkRecordController {
     }
 
     /**
-     * 当重新考试时，删除考生的某个试卷的所有考试记录
+     * 当重新考试时，删除考生的某个试卷的所有作业记录
      */
     @RequestMapping("/deleteRecords")
     public R deleteRecords(@RequestParam String token,@RequestParam Long homeworkId){
@@ -260,4 +279,20 @@ public class HomeworkRecordController {
         return R.ok("删除成功");
     }
 
+
+    /**
+     * 批改完所有主观题后计算总分
+     */
+    @RequestMapping("/calculateTotal")
+    public R calculateTotal(@RequestParam String token,@RequestParam Long homeworkId){
+        Long id=JwtUtils.getUserIdFromToken(token);
+        StudentEntity student=studentService.selectById(id);
+        String sUsername=student.getsUsername();
+        try {
+            int score=homeworkRecordService.calculateTotalScore(sUsername, homeworkId);
+            return R.ok("作业总分计算成功").put("totalScore",score);
+        } catch (Exception e) {
+            return R.error(500, e.getMessage());
+        }
+    }
 }

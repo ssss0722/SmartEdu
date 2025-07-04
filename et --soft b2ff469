@@ -1,0 +1,38 @@
+[33m2628ab4[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m Merge remote-tracking branch 'origin/main'
+[33m8272642[m 新增计算作业分数接口，并将文件上传改为上传至阿里云,修改课程类别接口
+[33mb2ff469[m[33m ([m[1;31morigin/main[m[33m)[m 当前的数据库
+[33m16c5945[m 后端
+[33m082ad95[m Merge remote-tracking branch 'origin/main'
+[33m2d972d5[m 新增计算作业分数接口，并将文件上传改为上传至阿里云
+[33mead6b00[m 再次修改
+[33m6f42b74[m 后端
+[33m3af3e81[m Merge remote-tracking branch 'origin/main'
+[33m1e69166[m 新增计算作业分数接口，并将文件上传改为上传至阿里云
+[33mf75880b[m Merge remote-tracking branch 'origin/main'
+[33m7ae5b76[m 一些接口
+[33me9c8f41[m 课程类别的接口
+[33mc679a4d[m Merge remote-tracking branch 'origin/main'
+[33m65f3a56[m 一些接口
+[33mf86dbb9[m 一些接口
+[33m6345a1c[m 修改响应码
+[33m8c3d2ce[m 课程资料、课程视频部分根据新数据库修改完成
+[33m877bae1[m 作业部分完成
+[33m2ec2a08[m Merge remote-tracking branch 'origin/main'
+[33m521c3f3[m 作业part1,以及修改了登录注册部分，新增了助教角色
+[33mdd2e90c[m 数据库修改homework_question表的重复项
+[33m9e4f33e[m 数据库新增homework_record表
+[33mdca051e[m 数据库新更新（作业系列绑定ID外键，引用同一张表多个外键的都删除成一个了，考题系统重构了）
+[33m7fe3d49[m 数据库的更新（user_teacher表再加一个role字段，加一个course_homework_quetion表）
+[33m342cd0b[m 类名的修改
+[33m4031e15[m jwt
+[33m1a11450[m Merge remote-tracking branch 'origin/main'
+[33m41fd6a1[m 教学资料
+[33mef3a7aa[m 数据库为discuss表添加外键（refid字段，分别对应的course_homework、course_material、course_video的主键id）
+[33m17afcda[m Merge remote-tracking branch 'origin/main'
+[33me96cc36[m jwt
+[33mb05cf62[m jwt
+[33m958c5fa[m Merge pull request #1 from kimdksfjk/main
+[33mf05f4c8[m 数据库修改成英语
+[33m8430757[m 数据库修改成英语
+[33m978a502[m jwt
+[33m9419a3d[m first commit

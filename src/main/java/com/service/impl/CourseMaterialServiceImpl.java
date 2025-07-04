@@ -18,7 +18,7 @@ import com.service.CourseMaterialService;
 import com.entity.vo.CourseMaterialVO;
 import com.entity.view.CourseMaterialView;
 
-@Service("jiaoxueziliaoService")
+@Service("CourseMaterialService")
 public class CourseMaterialServiceImpl extends ServiceImpl<CourseMaterialDao, CourseMaterialEntity> implements CourseMaterialService {
 	
 	

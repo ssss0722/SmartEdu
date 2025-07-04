@@ -1,12 +1,11 @@
 package com.controller;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
-import com.entity.TeacherEntity;
-import com.service.TeacherService;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.entity.*;
+import com.service.*;
 import com.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.annotation.IgnoreAuth;
 
-import com.entity.CourseHomeworkEntity;
 import com.entity.view.CourseHomeworkView;
-
-import com.service.CourseHomeworkService;
-import com.service.StoreupService;
 
 /**
  * 课程作业
@@ -38,6 +33,12 @@ public class CourseHomeworkController {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private ExamquestionbankService examquestionbankService;
+
+    @Autowired
+    private CourseHomeworkQuestionService courseHomeworkQuestionService;
 
 
     /**
@@ -75,7 +76,7 @@ public class CourseHomeworkController {
     @RequestMapping("/lists")
     public R list(CourseHomeworkEntity courseHomework){
        	EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
-      	ew.allEq(MPUtil.allEQMapPre( courseHomework, "ch"));
+      	ew.allEq(MPUtil.allEQMapPre(courseHomework, "ch"));
         return R.ok().put("data", courseHomeworkService.selectListView(ew));
     }
 
@@ -155,16 +156,117 @@ public class CourseHomeworkController {
         courseHomeworkService.deleteBatchIds(Arrays.asList(ids));
         return R.ok("删除成功");
     }
-    
-	
 
-
-
-
-
-
-
-
-
+    /**
+     * 创建作业和自动组卷
+     */
+    @RequestMapping("/create")
+    public R compose(@RequestParam String title, @RequestParam Integer single,
+                     @RequestParam Integer multiple, @RequestParam Integer judge,
+                     @RequestParam Integer blank, @RequestParam Integer subjective,
+                     String token){
+        Long id=JwtUtils.getUserIdFromToken(token);
+        String role=JwtUtils.getRoleFromToken(token);
+        List<ExamQuestionBankEntity> questionList = new ArrayList<ExamQuestionBankEntity>();
+        //创建试卷对象
+        CourseHomeworkEntity homework = new CourseHomeworkEntity();
+        homework.setHomework(title);
+        homework.setAddtime(new Date());
+        if(role.equals("teacher")) {
+            homework.settUsername(teacherService.selectById(id).getT_username());
+        }
+        // 插入试卷，自动回填ID
+        courseHomeworkService.insert(homework);
+        Long homeworkId = homework.getId();  // 获取回填的主键ID
+        //单选题
+        if(single>0) {
+            Integer singleSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 0));
+            if(singleSize<single) {
+                return R.error("单选题库不足");
+            } else {
+                Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
+                if(role.equals("teacher")) {
+                    ew.eq("t_username", teacherService.selectById(id).getT_username());
+                }
+                ew.eq("type", 0).orderBy("RAND()").last("limit "+single);
+                List<ExamQuestionBankEntity> radioList = examquestionbankService.selectList(ew);
+                questionList.addAll(radioList);
+            }
+        }
+        //多选题
+        if(multiple>0) {
+            Integer multipleChoiceSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 1));
+            if(multipleChoiceSize<multiple) {
+                return R.error("多选题库不足");
+            } else {
+                Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
+                if(role.equals("teacher")) {
+                    ew.eq("t_username", teacherService.selectById(id).getT_username());
+                }
+                ew.eq("type", 1).orderBy("RAND()").last("limit "+multiple);
+                List<ExamQuestionBankEntity> multipleChoiceList = examquestionbankService.selectList(ew);
+                questionList.addAll(multipleChoiceList);
+            }
+        }
+        //判断题
+        if(judge>0) {
+            Integer judgeSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 2));
+            if(judgeSize<judge) {
+                return R.error("判断题库不足");
+            } else {
+                Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
+                if(role.equals("teacher")) {
+                    ew.eq("t_username", teacherService.selectById(id).getT_username());
+                }
+                ew.eq("type", 2).orderBy("RAND()").last("limit "+judge);
+                List<ExamQuestionBankEntity> determineList = examquestionbankService.selectList(ew);
+                questionList.addAll(determineList);
+            }
+        }
+        //填空题
+        if(blank>0) {
+            Integer blankSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 3));
+            if(blankSize<blank) {
+                return R.error("填空题库不足");
+            } else {
+                Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
+                if(role.equals("teacher")) {
+                    ew.eq("t_username", teacherService.selectById(id).getT_username());
+                }
+                ew.eq("type", 3).orderBy("RAND()").last("limit "+blank);
+                List<ExamQuestionBankEntity> fillList = examquestionbankService.selectList(ew);
+                questionList.addAll(fillList);
+            }
+        }
+        //主观题
+        if(subjective>0) {
+            Integer subjectiveSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 4));
+            if(subjectiveSize<subjective) {
+                return R.error("主观题库不足");
+            } else {
+                Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
+                if(role.equals("teacher")) {
+                    ew.eq("t_username", teacherService.selectById(id).getT_username());
+                }
+                ew.eq("type", 4).orderBy("RAND()").last("limit "+subjective);
+                List<ExamQuestionBankEntity> subjectivityList = examquestionbankService.selectList(ew);
+                questionList.addAll(subjectivityList);
+            }
+        }
+        if(questionList!=null && questionList.size()>0) {
+            long seq = 0;
+            for(ExamQuestionBankEntity q : questionList) {
+                HomeworkQuestionEntity question = new HomeworkQuestionEntity();
+                question.setId(System.currentTimeMillis()+(long)Math.floor(Math.random()*1000));
+                question.setHomeworkId(homeworkId);
+                question.setQuestionId(q.getId());
+                if(role.equals("teacher")) {
+                    question.settUsername(teacherService.selectById(id).getT_username());
+                }
+                courseHomeworkQuestionService.insert(question);
+            }
+        }
+        return R.ok();
+    }
 
 }
