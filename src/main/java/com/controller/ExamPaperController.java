@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,13 +27,11 @@ import com.service.ExampaperService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
-import com.utils.MapUtils;
 import com.service.ExamquestionService;
 import com.service.ExamquestionbankService;
-import com.service.ExamrecordService;
+import com.service.ExamRecordService;
 import com.entity.ExamQuestionEntity;
 import com.entity.ExamQuestionBankEntity;
-import com.entity.ExamRecordEntity;
 
 /**
  * 在线考试表
@@ -59,7 +56,7 @@ public class ExamPaperController {
     private ExamquestionbankService examquestionbankService;
 
     @Autowired
-    private ExamrecordService examrecordService;
+    private ExamRecordService examrecordService;
     
 
 

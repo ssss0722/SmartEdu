@@ -1,324 +1,69 @@
 package com.entity.vo;
 
 import java.io.Serializable;
- 
 
 /**
- * 测试记录表
- * @author 
- * @email 
- * @date 2024-03-05 11:41:24
+ * 测试记录视图对象
  */
 public class ExamRecordVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	 			
-	/**
-	 * 用户名
-	 */
-	
-	private String username;
-		
-	/**
-	 * 在线考试id（外键）
-	 */
-	
-	private Long paperid;
-		
-	/**
-	 * 在线考试名称
-	 */
-	
-	private String papername;
-		
-	/**
-	 * 试题id（外键）
-	 */
-	
-	private Long questionid;
-		
-	/**
-	 * 试题名称
-	 */
-	
-	private String questionname;
-		
-	/**
-	 * 选项，json字符串
-	 */
-	
-	private String options;
-		
-	/**
-	 * 分值
-	 */
-	
-	private Long score;
-		
-	/**
-	 * 正确答案
-	 */
-	
-	private String answer;
-		
-	/**
-	 * 答案解析
-	 */
-	
-	private String analysis;
-		
-	/**
-	 * 是否批卷
-	 */
-	
-	private Long ismark;
-		
-	/**
-	 * 试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题
-	 */
-	
-	private Long type;
-		
-	/**
-	 * 试题得分
-	 */
-	
-	private Long myscore;
-		
-	/**
-	 * 考生答案
-	 */
-	
-	private String myanswer;
-		
-	/**
-	 * 教师工号
-	 */
-	
-	private String jiaoshigonghao;
-				
-	
-	/**
-	 * 设置：用户名
-	 */
-	 
-	public void setUsername(String username) {
-		this.username = username;
+	private Long id;
+	private String paperName;
+	private String courseType;
+	private String studentName;
+	private String submitTime;
+	private Integer score;
+	private String status;
+
+	// getter/setter
+
+	public Long getId() {
+		return id;
 	}
-	
-	/**
-	 * 获取：用户名
-	 */
-	public String getUsername() {
-		return username;
+	public void setId(Long id) {
+		this.id = id;
 	}
-				
-	
-	/**
-	 * 设置：在线考试id（外键）
-	 */
-	 
-	public void setPaperid(Long paperid) {
-		this.paperid = paperid;
+
+	public String getPaperName() {
+		return paperName;
 	}
-	
-	/**
-	 * 获取：在线考试id（外键）
-	 */
-	public Long getPaperid() {
-		return paperid;
+	public void setPaperName(String paperName) {
+		this.paperName = paperName;
 	}
-				
-	
-	/**
-	 * 设置：在线考试名称
-	 */
-	 
-	public void setPapername(String papername) {
-		this.papername = papername;
+
+	public String getCourseType() {
+		return courseType;
 	}
-	
-	/**
-	 * 获取：在线考试名称
-	 */
-	public String getPapername() {
-		return papername;
+	public void setCourseType(String courseType) {
+		this.courseType = courseType;
 	}
-				
-	
-	/**
-	 * 设置：试题id（外键）
-	 */
-	 
-	public void setQuestionid(Long questionid) {
-		this.questionid = questionid;
+
+	public String getStudentName() {
+		return studentName;
 	}
-	
-	/**
-	 * 获取：试题id（外键）
-	 */
-	public Long getQuestionid() {
-		return questionid;
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
-				
-	
-	/**
-	 * 设置：试题名称
-	 */
-	 
-	public void setQuestionname(String questionname) {
-		this.questionname = questionname;
+
+	public String getSubmitTime() {
+		return submitTime;
 	}
-	
-	/**
-	 * 获取：试题名称
-	 */
-	public String getQuestionname() {
-		return questionname;
+	public void setSubmitTime(String submitTime) {
+		this.submitTime = submitTime;
 	}
-				
-	
-	/**
-	 * 设置：选项，json字符串
-	 */
-	 
-	public void setOptions(String options) {
-		this.options = options;
-	}
-	
-	/**
-	 * 获取：选项，json字符串
-	 */
-	public String getOptions() {
-		return options;
-	}
-				
-	
-	/**
-	 * 设置：分值
-	 */
-	 
-	public void setScore(Long score) {
-		this.score = score;
-	}
-	
-	/**
-	 * 获取：分值
-	 */
-	public Long getScore() {
+
+	public Integer getScore() {
 		return score;
 	}
-				
-	
-	/**
-	 * 设置：正确答案
-	 */
-	 
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public void setScore(Integer score) {
+		this.score = score;
 	}
-	
-	/**
-	 * 获取：正确答案
-	 */
-	public String getAnswer() {
-		return answer;
+
+	public String getStatus() {
+		return status;
 	}
-				
-	
-	/**
-	 * 设置：答案解析
-	 */
-	 
-	public void setAnalysis(String analysis) {
-		this.analysis = analysis;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	
-	/**
-	 * 获取：答案解析
-	 */
-	public String getAnalysis() {
-		return analysis;
-	}
-				
-	
-	/**
-	 * 设置：是否批卷
-	 */
-	 
-	public void setIsmark(Long ismark) {
-		this.ismark = ismark;
-	}
-	
-	/**
-	 * 获取：是否批卷
-	 */
-	public Long getIsmark() {
-		return ismark;
-	}
-				
-	
-	/**
-	 * 设置：试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题
-	 */
-	 
-	public void setType(Long type) {
-		this.type = type;
-	}
-	
-	/**
-	 * 获取：试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题
-	 */
-	public Long getType() {
-		return type;
-	}
-				
-	
-	/**
-	 * 设置：试题得分
-	 */
-	 
-	public void setMyscore(Long myscore) {
-		this.myscore = myscore;
-	}
-	
-	/**
-	 * 获取：试题得分
-	 */
-	public Long getMyscore() {
-		return myscore;
-	}
-				
-	
-	/**
-	 * 设置：考生答案
-	 */
-	 
-	public void setMyanswer(String myanswer) {
-		this.myanswer = myanswer;
-	}
-	
-	/**
-	 * 获取：考生答案
-	 */
-	public String getMyanswer() {
-		return myanswer;
-	}
-				
-	
-	/**
-	 * 设置：教师工号
-	 */
-	 
-	public void setJiaoshigonghao(String jiaoshigonghao) {
-		this.jiaoshigonghao = jiaoshigonghao;
-	}
-	
-	/**
-	 * 获取：教师工号
-	 */
-	public String getJiaoshigonghao() {
-		return jiaoshigonghao;
-	}
-			
 }
