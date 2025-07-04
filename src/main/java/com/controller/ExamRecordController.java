@@ -45,4 +45,12 @@ public class ExamRecordController {
         return R.ok("自动判分成功");
     }
 
+    @IgnoreAuth
+    @GetMapping("/detail")
+    public R detail(@RequestParam("paperId") Long paperId,
+                    @RequestParam("sUsername") String sUsername) {
+        Map<String, Object> detail = examRecordService.getExamDetail(paperId, sUsername);
+        return R.ok().put("data", detail);
+    }
+
 }

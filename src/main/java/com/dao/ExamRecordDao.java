@@ -8,6 +8,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
+import com.entity.vo.ExamDetailQuestionVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import com.entity.vo.ExamRecordVO;
@@ -26,5 +27,12 @@ public interface ExamRecordDao extends BaseMapper<ExamRecordEntity> {
 	List<ExamRecordVO> selectExamRecordDetail(@Param("ew") Wrapper<?> wrapper);
 
 	int markSingleQuestionById(@Param("id") Long id, @Param("score") Long score);
+
+	List<ExamDetailQuestionVO> selectExamDetailQuestions(
+			@Param("sUsername") String sUsername,
+			@Param("paperId") Long paperId
+	);
+
+
 
 }

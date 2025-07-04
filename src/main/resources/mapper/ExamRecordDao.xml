@@ -29,6 +29,20 @@
             ismark = 1
         WHERE id = #{id}
     </update>
+    <select id="selectExamDetailQuestions" resultType="com.entity.vo.ExamDetailQuestionVO">
+        SELECT
+            er.questionid AS id,
+            eq.type AS type,
+            eq.title AS question,
+            er.myanswer AS studentAnswer,
+            eq.answer AS correctAnswer
+        FROM
+            exam_record er
+                LEFT JOIN exam_question_bank eq ON er.questionid = eq.id
+        WHERE
+            er.paperid = #{paperId}
+          AND er.s_username = #{sUsername}
+    </select>
 
 
 

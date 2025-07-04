@@ -83,7 +83,7 @@ public class ExamPaperController {
         if (tableName.equals("user_teacher")) {
             Long teacherId = JwtUtils.getUserIdFromToken(token);
             String tUsername = teacherService.selectById(teacherId).getT_username();
-            exampaper.setT_username(tUsername);
+            exampaper.setTUsername(tUsername);
         }
         EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
 
@@ -144,7 +144,7 @@ public class ExamPaperController {
     	//ValidatorUtils.validateEntity(exampaper);
         String tableName = request.getSession().getAttribute("tableName").toString();
         if(tableName.equals("user_teacher")) {
-            exampaper.setT_username((String)request.getSession().getAttribute("username"));
+            exampaper.setTUsername((String)request.getSession().getAttribute("username"));
         }
         exampaperService.insert(exampaper);
         return R.ok();
@@ -219,7 +219,7 @@ public class ExamPaperController {
      * 创建试卷和组卷
      */
     @RequestMapping("/create")
-    public R compose(@RequestParam Integer courseId,@RequestParam String title, @RequestParam Integer single,
+    public R compose(@RequestParam Long courseId,@RequestParam String title, @RequestParam Integer single,
                      @RequestParam Integer multiple, @RequestParam Integer judge, @RequestParam Integer blank, @RequestParam Integer subjective,@RequestParam String token){
         //获取当前用户身份（教师）
         String tableName = JwtUtils.getRoleFromToken(token);

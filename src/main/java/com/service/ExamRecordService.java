@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.service.IService;
 import com.entity.ExamRecordEntity;
 import com.entity.vo.ExamRecordVO;
 import java.util.List;
+import java.util.Map;
 
 public interface ExamRecordService extends IService<ExamRecordEntity> {
 
@@ -21,6 +22,8 @@ public interface ExamRecordService extends IService<ExamRecordEntity> {
 	 * @param recordId record表主键
 	 */
 	void autoMarkRecord(Long recordId);
+
+	Map<String, Object> getExamDetail(Long paperId, String sUsername);
 
 
 

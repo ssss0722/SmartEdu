@@ -1,19 +1,21 @@
 package com.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.dao.ExamPaperDao;
 import com.dao.ExamQuestionBankDao;
 import com.dao.ExamRecordDao;
+import com.dao.StudentDao;
 import com.entity.ExamQuestionBankEntity;
 import com.entity.ExamRecordEntity;
+import com.entity.StudentEntity;
+import com.entity.vo.ExamDetailQuestionVO;
 import com.entity.vo.ExamRecordVO;
 import com.service.ExamRecordService;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service("examRecordService")
 public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordDao, ExamRecordEntity> implements ExamRecordService {
@@ -81,6 +83,63 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordDao, ExamRecord
 		}
 
 		this.updateById(record);
+	}
+	@Autowired
+	private ExamPaperDao examPaperDao;
+
+	@Autowired
+	private StudentDao userStudentDao;
+
+	@Override
+	public Map<String, Object> getExamDetail(Long paperId, String sUsername) {
+		// 查试卷
+		String paperName = examPaperDao.selectById(paperId).getTitle();
+
+		// 查学生
+		List<StudentEntity> students = userStudentDao.selectList(
+				new EntityWrapper<StudentEntity>().eq("s_username", sUsername)
+		);
+		if (students.isEmpty()) {
+			throw new RuntimeException("学生不存在");
+		}
+		String studentName = students.get(0).getsName();
+		// 查答题记录
+		List<ExamRecordEntity> records = examRecordDao.selectList(
+				new EntityWrapper<ExamRecordEntity>()
+						.eq("paperid", paperId)
+						.eq("s_username", sUsername)
+		);
+
+		// 拼装题目列表
+		List<ExamDetailQuestionVO> questions = new ArrayList<>();
+		for (ExamRecordEntity record : records) {
+			ExamQuestionBankEntity question = examQuestionBankDao.selectById(record.getQuestionId());
+			ExamDetailQuestionVO vo = new ExamDetailQuestionVO();
+			vo.setId(record.getQuestionId());
+			vo.setQuestion(question.getTitle());
+			vo.setCorrectAnswer(question.getAnswer());
+			vo.setStudentAnswer(record.getMyanswer());
+
+			String typeStr;
+			switch (question.getType().intValue()) {
+				case 0: typeStr = "单选题"; break;
+				case 1: typeStr = "多选题"; break;
+				case 2: typeStr = "判断题"; break;
+				case 3: typeStr = "填空题"; break;
+				case 4: typeStr = "主观题"; break;
+				default: typeStr = "未知类型";
+			}
+			vo.setType(typeStr);
+
+			questions.add(vo);
+		}
+
+		Map<String, Object> result = new HashMap<>();
+		result.put("paperName", paperName);
+		result.put("studentName", studentName);
+		result.put("questions", questions);
+
+		return result;
 	}
 
 
