@@ -76,18 +76,26 @@ public class ExamPaperController {
 	@IgnoreAuth
     @RequestMapping("/managerlist")
     public R list(@RequestParam Map<String, Object> params, ExamPaperEntity exampaper,
-                  String tableName,String token
-                 ){
-
-        // 若为教师用户，则只查询自己创建的试卷
-        if (tableName.equals("user_teacher")) {
-            Long teacherId = JwtUtils.getUserIdFromToken(token);
-            String tUsername = teacherService.selectById(teacherId).getT_username();
-            exampaper.setTUsername(tUsername);
-        }
+                  @RequestParam String token
+    ){
+        String role=JwtUtils.getRoleFromToken(token);
+//创建查询条件构造器
         EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
+        // 若为教师用户，则只查询自己创建的试卷
+        if ("teacher".equals(role)) {
+            Long teacherId = JwtUtils.getUserIdFromToken(token);
+            TeacherEntity teacher = teacherService.selectById(teacherId);
+            if (teacher == null) {
+                return R.error("无效教师身份");
+            }
 
-		PageUtils page = exampaperService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, exampaper), params), params));
+            String tUsername = teacher.getT_username();
+            ew.eq("t_username", tUsername);
+        }
+
+
+
+        PageUtils page = exampaperService.queryPage(params, ew);
         return R.ok().put("data", page);
     }
 
@@ -144,7 +152,7 @@ public class ExamPaperController {
     	//ValidatorUtils.validateEntity(exampaper);
         String tableName = request.getSession().getAttribute("tableName").toString();
         if(tableName.equals("user_teacher")) {
-            exampaper.setTUsername((String)request.getSession().getAttribute("username"));
+            exampaper.setT_username((String)request.getSession().getAttribute("username"));
         }
         exampaperService.insert(exampaper);
         return R.ok();
@@ -219,7 +227,7 @@ public class ExamPaperController {
      * 创建试卷和组卷
      */
     @RequestMapping("/create")
-    public R compose(@RequestParam Long courseId,@RequestParam String title, @RequestParam Integer single,
+    public R compose(@RequestParam Integer courseId,@RequestParam String title, @RequestParam Integer single,
                      @RequestParam Integer multiple, @RequestParam Integer judge, @RequestParam Integer blank, @RequestParam Integer subjective,@RequestParam String token){
         //获取当前用户身份（教师）
         String tableName = JwtUtils.getRoleFromToken(token);
@@ -243,7 +251,7 @@ public class ExamPaperController {
                 return R.error("单选题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("user_teacher")) {
+                if(tableName.equals("teacher")) {
                     ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 0).orderBy("RAND()").last("limit "+single);

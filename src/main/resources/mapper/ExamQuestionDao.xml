@@ -14,26 +14,26 @@
 
 	<select id="selectListVO"
 		resultType="com.entity.vo.ExamQuestionVO" >
-		SELECT * FROM examquestion  examquestion         
+		SELECT * FROM exam_question  exam_question
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
 		resultType="com.entity.vo.ExamQuestionVO" >
-		SELECT  examquestion.* FROM examquestion  examquestion 	
+		SELECT  exam_question.* FROM exam_question  exam_question
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
     <select id="selectListView"
 		resultType="com.entity.view.ExamQuestionView" >
 
-		SELECT  examquestion.* FROM examquestion  examquestion 	        
+		SELECT  exam_question.* FROM exam_question  exam_question
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
 		resultType="com.entity.view.ExamQuestionView" >
-		SELECT * FROM examquestion  examquestion <where> 1=1 ${ew.sqlSegment}</where>
+		SELECT * FROM exam_question  exam_question <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 

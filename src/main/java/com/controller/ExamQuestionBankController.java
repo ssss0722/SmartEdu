@@ -1,22 +1,17 @@
 package com.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.entity.TeacherEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.TeacherService;
 import com.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.annotation.IgnoreAuth;
 
@@ -36,7 +31,7 @@ import com.utils.MPUtil;
  * @date 2024-03-05 11:41:24
  */
 @RestController
-@RequestMapping("/api/questionbank")
+@RequestMapping("/questionbank")
 public class ExamQuestionBankController {
     @Autowired
     private ExamquestionbankService examquestionbankService;
@@ -76,19 +71,65 @@ public class ExamQuestionBankController {
     /**
      * 前端列表
      */
-	@IgnoreAuth
+    @IgnoreAuth
     @RequestMapping("/managerlist")
-    public R list(@RequestParam Map<String, Object> params, ExamQuestionBankEntity examquestionbank
-                  ){
-        EntityWrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
+    public R list(@RequestParam Map<String, Object> params,
+                  @RequestParam String token) {
 
-		PageUtils page = examquestionbankService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, examquestionbank), params), params));
+
+        EntityWrapper<ExamQuestionBankEntity> ew = new EntityWrapper<>();
+        // 添加title模糊查询
+        String title = (String) params.get("title");
+        if (title != null && !title.trim().isEmpty()) {
+            ew.like("title", title.trim());
+            System.out.println("【调试信息】添加title模糊查询条件：" + title);
+        }
+
+        // 解析用户角色
+        String role = JwtUtils.getRoleFromToken(token);
+        System.out.println("【调试信息】用户角色：" + role);
+        if ("teacher".equals(role)) {
+            // 教师只能查看自己发布的题库
+            Long teacherId = JwtUtils.getUserIdFromToken(token);
+            System.out.println("【调试信息】教师ID：" + teacherId);
+            TeacherEntity teacher = teacherService.selectById(teacherId);
+            if (teacher == null) {
+                return R.error("无效教师身份");
+            }
+            // 添加限定条件
+            ew.eq("t_username", teacher.getT_username());
+            System.out.println("【调试信息】添加教师条件后的SQL：" + ew.getSqlSegment());
+        }
+
+
+        // 查询分页数据
+        PageUtils page = examquestionbankService.queryPage(params, ew);
+        // 打印 SQL 片段
+        System.out.println("查询条件 SQL：" + ew.getSqlSegment());
+        System.out.println("查询参数：" + ew.getParamNameValuePairs());
+        // ✅ 打印数据到控制台
+        System.out.println("【题库分页查询】当前页码：" + page.getCurrPage());
+        System.out.println("【题库分页查询】每页数量：" + page.getPageSize());
+        System.out.println("【题库分页查询】结果列表：");
+        ObjectMapper mapper= new ObjectMapper();
+        List<?> list = page.getList();
+        if (list != null) {
+            for (Object obj : page.getList()) {
+                try {
+                    System.out.println(mapper.writeValueAsString(obj));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
         return R.ok().put("data", page);
     }
 
 
 
-	/**
+
+    /**
      * 列表
      */
     @RequestMapping("/lists")
@@ -149,14 +190,38 @@ public class ExamQuestionBankController {
      * 前端保存
      */
     @RequestMapping("/create")
-    public R add(@RequestBody ExamQuestionBankEntity examquestionbank, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(examquestionbank);
-        String tableName = request.getSession().getAttribute("tableName").toString();
-        if(tableName.equals("user_teacher")) {
-            examquestionbank.setT_username((String)request.getSession().getAttribute("username"));
+    public R add(@RequestBody ExamQuestionBankEntity examquestionbank,@RequestHeader("Authorization") String authHeader){
+        // 解析用户角色
+        // 从 Authorization: Bearer xxx 中提取 token
+        String token = authHeader.replace("Bearer ", "");
+        String role = JwtUtils.getRoleFromToken(token);
+        if ("teacher".equals(role)) {
+            // 教师创建题库时，自动设置创建者为当前教师
+            Long teacherId = JwtUtils.getUserIdFromToken(token);
+
+            TeacherEntity teacher = teacherService.selectById(teacherId);
+            if (teacher == null) {
+                return R.error("无效教师身份");
+            }
+            // 设置题库创建者为当前教师
+            examquestionbank.setT_username(teacher.getT_username());
+
+            // 设置默认创建时间
+            if (examquestionbank.getAddtime() == null) {
+                examquestionbank.setAddtime(new Date());
+            }
         }
-        examquestionbankService.insert(examquestionbank);
-        return R.ok();
+        try {
+            examquestionbankService.insert(examquestionbank);
+            return R.ok().put("message", "题库创建成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("题库创建失败");
+        }
+
+
+
+
     }
 
 

@@ -14,26 +14,26 @@
 
 	<select id="selectListVO"
 		resultType="com.entity.vo.ExamPaperVO" >
-		SELECT * FROM exampaper  exampaper         
+		SELECT * FROM exam_paper  exam_paper
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
 		resultType="com.entity.vo.ExamPaperVO" >
-		SELECT  exampaper.* FROM exampaper  exampaper 	
+		SELECT  exam_paper.* FROM exam_paper  exam_paper
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
     <select id="selectListView"
 		resultType="com.entity.view.ExamPaperView" >
 
-		SELECT  exampaper.* FROM exampaper  exampaper 	        
+		SELECT  exam_paper.* FROM exam_paper  exam_paper
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
 		resultType="com.entity.view.ExamPaperView" >
-		SELECT * FROM exampaper  exampaper <where> 1=1 ${ew.sqlSegment}</where>
+		SELECT * FROM exam_paper  exam_paper <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 

@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-@TableName("examquestionbank")
+@TableName("exam_question_bank")
 public class ExamQuestionBankView extends ExamQuestionBankEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

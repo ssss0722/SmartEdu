@@ -8,10 +8,10 @@
     <resultMap id="examStudentMap" type="com.entity.ExamStudentEntity">
         <result property="id" column="id"/>
         <result property="examId" column="exam_id"/>
-        <result property="studentName" column="student_name"/>
+        <result property="studentId" column="student_"/>
     </resultMap>
 
-    <!-- VO 列表 -->
+    <!-- Vid 列表 -->
     <select id="selectListVO" resultType="com.entity.vo.ExamStudentVO">
         SELECT * FROM exam_student
         <where> 1=1 ${ew.sqlSegment}</where>
@@ -19,12 +19,6 @@
 
     <!-- 单个 VO -->
     <select id="selectVO" resultType="com.entity.vo.ExamStudentVO">
-        SELECT * FROM exam_student
-        <where> 1=1 ${ew.sqlSegment}</where>
-    </select>
-
-    <!-- View 列表 -->
-    <select id="selectListView" resultType="com.entity.view.ExamStudentView">
         SELECT * FROM exam_student
         <where> 1=1 ${ew.sqlSegment}</where>
     </select>
