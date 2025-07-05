@@ -266,7 +266,7 @@ public class ExamPaperController {
                 return R.error("多选题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("user_teacher")) {
+                if(tableName.equals("teacher")) {
                     ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 1).orderBy("RAND()").last("limit "+multiple);
@@ -281,7 +281,7 @@ public class ExamPaperController {
                 return R.error("判断题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("user_teacher")) {
+                if(tableName.equals("teacher")) {
                     ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 2).orderBy("RAND()").last("limit "+judge);
@@ -296,7 +296,7 @@ public class ExamPaperController {
                 return R.error("填空题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("user_teacher")) {
+                if(tableName.equals("teacher")) {
                     ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 3).orderBy("RAND()").last("limit "+blank);
@@ -311,7 +311,7 @@ public class ExamPaperController {
                 return R.error("主观题库不足");
             } else {
                 Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(tableName.equals("user_teacher")) {
+                if(tableName.equals("teacher")) {
                     ew.eq("t_username", teacher.getT_username());
                 }
                 ew.eq("type", 4).orderBy("RAND()").last("limit "+subjective);
@@ -327,7 +327,7 @@ public class ExamPaperController {
                 examquestion.setPaperid(paperid);
                 examquestion.setQuestionId(q.getId());
                 examquestion.setSequence(++seq);
-                if(tableName.equals("user_teacher")) {
+                if(tableName.equals("teacher")) {
                     examquestion.setT_username(teacher.getT_username());
                 }
                 examquestionService.insert(examquestion);
