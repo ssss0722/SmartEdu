@@ -11,7 +11,7 @@
  Target Server Version : 80011 (8.0.11)
  File Encoding         : 65001
 
- Date: 04/07/2025 16:18:01
+ Date: 07/07/2025 21:01:29
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `about_us`  (
 -- ----------------------------
 -- Records of about_us
 -- ----------------------------
-INSERT INTO `about_us` VALUES (1, '2024-03-05 11:41:50', '关于我们', '远程教育网站的设计与实现', '<p>当你设想门外是寒冷可怕的世界时，你还应该开门出去看看，是否真的如此。如果你有信心，你对前途就不犹豫了。如果你有勇气，你就不怕前途是否有困难或危险了每个人心中都应有两盏灯，一盏是希望的灯，一盏是勇气的灯。有了这两盏灯，我们就不怕海上的黑暗和风涛的险恶了。人的一生很像是在雾中行走。远远望去，只是迷蒙一片，辨不出方向和吉凶。可是，当你鼓起勇气，放下恐惧和怀疑，一步一步向前走去的时候，你就会发现，每走一步，你都能把下一步路看得清楚一点。“往前走，别站在远远的地方观望！”你就可以找到你的方向。</p>', 'upload/aboutus_picture1.jpg', 'upload/aboutus_picture2.jpg', 'upload/aboutus_picture3.jpg');
+INSERT INTO `about_us` VALUES (1, '2025-07-07 11:41:50', '关于我们', '智能化在线教学支持服务平台教师中心系统', '<p>当你设想门外是寒冷可怕的世界时，你还应该开门出去看看，是否真的如此。如果你有信心，你对前途就不犹豫了。如果你有勇气，你就不怕前途是否有困难或危险了每个人心中都应有两盏灯，一盏是希望的灯，一盏是勇气的灯。有了这两盏灯，我们就不怕海上的黑暗和风涛的险恶了。人的一生很像是在雾中行走。远远望去，只是迷蒙一片，辨不出方向和吉凶。可是，当你鼓起勇气，放下恐惧和怀疑，一步一步向前走去的时候，你就会发现，每走一步，你都能把下一步路看得清楚一点。“往前走，别站在远远的地方观望！”你就可以找到你的方向。</p>', 'upload/aboutus_picture1.jpg', 'upload/aboutus_picture2.jpg', 'upload/aboutus_picture3.jpg');
 
 -- ----------------------------
 -- Table structure for config
@@ -73,178 +73,15 @@ CREATE TABLE `course_categories`  (
 -- ----------------------------
 -- Records of course_categories
 -- ----------------------------
-INSERT INTO `course_categories` VALUES (51, '2024-03-05 11:41:50', '课程名称1');
-INSERT INTO `course_categories` VALUES (52, '2024-03-05 11:41:50', '课程名称2');
-INSERT INTO `course_categories` VALUES (53, '2024-03-05 11:41:50', '课程名称3');
-INSERT INTO `course_categories` VALUES (54, '2024-03-05 11:41:50', '课程名称4');
-INSERT INTO `course_categories` VALUES (55, '2024-03-05 11:41:50', '课程名称5');
-INSERT INTO `course_categories` VALUES (56, '2024-03-05 11:41:50', '课程名称6');
-INSERT INTO `course_categories` VALUES (57, '2024-03-05 11:41:50', '课程名称7');
-INSERT INTO `course_categories` VALUES (58, '2024-03-05 11:41:50', '课程名称8');
-INSERT INTO `course_categories` VALUES (59, '2024-03-05 11:51:31', '编程');
-
--- ----------------------------
--- Table structure for course_homework
--- ----------------------------
-DROP TABLE IF EXISTS `course_homework`;
-CREATE TABLE `course_homework`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `course` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程名称',
-  `homework` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作业名称',
-  `picture` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '图片',
-  `attachment` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '相关附件',
-  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
-  `publish_at` datetime NULL DEFAULT NULL COMMENT '发布时间',
-  `contxt` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '作业内容',
-  `discussnum` int(11) NULL DEFAULT 0 COMMENT '评论数',
-  `storeupnum` int(11) NULL DEFAULT 0 COMMENT '收藏数',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `t_co_ho`(`t_username` ASC) USING BTREE,
-  INDEX `cate_co_ho`(`course` ASC) USING BTREE,
-  CONSTRAINT `cate_co_ho` FOREIGN KEY (`course`) REFERENCES `course_categories` (`course`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `t_co_ho` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 70 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '课程作业' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of course_homework
--- ----------------------------
-INSERT INTO `course_homework` VALUES (61, '2024-03-05 11:41:50', '课程名称1', '作业名称1', 'upload/kechengzuoye_tupian1.jpg,upload/kechengzuoye_tupian2.jpg,upload/kechengzuoye_tupian3.jpg', '', '教师工号1', '2024-03-05 11:41:50', '作业内容1', 0, 1);
-INSERT INTO `course_homework` VALUES (62, '2024-03-05 11:41:50', '课程名称2', '作业名称2', 'upload/kechengzuoye_tupian2.jpg,upload/kechengzuoye_tupian3.jpg,upload/kechengzuoye_tupian4.jpg', '', '教师工号2', '2024-03-05 11:41:50', '作业内容2', 0, 2);
-INSERT INTO `course_homework` VALUES (63, '2024-03-05 11:41:50', '课程名称3', '作业名称3', 'upload/kechengzuoye_tupian3.jpg,upload/kechengzuoye_tupian4.jpg,upload/kechengzuoye_tupian5.jpg', '', '教师工号3', '2024-03-05 11:41:50', '作业内容3', 0, 3);
-INSERT INTO `course_homework` VALUES (64, '2024-03-05 11:41:50', '课程名称4', '作业名称4', 'upload/kechengzuoye_tupian4.jpg,upload/kechengzuoye_tupian5.jpg,upload/kechengzuoye_tupian6.jpg', '', '教师工号4', '2024-03-05 11:41:50', '作业内容4', 0, 4);
-INSERT INTO `course_homework` VALUES (65, '2024-03-05 11:41:50', '课程名称5', '作业名称5', 'upload/kechengzuoye_tupian5.jpg,upload/kechengzuoye_tupian6.jpg,upload/kechengzuoye_tupian7.jpg', '', '教师工号5', '2024-03-05 11:41:50', '作业内容5', 0, 5);
-INSERT INTO `course_homework` VALUES (66, '2024-03-05 11:41:50', '课程名称6', '作业名称6', 'upload/kechengzuoye_tupian6.jpg,upload/kechengzuoye_tupian7.jpg,upload/kechengzuoye_tupian8.jpg', '', '教师工号6', '2024-03-05 11:41:50', '作业内容6', 0, 6);
-INSERT INTO `course_homework` VALUES (67, '2024-03-05 11:41:50', '课程名称7', '作业名称7', 'upload/kechengzuoye_tupian7.jpg,upload/kechengzuoye_tupian8.jpg,upload/kechengzuoye_tupian9.jpg', '', '教师工号7', '2024-03-05 11:41:50', '作业内容7', 0, 7);
-INSERT INTO `course_homework` VALUES (68, '2024-03-05 11:41:50', '课程名称8', '作业名称8', 'upload/kechengzuoye_tupian8.jpg,upload/kechengzuoye_tupian9.jpg,upload/kechengzuoye_tupian10.jpg', '', '教师工号8', '2024-03-05 11:41:50', '作业内容8', 0, 8);
-INSERT INTO `course_homework` VALUES (69, '2024-03-05 11:54:22', '编程', '第一单元', 'upload/1709610853914.jpg', 'upload/1709610859409.doc', '111', '2024-03-05 11:56:18', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', 0, 1);
-
--- ----------------------------
--- Table structure for course_homework_question
--- ----------------------------
-DROP TABLE IF EXISTS `course_homework_question`;
-CREATE TABLE `course_homework_question`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `addtime` timestamp NOT NULL COMMENT '创建时间',
-  `homework_id` bigint(20) NOT NULL COMMENT '所属作业id（外键）',
-  `question_id` bigint(20) NOT NULL COMMENT '试题ID（外键）',
-  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号（外键）',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `t_ho_question`(`t_username` ASC) USING BTREE,
-  INDEX `qu_ho`(`homework_id` ASC) USING BTREE,
-  INDEX `bank_ho_qu`(`question_id` ASC) USING BTREE,
-  CONSTRAINT `bank_ho_qu` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `qu_ho` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `t_ho_question` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of course_homework_question
--- ----------------------------
-
--- ----------------------------
--- Table structure for course_homework_record
--- ----------------------------
-DROP TABLE IF EXISTS `course_homework_record`;
-CREATE TABLE `course_homework_record`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学生用户id（外键）',
-  `homework_id` bigint(20) NOT NULL COMMENT '作业id（外键）',
-  `question_id` bigint(20) NOT NULL COMMENT '试题id（外键）',
-  `ismark` bigint(20) NULL DEFAULT 0 COMMENT '是否批改',
-  `myscore` bigint(20) NOT NULL DEFAULT 0 COMMENT '试题得分',
-  `myanswer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '考生答案',
-  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号(外键)',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `ho_re_id`(`homework_id` ASC) USING BTREE,
-  INDEX `ho_re_qu_bank`(`question_id` ASC) USING BTREE,
-  INDEX `ho_re_user_s`(`s_username` ASC) USING BTREE,
-  INDEX `ho_t_ex_record`(`t_username` ASC) USING BTREE,
-  CONSTRAINT `ho_re_id` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ho_re_qu_bank` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ho_re_user_s` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ho_t_ex_record` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of course_homework_record
--- ----------------------------
-
--- ----------------------------
--- Table structure for course_homework_review
--- ----------------------------
-DROP TABLE IF EXISTS `course_homework_review`;
-CREATE TABLE `course_homework_review`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `course` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程名称',
-  `homework_id` bigint(20) NOT NULL COMMENT '作业名称',
-  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
-  `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生账号',
-  `grade` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作业评分',
-  `reviewed_at` datetime NULL DEFAULT NULL COMMENT '批改时间',
-  `teacher_comment` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '教师评语',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `t_co_ho_re`(`t_username` ASC) USING BTREE,
-  INDEX `s_co_ho_re`(`s_username` ASC) USING BTREE,
-  INDEX `cate_co_ho_re`(`course` ASC) USING BTREE,
-  INDEX `rev_ho`(`homework_id` ASC) USING BTREE,
-  CONSTRAINT `cate_co_ho_re` FOREIGN KEY (`course`) REFERENCES `course_categories` (`course`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `rev_ho` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `s_co_ho_re` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `t_co_ho_re` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '作业批改' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of course_homework_review
--- ----------------------------
-INSERT INTO `course_homework_review` VALUES (81, '2024-03-05 11:41:50', '课程名称1', 61, '教师工号1', '学生账号1', '作业评分1', '2024-03-05 11:41:50', '教师评语1');
-INSERT INTO `course_homework_review` VALUES (82, '2024-03-05 11:41:50', '课程名称2', 62, '教师工号2', '学生账号2', '作业评分2', '2024-03-05 11:41:50', '教师评语2');
-INSERT INTO `course_homework_review` VALUES (83, '2024-03-05 11:41:50', '课程名称3', 63, '教师工号3', '学生账号3', '作业评分3', '2024-03-05 11:41:50', '教师评语3');
-INSERT INTO `course_homework_review` VALUES (84, '2024-03-05 11:41:50', '课程名称4', 64, '教师工号4', '学生账号4', '作业评分4', '2024-03-05 11:41:50', '教师评语4');
-INSERT INTO `course_homework_review` VALUES (85, '2024-03-05 11:41:50', '课程名称5', 65, '教师工号5', '学生账号5', '作业评分5', '2024-03-05 11:41:50', '教师评语5');
-INSERT INTO `course_homework_review` VALUES (86, '2024-03-05 11:41:50', '课程名称6', 66, '教师工号6', '学生账号6', '作业评分6', '2024-03-05 11:41:50', '教师评语6');
-INSERT INTO `course_homework_review` VALUES (87, '2024-03-05 11:41:50', '课程名称7', 67, '教师工号7', '学生账号7', '作业评分7', '2024-03-05 11:41:50', '教师评语7');
-INSERT INTO `course_homework_review` VALUES (88, '2024-03-05 11:41:50', '课程名称8', 68, '教师工号8', '学生账号8', '作业评分8', '2024-03-05 11:41:50', '教师评语8');
-INSERT INTO `course_homework_review` VALUES (89, '2024-03-05 12:00:24', '编程', 69, '111', '222', '85', '2024-03-05 12:02:37', '11');
-
--- ----------------------------
--- Table structure for course_homework_submission
--- ----------------------------
-DROP TABLE IF EXISTS `course_homework_submission`;
-CREATE TABLE `course_homework_submission`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `course` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '课程名称',
-  `homework_id` bigint(20) NULL DEFAULT NULL COMMENT '作业名称',
-  `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
-  `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生账号',
-  `submission` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '提交作业',
-  `submission_at` datetime NULL DEFAULT NULL COMMENT '提交时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `t_co_ho_sub`(`t_username` ASC) USING BTREE,
-  INDEX `s_co_ho_sub`(`s_username` ASC) USING BTREE,
-  INDEX `cate_co_ho_sub`(`course` ASC) USING BTREE,
-  INDEX `sub_ho`(`homework_id` ASC) USING BTREE,
-  CONSTRAINT `cate_co_ho_sub` FOREIGN KEY (`course`) REFERENCES `course_categories` (`course`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `s_co_ho_sub` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `sub_ho` FOREIGN KEY (`homework_id`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `t_co_ho_sub` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 80 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '作业提交' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of course_homework_submission
--- ----------------------------
-INSERT INTO `course_homework_submission` VALUES (71, '2024-03-05 11:41:50', '课程名称1', 61, '教师工号1', '学生账号1', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (72, '2024-03-05 11:41:50', '课程名称2', 62, '教师工号2', '学生账号2', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (73, '2024-03-05 11:41:50', '课程名称3', 63, '教师工号3', '学生账号3', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (74, '2024-03-05 11:41:50', '课程名称4', 64, '教师工号4', '学生账号4', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (75, '2024-03-05 11:41:50', '课程名称5', 65, '教师工号5', '学生账号5', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (76, '2024-03-05 11:41:50', '课程名称6', 66, '教师工号6', '学生账号6', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (77, '2024-03-05 11:41:50', '课程名称7', 67, '教师工号7', '学生账号7', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (78, '2024-03-05 11:41:50', '课程名称8', 68, '教师工号8', '学生账号8', '', '2024-03-05 11:41:50');
-INSERT INTO `course_homework_submission` VALUES (79, '2024-03-05 11:58:20', '编程', 69, '111', '222', 'upload/1709611098834.doc', '2024-03-05 12:00:29');
+INSERT INTO `course_categories` VALUES (51, '2025-07-07 11:41:50', 'JAVA程序设计与实现');
+INSERT INTO `course_categories` VALUES (52, '2025-07-07 11:41:50', '高等数学A');
+INSERT INTO `course_categories` VALUES (53, '2025-07-07 11:41:50', '统计与概率');
+INSERT INTO `course_categories` VALUES (54, '2025-07-07 11:41:50', '敦煌的艺术');
+INSERT INTO `course_categories` VALUES (55, '2025-07-07 11:41:50', '实用英语阅读与写作');
+INSERT INTO `course_categories` VALUES (56, '2025-07-07 11:41:50', '近代史纲要');
+INSERT INTO `course_categories` VALUES (57, '2025-07-07 11:41:50', '马克思主义原理');
+INSERT INTO `course_categories` VALUES (58, '2025-07-07 11:41:50', 'WEB开发');
+INSERT INTO `course_categories` VALUES (59, '2025-07-07 11:41:50', '开源操作系统');
 
 -- ----------------------------
 -- Table structure for course_material
@@ -269,20 +106,39 @@ CREATE TABLE `course_material`  (
   INDEX `cate_co_material`(`course` ASC) USING BTREE,
   CONSTRAINT `cate_co_material` FOREIGN KEY (`course`) REFERENCES `course_categories` (`course`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_co_material` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '教学资料' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '教学资料' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of course_material
 -- ----------------------------
-INSERT INTO `course_material` VALUES (31, '2024-03-05 11:41:50', '标题1', '课程名称1', 'upload/jiaoxueziliao_tupian1.jpg,upload/jiaoxueziliao_tupian2.jpg,upload/jiaoxueziliao_tupian3.jpg', '', '教师工号1', '2024-03-05 11:41:50', '内容1', '2024-03-05 11:41:50', 1, 0, 1);
-INSERT INTO `course_material` VALUES (32, '2024-03-05 11:41:50', '标题2', '课程名称2', 'upload/jiaoxueziliao_tupian2.jpg,upload/jiaoxueziliao_tupian3.jpg,upload/jiaoxueziliao_tupian4.jpg', '', '教师工号2', '2024-03-05 11:41:50', '内容2', '2024-03-05 11:41:50', 2, 0, 2);
-INSERT INTO `course_material` VALUES (33, '2024-03-05 11:41:50', '标题3', '课程名称3', 'upload/jiaoxueziliao_tupian3.jpg,upload/jiaoxueziliao_tupian4.jpg,upload/jiaoxueziliao_tupian5.jpg', '', '教师工号3', '2024-03-05 11:41:50', '内容3', '2024-03-05 11:41:50', 3, 0, 3);
-INSERT INTO `course_material` VALUES (34, '2024-03-05 11:41:50', '标题4', '课程名称4', 'upload/jiaoxueziliao_tupian4.jpg,upload/jiaoxueziliao_tupian5.jpg,upload/jiaoxueziliao_tupian6.jpg', '', '教师工号4', '2024-03-05 11:41:50', '内容4', '2024-03-05 11:41:50', 4, 0, 4);
-INSERT INTO `course_material` VALUES (35, '2024-03-05 11:41:50', '标题5', '课程名称5', 'upload/jiaoxueziliao_tupian5.jpg,upload/jiaoxueziliao_tupian6.jpg,upload/jiaoxueziliao_tupian7.jpg', '', '教师工号5', '2024-03-05 11:41:50', '内容5', '2024-03-05 11:41:50', 5, 0, 5);
-INSERT INTO `course_material` VALUES (36, '2024-03-05 11:41:50', '标题6', '课程名称6', 'upload/jiaoxueziliao_tupian6.jpg,upload/jiaoxueziliao_tupian7.jpg,upload/jiaoxueziliao_tupian8.jpg', '', '教师工号6', '2024-03-05 11:41:50', '内容6', '2024-03-05 11:41:50', 6, 0, 6);
-INSERT INTO `course_material` VALUES (37, '2024-03-05 11:41:50', '标题7', '课程名称7', 'upload/jiaoxueziliao_tupian7.jpg,upload/jiaoxueziliao_tupian8.jpg,upload/jiaoxueziliao_tupian9.jpg', '', '教师工号7', '2024-03-05 11:41:50', '内容7', '2024-03-05 11:41:50', 7, 0, 7);
-INSERT INTO `course_material` VALUES (38, '2024-03-05 11:41:50', '标题8', '课程名称8', 'upload/jiaoxueziliao_tupian8.jpg,upload/jiaoxueziliao_tupian9.jpg,upload/jiaoxueziliao_tupian10.jpg', '', '教师工号8', '2024-03-05 11:41:50', '内容8', '2024-03-05 11:41:50', 8, 0, 8);
-INSERT INTO `course_material` VALUES (39, '2024-03-05 11:53:19', '初级编程', '编程', 'upload/1709610789808.jpg', 'upload/1709610795897.doc', '111', '2024-03-05 11:55:14', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2024-03-05 11:57:04', 1, 1, 1);
+INSERT INTO `course_material` VALUES (39, '2024-03-05 11:53:19', 'openEuler操作系统', '开源操作系统', 'upload/openEuler操作系统.jpg', 'upload/1709610795897.doc', '111', '2024-03-05 11:55:14', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2024-03-05 11:57:04', 1, 1, 1);
+INSERT INTO `course_material` VALUES (40, '2025-07-07 16:14:04', 'JAVA程序设计与实现', 'JAVA程序设计与实现', 'upload/JAVA程序设计与实现.jpg', '40', '111', '2025-07-07 16:19:27', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2025-07-07 16:19:39', 0, 0, 0);
+INSERT INTO `course_material` VALUES (41, '2025-07-07 16:14:04', '高等数学A', '高等数学A', 'upload/高等数学A.jpg', '40', '111', '2025-07-07 16:19:27', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2025-07-07 16:19:39', 0, 0, 0);
+INSERT INTO `course_material` VALUES (42, '2025-07-07 19:01:44', '概率论与数理统计', '统计与概率', 'upload/概率论与数理统计.jpg', '12', '111', '2025-07-07 20:44:56', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2025-07-07 20:45:30', 0, 0, 0);
+INSERT INTO `course_material` VALUES (43, '2025-07-07 19:04:11', '敦煌', '敦煌的艺术', 'upload/敦煌.jpg', NULL, '111', '2025-07-07 20:44:59', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2025-07-07 20:45:32', 0, 0, 0);
+INSERT INTO `course_material` VALUES (44, '2025-07-07 19:04:42', '英语阅读与写作教程', '实用英语阅读与写作', 'upload/英语阅读与写作教程.jpg', NULL, '111', '2025-07-07 20:45:01', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2025-07-07 20:45:36', 0, 0, 0);
+INSERT INTO `course_material` VALUES (45, '2025-07-07 19:05:12', '中国近代史纲要', '近代史纲要', 'upload/中国近代史纲要.jpg', NULL, '111', '2025-07-07 20:45:05', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2025-07-07 20:45:34', 0, 0, 0);
+INSERT INTO `course_material` VALUES (46, '2025-07-07 19:05:39', '马克思主义基本原理', '马克思主义原理', 'upload/马克思主义基本原理.jpg', NULL, '111', '2025-07-07 20:45:07', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2025-07-07 20:45:40', 0, 0, 0);
+INSERT INTO `course_material` VALUES (47, '2025-07-07 19:06:06', 'springboot', 'WEB开发', 'upload/springboot.jpg', NULL, '111', '2025-07-07 20:45:10', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2025-07-07 20:45:38', 0, 0, 0);
+
+-- ----------------------------
+-- Table structure for course_student
+-- ----------------------------
+DROP TABLE IF EXISTS `course_student`;
+CREATE TABLE `course_student`  (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `course_id` bigint(20) NULL DEFAULT NULL COMMENT '课程',
+  `s_username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `co_s`(`s_username` ASC) USING BTREE,
+  INDEX `co_s_cate`(`course_id` ASC) USING BTREE,
+  CONSTRAINT `co_s` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `co_s_cate` FOREIGN KEY (`course_id`) REFERENCES `course_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of course_student
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for course_teacher
@@ -297,7 +153,7 @@ CREATE TABLE `course_teacher`  (
   INDEX `co_t_cate`(`course_id` ASC) USING BTREE,
   CONSTRAINT `co_t` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `co_t_cate` FOREIGN KEY (`course_id`) REFERENCES `course_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of course_teacher
@@ -331,108 +187,51 @@ CREATE TABLE `course_video`  (
 -- ----------------------------
 -- Records of course_video
 -- ----------------------------
-INSERT INTO `course_video` VALUES (41, '2024-03-05 11:41:50', '标题1', '课程名称1', 'upload/jiaoxueshipin_fengmian1.jpg,upload/jiaoxueshipin_fengmian2.jpg,upload/jiaoxueshipin_fengmian3.jpg', '教师工号1', '', '2024-03-05', '基本介绍1', '2025-06-27 09:02:53', 2, 0, 1);
-INSERT INTO `course_video` VALUES (42, '2024-03-05 11:41:50', '标题2', '课程名称2', 'upload/jiaoxueshipin_fengmian2.jpg,upload/jiaoxueshipin_fengmian3.jpg,upload/jiaoxueshipin_fengmian4.jpg', '教师工号2', '', '2024-03-05', '基本介绍2', '2024-03-05 11:41:50', 2, 0, 2);
-INSERT INTO `course_video` VALUES (43, '2024-03-05 11:41:50', '标题3', '课程名称3', 'upload/jiaoxueshipin_fengmian3.jpg,upload/jiaoxueshipin_fengmian4.jpg,upload/jiaoxueshipin_fengmian5.jpg', '教师工号3', '', '2024-03-05', '基本介绍3', '2024-03-05 11:41:50', 3, 0, 3);
-INSERT INTO `course_video` VALUES (44, '2024-03-05 11:41:50', '标题4', '课程名称4', 'upload/jiaoxueshipin_fengmian4.jpg,upload/jiaoxueshipin_fengmian5.jpg,upload/jiaoxueshipin_fengmian6.jpg', '教师工号4', '', '2024-03-05', '基本介绍4', '2025-06-27 09:03:15', 5, 0, 4);
-INSERT INTO `course_video` VALUES (45, '2024-03-05 11:41:50', '标题5', '课程名称5', 'upload/jiaoxueshipin_fengmian5.jpg,upload/jiaoxueshipin_fengmian6.jpg,upload/jiaoxueshipin_fengmian7.jpg', '教师工号5', '', '2024-03-05', '基本介绍5', '2024-03-05 11:41:50', 5, 0, 5);
-INSERT INTO `course_video` VALUES (46, '2024-03-05 11:41:50', '标题6', '课程名称6', 'upload/jiaoxueshipin_fengmian6.jpg,upload/jiaoxueshipin_fengmian7.jpg,upload/jiaoxueshipin_fengmian8.jpg', '教师工号6', '', '2024-03-05', '基本介绍6', '2024-03-05 11:41:50', 6, 0, 6);
-INSERT INTO `course_video` VALUES (47, '2024-03-05 11:41:50', '标题7', '课程名称7', 'upload/jiaoxueshipin_fengmian7.jpg,upload/jiaoxueshipin_fengmian8.jpg,upload/jiaoxueshipin_fengmian9.jpg', '教师工号7', '', '2024-03-05', '基本介绍7', '2024-03-05 11:41:50', 7, 0, 7);
-INSERT INTO `course_video` VALUES (48, '2024-03-05 11:41:50', '标题8', '课程名称8', 'upload/jiaoxueshipin_fengmian8.jpg,upload/jiaoxueshipin_fengmian9.jpg,upload/jiaoxueshipin_fengmian10.jpg', '教师工号8', '', '2024-03-05', '基本介绍8', '2024-03-05 11:41:50', 8, 0, 8);
-INSERT INTO `course_video` VALUES (49, '2024-03-05 11:53:53', '初级编程', '编程', 'upload/1709610825018.jpg', '111', 'upload/1709611063013.mp4', '2024-03-05', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2024-03-05 11:58:25', 4, 0, 1);
+INSERT INTO `course_video` VALUES (49, '2024-03-05 11:53:53', '系统环境的搭建', '开源操作系统', 'upload/1709610825018.jpg', '111', 'upload/1709611063013.mp4', '2024-03-05', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>', '2024-03-05 11:58:25', 4, 0, 1);
 
 -- ----------------------------
--- Table structure for discuss_course_homework
+-- Table structure for exam_homework
 -- ----------------------------
-DROP TABLE IF EXISTS `discuss_course_homework`;
-CREATE TABLE `discuss_course_homework`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `refid` bigint(20) NOT NULL COMMENT '关联表id',
-  `userid` bigint(20) NOT NULL COMMENT '用户id',
-  `avatarurl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
-  `nickname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论内容',
-  `reply` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '回复内容',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `co_ho_dis`(`refid` ASC) USING BTREE,
-  CONSTRAINT `co_ho_dis` FOREIGN KEY (`refid`) REFERENCES `course_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '课程作业评论表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of discuss_course_homework
--- ----------------------------
-
--- ----------------------------
--- Table structure for discuss_course_material
--- ----------------------------
-DROP TABLE IF EXISTS `discuss_course_material`;
-CREATE TABLE `discuss_course_material`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `refid` bigint(20) NOT NULL COMMENT '关联表id',
-  `userid` bigint(20) NOT NULL COMMENT '用户id',
-  `avatarurl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
-  `nickname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论内容',
-  `reply` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '回复内容',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `co_ma_dis`(`refid` ASC) USING BTREE,
-  CONSTRAINT `co_ma_dis` FOREIGN KEY (`refid`) REFERENCES `course_material` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '教学资料评论表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of discuss_course_material
--- ----------------------------
-INSERT INTO `discuss_course_material` VALUES (1, '2024-03-05 11:57:08', 39, 1709611010643, 'upload/1709611009944.jpeg', '222', '<p>22</p>', NULL);
-
--- ----------------------------
--- Table structure for discuss_course_video
--- ----------------------------
-DROP TABLE IF EXISTS `discuss_course_video`;
-CREATE TABLE `discuss_course_video`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `refid` bigint(20) NOT NULL COMMENT '关联表id',
-  `userid` bigint(20) NOT NULL COMMENT '用户id',
-  `avatarurl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
-  `nickname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论内容',
-  `reply` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '回复内容',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `co_vi_dis`(`refid` ASC) USING BTREE,
-  CONSTRAINT `co_vi_dis` FOREIGN KEY (`refid`) REFERENCES `course_video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '教学视频评论表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of discuss_course_video
--- ----------------------------
-
--- ----------------------------
--- Table structure for exam
--- ----------------------------
-DROP TABLE IF EXISTS `exam`;
-CREATE TABLE `exam`  (
+DROP TABLE IF EXISTS `exam_homework`;
+CREATE TABLE `exam_homework`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '考试ID',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '考试名称',
   `paper_id` bigint(20) NOT NULL COMMENT '关联试卷ID',
-  `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '考试状态：0 草稿，1 已发布',
   `start_time` datetime NOT NULL COMMENT '考试开始时间',
   `end_time` datetime NOT NULL COMMENT '考试结束时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_exam_paper`(`paper_id` ASC) USING BTREE,
-  CONSTRAINT `fk_exam_paper` FOREIGN KEY (`paper_id`) REFERENCES `exam_paper` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_exam_paper` FOREIGN KEY (`paper_id`) REFERENCES `paper` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of exam
+-- Records of exam_homework
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for exam_paper
+-- Table structure for exam_homework_student
 -- ----------------------------
-DROP TABLE IF EXISTS `exam_paper`;
-CREATE TABLE `exam_paper`  (
+DROP TABLE IF EXISTS `exam_homework_student`;
+CREATE TABLE `exam_homework_student`  (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `exam_id` bigint(20) NULL DEFAULT NULL COMMENT '考试或作业的ID',
+  `s_username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生姓名',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `ex`(`exam_id` ASC) USING BTREE,
+  INDEX `ex_stu`(`s_username` ASC) USING BTREE,
+  CONSTRAINT `ex` FOREIGN KEY (`exam_id`) REFERENCES `exam_homework` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ex_stu` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of exam_homework_student
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for paper
+-- ----------------------------
+DROP TABLE IF EXISTS `paper`;
+CREATE TABLE `paper`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '在线考试名称',
@@ -448,16 +247,16 @@ CREATE TABLE `exam_paper`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '在线考试表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of exam_paper
+-- Records of paper
 -- ----------------------------
-INSERT INTO `exam_paper` VALUES (1, '2024-03-05 11:41:50', '十万个为什么', 60, '1', NULL, NULL);
-INSERT INTO `exam_paper` VALUES (2, '2024-03-05 11:54:40', '编程', 30, '1', '111', NULL);
+INSERT INTO `paper` VALUES (1, '2024-03-05 11:41:50', '十万个为什么', 60, '1', NULL, NULL);
+INSERT INTO `paper` VALUES (2, '2024-03-05 11:54:40', '编程', 30, '1', '111', NULL);
 
 -- ----------------------------
--- Table structure for exam_question
+-- Table structure for question
 -- ----------------------------
-DROP TABLE IF EXISTS `exam_question`;
-CREATE TABLE `exam_question`  (
+DROP TABLE IF EXISTS `question`;
+CREATE TABLE `question`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `paperid` bigint(20) NOT NULL COMMENT '所属在线考试id（外键）',
@@ -467,66 +266,92 @@ CREATE TABLE `exam_question`  (
   INDEX `t_ex_queation`(`t_username` ASC) USING BTREE,
   INDEX `qu_pa`(`paperid` ASC) USING BTREE,
   INDEX `bank_qu`(`question_id` ASC) USING BTREE,
-  CONSTRAINT `bank_qu` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `qu_pa` FOREIGN KEY (`paperid`) REFERENCES `exam_paper` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `bank_qu` FOREIGN KEY (`question_id`) REFERENCES `question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `qu_pa` FOREIGN KEY (`paperid`) REFERENCES `paper` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_ex_queation` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '试题表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of exam_question
+-- Records of question
 -- ----------------------------
-INSERT INTO `exam_question` VALUES (1, '2024-03-05 11:41:50', 1, NULL, 1);
-INSERT INTO `exam_question` VALUES (2, '2024-03-05 11:41:50', 1, NULL, 2);
-INSERT INTO `exam_question` VALUES (3, '2024-03-05 11:41:50', 1, NULL, 3);
-INSERT INTO `exam_question` VALUES (4, '2024-03-05 11:41:50', 1, NULL, 4);
-INSERT INTO `exam_question` VALUES (5, '2024-03-05 11:41:50', 1, NULL, 5);
-INSERT INTO `exam_question` VALUES (6, '2024-03-05 11:56:22', 2, '111', 6);
-INSERT INTO `exam_question` VALUES (7, '2024-03-05 11:56:22', 2, '111', 7);
-INSERT INTO `exam_question` VALUES (8, '2024-03-05 11:56:22', 2, '111', 8);
-INSERT INTO `exam_question` VALUES (9, '2024-03-05 11:56:22', 2, '111', 9);
-INSERT INTO `exam_question` VALUES (10, '2024-03-05 11:56:22', 2, '111', 10);
-INSERT INTO `exam_question` VALUES (11, '2024-03-05 11:56:22', 2, '111', 11);
 
 -- ----------------------------
--- Table structure for exam_question_bank
+-- Table structure for question_bank
 -- ----------------------------
-DROP TABLE IF EXISTS `exam_question_bank`;
-CREATE TABLE `exam_question_bank`  (
+DROP TABLE IF EXISTS `question_bank`;
+CREATE TABLE `question_bank`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '试题名称',
   `options` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '选项，json字符串',
   `answer` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '正确答案',
   `analysis` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '答案解析',
-  `type` bigint(20) NULL DEFAULT 0 COMMENT '试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空） 4:主观题',
+  `type` bigint(20) NULL DEFAULT 0 COMMENT '试题类型，0：单选题 1：多选题 2：判断题 3：填空题（暂不考虑多项填空）',
   `sequence` bigint(20) NULL DEFAULT 100 COMMENT '试题排序，值越大排越前面',
   `t_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
   `score` bigint(20) NULL DEFAULT NULL COMMENT '试题分值',
+  `course_id` bigint(20) NULL DEFAULT NULL COMMENT '课程外检',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_ex_bank`(`t_username` ASC) USING BTREE,
+  INDEX `bank_co`(`course_id` ASC) USING BTREE,
+  CONSTRAINT `bank_co` FOREIGN KEY (`course_id`) REFERENCES `course_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_ex_bank` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '试题库表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '试题库表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of exam_question_bank
+-- Records of question_bank
 -- ----------------------------
-INSERT INTO `exam_question_bank` VALUES (1, '2024-03-05 11:41:50', '下面动物不属于昆虫的是（）。', '[{\"text\":\"A.苍蝇\",\"code\":\"A\"},{\"text\":\"B.蜜蜂\",\"code\":\"B\"},{\"text\":\"C.蜂鸟\",\"code\":\"C\"}]', 'C', '蜂鸟', 0, 1, NULL, 20);
-INSERT INTO `exam_question_bank` VALUES (2, '2024-03-05 11:41:50', '油着火后可以用水扑灭。', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '油着火后不可以用水扑灭', 2, 2, NULL, 20);
-INSERT INTO `exam_question_bank` VALUES (3, '2024-03-05 11:41:50', '地球是个球体，中间是（ ）。', '[]', '赤道', '赤道', 3, 3, NULL, 20);
-INSERT INTO `exam_question_bank` VALUES (4, '2024-03-05 11:41:50', '下面动物中会流汗的有（ ）。', '[{\"text\":\"A.马\",\"code\":\"A\"},{\"text\":\"B.猫\",\"code\":\"B\"},{\"text\":\"C.狗\",\"code\":\"C\"}]', 'A,B', '狗不会流汗', 1, 4, NULL, 20);
-INSERT INTO `exam_question_bank` VALUES (5, '2024-03-05 11:41:50', '世界上为什么不存在完美的圆？', '[]', '', '目前没有证据表明现实中存在完美的圆', 4, 5, NULL, 20);
-INSERT INTO `exam_question_bank` VALUES (6, '2024-03-05 11:55:11', '测试1', '[{\"text\":\"A.11\",\"code\":\"A\"},{\"text\":\"B.22\",\"code\":\"B\"},{\"text\":\"C.33\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 'B', '5', 0, 5, '111', 20);
-INSERT INTO `exam_question_bank` VALUES (7, '2024-03-05 11:55:35', '222', '[{\"text\":\"A.22\",\"code\":\"A\"},{\"text\":\"B.213\",\"code\":\"B\"},{\"text\":\"C.333\",\"code\":\"C\"},{\"text\":\"D.444\",\"code\":\"D\"}]', 'A,B', '5', 1, 6, '111', 20);
-INSERT INTO `exam_question_bank` VALUES (8, '2024-03-05 11:55:43', '666', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '6', 2, 6, '111', 20);
-INSERT INTO `exam_question_bank` VALUES (9, '2024-03-05 11:55:50', '77', '[]', '7', '7', 3, 7, '111', 20);
-INSERT INTO `exam_question_bank` VALUES (10, '2024-03-05 11:55:56', '878', '[]', '', '8', 4, 8, '111', 20);
-INSERT INTO `exam_question_bank` VALUES (11, '2024-03-05 11:56:05', '878', '[]', '8', '8', 3, 8, '111', 20);
+INSERT INTO `question_bank` VALUES (12, '2025-07-07 21:00:32', 'Java中以下哪个关键字用于继承一个类？', '[{\"text\":\"A.extends\",\"code\":\"A\"},{\"text\":\"B.implements\",\"code\":\"B\"},{\"text\":\"C.import\",\"code\":\"C\"}]', 'A', '用于继承类', 0, 1, NULL, 5, 51);
+INSERT INTO `question_bank` VALUES (13, '2025-07-07 21:00:32', '以下哪些属于Java集合类？', '[{\"text\":\"A.ArrayList\",\"code\":\"A\"},{\"text\":\"B.HashMap\",\"code\":\"B\"},{\"text\":\"C.Scanner\",\"code\":\"C\"}]', 'A,B', '集合类有List和Map等', 1, 2, NULL, 5, 51);
+INSERT INTO `question_bank` VALUES (14, '2025-07-07 21:00:32', 'Java程序入口是（ ）。', '[]', 'main方法', 'main方法', 3, 3, NULL, 5, 51);
+INSERT INTO `question_bank` VALUES (15, '2025-07-07 21:00:32', '在Java中，接口可以被实例化。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '接口不能被直接实例化', 2, 4, NULL, 5, 51);
+INSERT INTO `question_bank` VALUES (16, '2025-07-07 21:00:32', '关键字final修饰的类可以被继承。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', 'final类不可继承', 2, 5, NULL, 5, 51);
+INSERT INTO `question_bank` VALUES (17, '2025-07-07 21:00:32', '函数y=sin(x)在区间[0,π]的最大值是（ ）。', '[]', '1', 'sin在π/2处为1', 3, 1, NULL, 5, 52);
+INSERT INTO `question_bank` VALUES (18, '2025-07-07 21:00:32', '下列哪些函数在x=0处连续？', '[{\"text\":\"A.e^x\",\"code\":\"A\"},{\"text\":\"B.ln(x)\",\"code\":\"B\"},{\"text\":\"C.x^2\",\"code\":\"C\"}]', 'A,C', 'ln(x)在0无定义', 1, 2, NULL, 5, 52);
+INSERT INTO `question_bank` VALUES (19, '2025-07-07 21:00:32', '导数的本质是（ ）。', '[]', '变化率', '导数是变化率的极限', 3, 3, NULL, 5, 52);
+INSERT INTO `question_bank` VALUES (20, '2025-07-07 21:00:32', '如果函数在一点可导，则一定连续。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'A', '可导必连续', 2, 4, NULL, 5, 52);
+INSERT INTO `question_bank` VALUES (21, '2025-07-07 21:00:32', '下列哪个积分表示面积？', '[{\"text\":\"A.定积分\",\"code\":\"A\"},{\"text\":\"B.不定积分\",\"code\":\"B\"},{\"text\":\"C.微分\",\"code\":\"C\"}]', 'A', '定积分表示面积', 0, 5, NULL, 5, 52);
+INSERT INTO `question_bank` VALUES (22, '2025-07-07 21:00:32', '正态分布的期望等于（ ）。', '[]', '均值', '正态分布均值即期望', 3, 1, NULL, 5, 53);
+INSERT INTO `question_bank` VALUES (23, '2025-07-07 21:00:32', '以下哪些属于描述统计？', '[{\"text\":\"A.均值\",\"code\":\"A\"},{\"text\":\"B.标准差\",\"code\":\"B\"},{\"text\":\"C.假设检验\",\"code\":\"C\"}]', 'A,B', '假设检验是推断统计', 1, 2, NULL, 5, 53);
+INSERT INTO `question_bank` VALUES (24, '2025-07-07 21:00:32', '样本方差用于度量数据的（ ）。', '[]', '离散程度', '方差是离散度量', 3, 3, NULL, 5, 53);
+INSERT INTO `question_bank` VALUES (25, '2025-07-07 21:00:32', '概率是客观存在的确定性。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', '概率表示随机性', 2, 4, NULL, 5, 53);
+INSERT INTO `question_bank` VALUES (26, '2025-07-07 21:00:32', '0到1之间的任何数都可以作为概率值。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'A', '概率在[0,1]范围', 2, 5, NULL, 5, 53);
+INSERT INTO `question_bank` VALUES (27, '2025-07-07 21:00:32', '敦煌莫高窟始建于（ ）朝代。', '[]', '前秦', '前秦建造', 3, 1, NULL, 5, 54);
+INSERT INTO `question_bank` VALUES (28, '2025-07-07 21:00:32', '下列哪些属于敦煌艺术形式？', '[{\"text\":\"A.壁画\",\"code\":\"A\"},{\"text\":\"B.雕塑\",\"code\":\"B\"},{\"text\":\"C.瓷器\",\"code\":\"C\"}]', 'A,B', '瓷器非敦煌主要形式', 1, 2, NULL, 5, 54);
+INSERT INTO `question_bank` VALUES (29, '2025-07-07 21:00:32', '敦煌壁画多以（ ）题材为主。', '[]', '佛教', '佛教题材', 3, 3, NULL, 5, 54);
+INSERT INTO `question_bank` VALUES (30, '2025-07-07 21:00:32', '敦煌遗书出土于藏经洞。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'A', '确实出土于藏经洞', 2, 4, NULL, 5, 54);
+INSERT INTO `question_bank` VALUES (31, '2025-07-07 21:00:32', '敦煌石窟艺术是多民族文化交流的产物。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'A', '多民族文化交流', 2, 5, NULL, 5, 54);
+INSERT INTO `question_bank` VALUES (32, '2025-07-07 21:00:32', 'Which of the following is NOT a type of essay?', '[{\"text\":\"A.Argumentative\",\"code\":\"A\"},{\"text\":\"B.Narrative\",\"code\":\"B\"},{\"text\":\"C.Experimental\",\"code\":\"C\"}]', 'C', 'Experimental is not common type', 0, 1, NULL, 5, 55);
+INSERT INTO `question_bank` VALUES (33, '2025-07-07 21:00:32', 'A paragraph usually contains ( ) idea.', '[]', 'one main', 'one main idea', 3, 2, NULL, 5, 55);
+INSERT INTO `question_bank` VALUES (34, '2025-07-07 21:00:32', '以下哪些属于连接词？', '[{\"text\":\"A.Therefore\",\"code\":\"A\"},{\"text\":\"B.Because\",\"code\":\"B\"},{\"text\":\"C.Apple\",\"code\":\"C\"}]', 'A,B', 'Apple不是连接词', 1, 3, NULL, 5, 55);
+INSERT INTO `question_bank` VALUES (35, '2025-07-07 21:00:32', 'Reading skills include skimming and scanning. ( )', '[{\"text\":\"A.True\",\"code\":\"A\"},{\"text\":\"B.False\",\"code\":\"B\"}]', 'A', '正确', 2, 4, NULL, 5, 55);
+INSERT INTO `question_bank` VALUES (36, '2025-07-07 21:00:32', 'Formal writing avoids contractions. ( )', '[{\"text\":\"A.True\",\"code\":\"A\"},{\"text\":\"B.False\",\"code\":\"B\"}]', 'A', '应避免缩写', 2, 5, NULL, 5, 55);
+INSERT INTO `question_bank` VALUES (37, '2025-07-07 21:00:32', '五四运动爆发于（ ）年。', '[]', '1919', '1919年爆发', 3, 1, NULL, 5, 56);
+INSERT INTO `question_bank` VALUES (38, '2025-07-07 21:00:32', '辛亥革命推翻了（ ）的统治。', '[]', '清朝', '推翻清朝', 3, 2, NULL, 5, 56);
+INSERT INTO `question_bank` VALUES (39, '2025-07-07 21:00:32', '新文化运动的中心人物有（ ）。', '[{\"text\":\"A.陈独秀\",\"code\":\"A\"},{\"text\":\"B.胡适\",\"code\":\"B\"},{\"text\":\"C.鲁迅\",\"code\":\"C\"}]', 'A,B,C', '三人都是核心人物', 1, 3, NULL, 5, 56);
+INSERT INTO `question_bank` VALUES (40, '2025-07-07 21:00:32', '鸦片战争标志中国近代史的开始。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'A', '确实如此', 2, 4, NULL, 5, 56);
+INSERT INTO `question_bank` VALUES (41, '2025-07-07 21:00:32', '辛亥革命建立了中华民国。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'A', '确立中华民国', 2, 5, NULL, 5, 56);
+INSERT INTO `question_bank` VALUES (42, '2025-07-07 21:00:32', '马克思主义的核心理论是（ ）。', '[]', '唯物史观', '核心是唯物史观', 3, 1, NULL, 5, 57);
+INSERT INTO `question_bank` VALUES (43, '2025-07-07 21:00:32', '以下哪些属于马克思主义组成部分？', '[{\"text\":\"A.哲学\",\"code\":\"A\"},{\"text\":\"B.政治经济学\",\"code\":\"B\"},{\"text\":\"C.科学社会主义\",\"code\":\"C\"}]', 'A,B,C', '三部分组成', 1, 2, NULL, 5, 57);
+INSERT INTO `question_bank` VALUES (44, '2025-07-07 21:00:32', '阶级斗争是历史发展的动力。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'A', '确实如此', 2, 3, NULL, 5, 57);
+INSERT INTO `question_bank` VALUES (45, '2025-07-07 21:00:32', '马克思主义产生于19世纪（ ）。', '[]', '40年代', '19世纪40年代', 3, 4, NULL, 5, 57);
+INSERT INTO `question_bank` VALUES (46, '2025-07-07 21:00:32', '剩余价值理论是马克思经济学的核心。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'A', '确实如此', 2, 5, NULL, 5, 57);
+INSERT INTO `question_bank` VALUES (47, '2025-07-07 21:00:32', 'HTML中用于定义段落的标签是（ ）。', '[]', '<p>', 'p标签定义段落', 3, 1, NULL, 5, 58);
+INSERT INTO `question_bank` VALUES (48, '2025-07-07 21:00:32', '以下哪些属于CSS属性？', '[{\"text\":\"A.color\",\"code\":\"A\"},{\"text\":\"B.font-size\",\"code\":\"B\"},{\"text\":\"C.padding\",\"code\":\"C\"}]', 'A,B,C', '三者都是CSS属性', 1, 2, NULL, 5, 58);
+INSERT INTO `question_bank` VALUES (49, '2025-07-07 21:00:32', 'JavaScript可以操作DOM。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'A', '可以操作DOM', 2, 3, NULL, 5, 58);
+INSERT INTO `question_bank` VALUES (50, '2025-07-07 21:00:32', '响应式布局常用的框架是（ ）。', '[]', 'Bootstrap', 'Bootstrap用于响应式', 3, 4, NULL, 5, 58);
+INSERT INTO `question_bank` VALUES (51, '2025-07-07 21:00:32', 'HTTP协议默认端口号是（ ）。', '[]', '80', 'HTTP默认80', 3, 5, NULL, 5, 58);
+INSERT INTO `question_bank` VALUES (52, '2025-07-07 21:00:32', 'Linux内核最初由（ ）开发。', '[]', 'Linus Torvalds', 'Linus开发', 3, 1, NULL, 5, 59);
+INSERT INTO `question_bank` VALUES (53, '2025-07-07 21:00:32', '以下哪些属于Linux发行版？', '[{\"text\":\"A.Ubuntu\",\"code\":\"A\"},{\"text\":\"B.Fedora\",\"code\":\"B\"},{\"text\":\"C.RedHat\",\"code\":\"C\"}]', 'A,B,C', '三者都是发行版', 1, 2, NULL, 5, 59);
+INSERT INTO `question_bank` VALUES (54, '2025-07-07 21:00:32', 'Linux是一个闭源系统。（ ）', '[{\"text\":\"A.对\",\"code\":\"A\"},{\"text\":\"B.错\",\"code\":\"B\"}]', 'B', 'Linux是开源', 2, 3, NULL, 5, 59);
+INSERT INTO `question_bank` VALUES (55, '2025-07-07 21:00:32', 'GNU是（ ）的缩写。', '[]', 'GNU\'s Not Unix', '递归缩写', 3, 4, NULL, 5, 59);
+INSERT INTO `question_bank` VALUES (56, '2025-07-07 21:00:32', 'Linux默认Shell是（ ）。', '[]', 'Bash', '默认Bash', 3, 5, NULL, 5, 59);
 
 -- ----------------------------
--- Table structure for exam_record
+-- Table structure for record
 -- ----------------------------
-DROP TABLE IF EXISTS `exam_record`;
-CREATE TABLE `exam_record`  (
+DROP TABLE IF EXISTS `record`;
+CREATE TABLE `record`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `s_username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学生用户id（外键）',
@@ -541,118 +366,15 @@ CREATE TABLE `exam_record`  (
   INDEX `re_qu_bank`(`question_id` ASC) USING BTREE,
   INDEX `re_user_s`(`s_username` ASC) USING BTREE,
   INDEX `re_pa`(`paperid` ASC) USING BTREE,
-  CONSTRAINT `re_pa` FOREIGN KEY (`paperid`) REFERENCES `exam_paper` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `re_qu_bank` FOREIGN KEY (`question_id`) REFERENCES `exam_question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `re_pa` FOREIGN KEY (`paperid`) REFERENCES `paper` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `re_qu_bank` FOREIGN KEY (`question_id`) REFERENCES `question_bank` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `re_user_s` FOREIGN KEY (`s_username`) REFERENCES `user_student` (`s_username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `t_ex_record` FOREIGN KEY (`t_username`) REFERENCES `user_teacher` (`t_username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of exam_record
+-- Records of record
 -- ----------------------------
-INSERT INTO `exam_record` VALUES (6, '2024-03-05 11:59:10', '222', 2, 8, 1, 88, 'B', '111');
-INSERT INTO `exam_record` VALUES (7, '2024-03-05 11:59:10', '222', 2, 11, 1, 1, '222', '111');
-INSERT INTO `exam_record` VALUES (8, '2024-03-05 11:59:10', '222', 2, 9, 1, 0, '22', '111');
-INSERT INTO `exam_record` VALUES (9, '2024-03-05 11:59:10', '222', 2, 7, 1, 0, 'D', '111');
-INSERT INTO `exam_record` VALUES (10, '2024-03-05 11:59:10', '222', 2, 10, 1, 0, '22', '111');
-INSERT INTO `exam_record` VALUES (11, '2024-03-05 11:59:10', '222', 2, 6, 1, 0, 'D', '111');
-INSERT INTO `exam_record` VALUES (12, '2025-06-27 09:01:35', '222', 1, 1, 0, 20, 'C', NULL);
-INSERT INTO `exam_record` VALUES (13, '2025-06-27 09:01:35', '222', 1, 4, 0, 0, 'B,C', NULL);
-INSERT INTO `exam_record` VALUES (14, '2025-06-27 09:01:35', '222', 1, 5, 0, 0, '21', NULL);
-INSERT INTO `exam_record` VALUES (15, '2025-06-27 09:01:35', '222', 1, 3, 0, 0, '球心', NULL);
-INSERT INTO `exam_record` VALUES (16, '2025-06-27 09:01:35', '222', 1, 2, 0, 20, 'B', NULL);
-
--- ----------------------------
--- Table structure for forum
--- ----------------------------
-DROP TABLE IF EXISTS `forum`;
-CREATE TABLE `forum`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '帖子标题',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '帖子内容',
-  `parentid` bigint(20) NULL DEFAULT NULL COMMENT '父节点id',
-  `userid` bigint(20) NOT NULL COMMENT '用户id',
-  `username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
-  `avatarurl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
-  `isdone` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '状态',
-  `istop` int(11) NULL DEFAULT 0 COMMENT '是否置顶',
-  `toptime` datetime NULL DEFAULT NULL COMMENT '置顶时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '交流论坛' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of forum
--- ----------------------------
-INSERT INTO `forum` VALUES (91, '2024-03-05 11:41:50', '帖子标题1', '帖子内容1', 0, 1, '用户名1', 'upload/forum_avatarurl1.jpg,upload/forum_avatarurl2.jpg,upload/forum_avatarurl3.jpg', '开放', 0, '2024-03-05 11:41:50');
-INSERT INTO `forum` VALUES (92, '2024-03-05 11:41:50', '帖子标题2', '帖子内容2', 0, 2, '用户名2', 'upload/forum_avatarurl2.jpg,upload/forum_avatarurl3.jpg,upload/forum_avatarurl4.jpg', '开放', 0, '2024-03-05 11:41:50');
-INSERT INTO `forum` VALUES (93, '2024-03-05 11:41:50', '帖子标题3', '帖子内容3', 0, 3, '用户名3', 'upload/forum_avatarurl3.jpg,upload/forum_avatarurl4.jpg,upload/forum_avatarurl5.jpg', '开放', 0, '2024-03-05 11:41:50');
-INSERT INTO `forum` VALUES (94, '2024-03-05 11:41:50', '帖子标题4', '帖子内容4', 0, 4, '用户名4', 'upload/forum_avatarurl4.jpg,upload/forum_avatarurl5.jpg,upload/forum_avatarurl6.jpg', '开放', 0, '2024-03-05 11:41:50');
-INSERT INTO `forum` VALUES (95, '2024-03-05 11:41:50', '帖子标题5', '帖子内容5', 0, 5, '用户名5', 'upload/forum_avatarurl5.jpg,upload/forum_avatarurl6.jpg,upload/forum_avatarurl7.jpg', '开放', 0, '2024-03-05 11:41:50');
-INSERT INTO `forum` VALUES (96, '2024-03-05 11:41:50', '帖子标题6', '帖子内容6', 0, 6, '用户名6', 'upload/forum_avatarurl6.jpg,upload/forum_avatarurl7.jpg,upload/forum_avatarurl8.jpg', '开放', 0, '2024-03-05 11:41:50');
-INSERT INTO `forum` VALUES (97, '2024-03-05 11:41:50', '帖子标题7', '帖子内容7', 0, 7, '用户名7', 'upload/forum_avatarurl7.jpg,upload/forum_avatarurl8.jpg,upload/forum_avatarurl9.jpg', '开放', 0, '2024-03-05 11:41:50');
-INSERT INTO `forum` VALUES (98, '2024-03-05 11:41:50', '帖子标题8', '帖子内容8', 0, 8, '用户名8', 'upload/forum_avatarurl8.jpg,upload/forum_avatarurl9.jpg,upload/forum_avatarurl10.jpg', '开放', 0, '2024-03-05 11:41:50');
-INSERT INTO `forum` VALUES (99, '2024-03-05 11:58:31', NULL, '<p>远程教育网站的设计与实现</p>', 91, 1709611010643, '222', 'upload/1709611009944.jpeg', NULL, 0, NULL);
-INSERT INTO `forum` VALUES (100, '2024-03-05 11:58:38', '远程教育网站的设计与实现', '<p>远程教育网站的设计与实现远程教育网站的设计与实现</p>', 0, 1709611010643, '222', NULL, '开放', 0, '2024-03-05 12:00:55');
-
--- ----------------------------
--- Table structure for news
--- ----------------------------
-DROP TABLE IF EXISTS `news`;
-CREATE TABLE `news`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
-  `introduction` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '简介',
-  `typename` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '分类名称',
-  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发布人',
-  `headportrait` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
-  `clicknum` int(11) NULL DEFAULT 0 COMMENT '点击次数',
-  `clicktime` datetime NULL DEFAULT NULL COMMENT '最近点击时间',
-  `thumbsupnum` int(11) NULL DEFAULT 0 COMMENT '赞',
-  `crazilynum` int(11) NULL DEFAULT 0 COMMENT '踩',
-  `storeupnum` int(11) NULL DEFAULT 0 COMMENT '收藏数',
-  `picture` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '图片',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 160 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统公告' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of news
--- ----------------------------
-INSERT INTO `news` VALUES (151, '2024-03-05 11:41:50', '趁着年轻，输得起，看得开，去经历', '我在大学一年级那一年，毫无悬念地把自己吃成了一个胖子。不是那种巨大的胖子，而是介于正规的肥胖和臃肿之间的尴尬体型，比标准体型重了15斤。于是，我的整个大学生活变成了电影《蝴蝶效应》系列，那只蝴蝶重达15斤', '分类名称1', '发布人1', 'upload/news_headportrait1.jpg', 2, '2025-06-27 09:04:41', 1, 1, 1, 'upload/news_picture1.jpg', '<p>我在大学一年级那一年，毫无悬念地把自己吃成了一个胖子。不是那种巨大的胖子，而是介于正规的肥胖和臃肿之间的尴尬体型，比标准体型重了15斤。于是，我的整个大学生活变成了电影《蝴蝶效应》系列，那只蝴蝶重达15斤。</p><p>  首先，我皈依了减肥。我可以整整一天滴水不进，然后第二天中午，一个小时之内连续去三个食堂吃午饭，每次都是两荤一素、一两米饭加一瓶大可乐，像是一个人孢子分裂出了三个暴食症患者。其次，因为要么饿得百爪挠心，要么撑得寝食难安，我变成了一个昼夜颠倒的人，再加上觉得自己邋遢难看，不愿见人，便逃掉了很多课。其三，逃课的空虚让我花了大量时间网购，击败了全国90%以上的电商消费者，和快递员结下了深厚的友谊。我买的大多数是衣服，衣服又穿不进，羞愤难当，继续皈依减肥。总之，那是我非常不快乐的几年。因为难以接受自己，所以蜷缩着，拒绝他人。</p><p>    我很久之后才知道，人用来自憎的大脑边缘系统，在童年时就已经形成。可是，用来开导自己、原谅自己、使自己变得强大的智慧，却往往在我们本该成熟的年纪依然不具备。每一世代的年轻人都是脆弱的、敏感的、容易受他人影响的。而对于正年轻的一代来说，这个挑战异乎寻常的艰难。</p><p> 电影《楚门的世界》中提出了一个假设以及相应的解答:当一个人活在所有人的窥探之下，他应该怎么办?答案是:他逃走，获得自由。然而，如果所有人活在所有人的窥探之下，那又该如何逃避?这不是假设，而是正在悄然发生的现实。我们无时无刻不在朋友圈、微博、贴吧、个人主页上展现自己的生活，同时，也在同样的平台上窥探他人的生活。我们无时无刻不在评估他人，同时，也在接受他人的评估。“个性张扬”只是狐假虎威的外衣，为的是掩饰自卑与自恋此起彼伏、相爱相杀的脆弱。我们羡慕嫉妒他人，也努力把自己的生活修饰得让他人羡慕嫉妒。我们对他人的意见过于敏感，无法忍受不被“点赞”的人生。</p><p>  社交网络的核心在于“社交”，社交的动力，是出于人们无法忍受孤独;人们之所以无法忍受孤独，是因为人们无法拷问自己。可是，总有一天，我们要站在镜子前，发现我们并不是自己创造出来的那个有趣、可爱、有吸引力、有能力的人。那么，你还喜欢镜子里的自己吗?或者，镜子里的你还喜欢自己吗?这个世界是否称赞你、羡慕你、爱你，在某种程度上是个不断膨胀的谎言。关键的问题在于，你是否对自己足够诚实，并且接受诚实之后的不完美。</p><p>   失去的痛苦、被拒绝的痛苦、被伤害的痛苦、分别的痛苦，它们如此显眼地横在前行的路上，让人想逃遁到那个充满着“赞”的虚幻世界里。然而，我们是人，走在一条从摇篮到坟墓的路上，年轻在途中，衰老在途中。必须和真实的世界发生联系，而不是兀自为尚未发生的事情恐惧;必须和真实的人发生各种关系，而不是如一座座只能遥远眺望的孤岛。</p><p>那些杀不死我们的，它们有时并不会让我们更加强大，而只是成为一段诗意或自嘲的记忆。趁着年轻，输得起，看得开，去经历。那些杀不死我们的，它们在混沌而无序的未来里，并不能成为我们手中的武器，却为我们的存活，增加了反抗脆弱与敏感的韧性。</p>');
-INSERT INTO `news` VALUES (152, '2024-03-05 11:41:50', '大学就该抓住青春，用汗水实现梦想', '大学之青春，人生之春，人生之王，人生之华也，宝贵的时光我们理当去珍惜。然而，当我们在青春布满藤墓的围墙上缓慢的攀行时;依旧游离在青春摇摆不定的尾巴上时;奋力想抓却抓不住，用力一扯，却又是散落一地的音符时;我们是否该回头思考了。零零碎碎的记忆，偶尔会闪过寂寞的长空，飘然在无际的苍穹，仅仅留下几颗闪烁的残星让我们自己深思，青春易逝，好比东逝的水—去不复还', '分类名称2', '发布人2', 'upload/news_headportrait2.jpg', 3, '2025-06-27 09:10:43', 2, 2, 2, 'upload/news_picture2.jpg', '<p>  大学之青春，人生之春，人生之王，人生之华也，宝贵的时光我们理当去珍惜。然而，当我们在青春布满藤墓的围墙上缓慢的攀行时;依旧游离在青春摇摆不定的尾巴上时;奋力想抓却抓不住，用力一扯，却又是散落一地的音符时;我们是否该回头思考了。零零碎碎的记忆，偶尔会闪过寂寞的长空，飘然在无际的苍穹，仅仅留下几颗闪烁的残星让我们自己深思，青春易逝，好比东逝的水—去不复还。</p><p>  青春是属于我们的，是人生最最美好的时光。我们应该好好把握住现在象牙塔的点点滴滴。大学对于我们来说很重要，这里充满了好奇、机遇和挑战。当我懵懵懂懂的走过了两年才突然发现原来大学是这样的，每个人有不同的选择，有不同的理想，也有不同的人生。但是无论怎样都是一个博学的过程，学做人，学知识，学生活..…...春是疯狂的，是充满激情的，是奋斗的，最重要的是我们要坚定我们的梦想，为了梦想付出一切，为了梦想坚持到底，这才是真正的青春。青春的梦想就是黑夜里的灯塔在我们迷茫时给予我们方向，就是力量的源泉在我们身陷逆境时给予我们最大的动力，就是爱的港湾在我们屡次失败时给予我们受伤的心灵以安慰。因此无论何时何地，都不能忘却心里坚守的那份沉甸甸的梦想。</p><p>   青春的梦想很简单，可能是梦想成为学习的佼佼者让GPA无限趋于4.0，可能是梦想成为学生工作的杰出者当上主席为自己的从政事业奠定基础，也可能是梦想成为运动场上的超级明星拥有大量的球迷粉丝，也可能是梦想成为职场达人，面试无压力，就业有保障...….或许你觉得这些都算不上梦想，其实梦想并不分大小和轻重，不能说只有中国梦才算是梦想，梦想就是这样每个人有不同的定位，但都是值得去追逐的，去为之奋斗的。()拥有了梦想，就有了坚定的信念，海风再大海浪再大，也无法扼杀我们追逐胜利的信念。信念给我们坚持的勇气，勇气赐我们昂扬的斗志，斗志带我们摆脱厄运;拥有了梦想，就能化压力为动力，梦想会时刻在鞭策我们，鼓励我们，让我们审视自己，发现不足，奋力补救，让自己保持不懈的前进动力;拥有了梦想，我们就不会在迷茫的路上更加迷茫，我们就能在青春之歌复杂的五线谱中听到动人的旋律。</p><p>   我们是大学生，是祖国的未来，是民族复兴的脊梁，面对如此重任，怎么能不胸怀大志，坚定梦想，在青春的道路上奋斗。“恰同学少年，风华正茂，书生意气，挥斥方道。”青春是黄金时段，我们要以梦想为方向，扬帆起航，努力拼搏，给我们即将失去的青春以最好的结局。人因梦想而伟大，让我们一起奏响青春的梦想之歌，为各自的梦想努力进发吧!</p>');
-INSERT INTO `news` VALUES (153, '2024-03-05 11:41:50', '留退路就没有出路', '公元前一世纪，凯撒大帝率领他的军队抵达了英格兰，他决心要赢得这场战争，不管遇到什么情况都不会退却。为了让士兵们明白自己必胜的决心和信心，也为了断绝士兵们逃跑退缩的念头，凯撒命令士兵将运载他们的所有船只都烧毁。这使得军队的士气受到了莫大的鼓舞。后来他们获胜了', '分类名称3', '发布人3', 'upload/news_headportrait3.jpg', 6, '2025-06-27 09:10:44', 3, 3, 3, 'upload/news_picture3.jpg', '<p>  公元前一世纪，凯撒大帝率领他的军队抵达了英格兰，他决心要赢得这场战争，不管遇到什么情况都不会退却。为了让士兵们明白自己必胜的决心和信心，也为了断绝士兵们逃跑退缩的念头，凯撒命令士兵将运载他们的所有船只都烧毁。这使得军队的士气受到了莫大的鼓舞。后来他们获胜了。</p><p>  很多人在处理重要问题的时候，总是喜欢把这些问题暂且搁置在一边，等以后再做。他们没有决定的勇气和魄力，总是在着手做事的时候想给自己留一条后路，以免没有出路。对于他们来说，退路就是出路。但是，事实证明，这样是不会有任何成就的。</p><p>背水一战、破釜沉舟的军队往往能获得胜利。同样，一个做事不留退路、一心向前的人，不管遇到什么困难和障碍，他都不会后退，因为他没有路可以退。而那些人在为自己准备退路的同时就是在后退，他们立志不坚，把精力和时间投入到退缩的准备上，这种人绝不会获得成功。</p><p>  一个人能否成功，关键在于他意志力的强弱。意志坚强的人不管遇到什么困难和障碍，都会百折不挠，想方设法地克服;意志薄弱的人一遇到麻烦，甚至在挫折还没有到来之前，他们就开始庸人自扰，彷徨失措，把精力都放在如何规避问题上，放在为自己铺设后路上。当困难一个接一个来时，他们就一步接一步后退，最后他们终将无路可退。</p><p>现实生活中，到处都充斥着这样的青年，他们富有上进心，希望有一番成就和作为，但是他们意志薄弱，没有必胜的决心，不敢破釜沉舟;他们始终左摇右摆，没有坚定的信念，一遇到挫折和困难，马上就缩回了进取的手和脚。这样的人，这样的心态，最后遭受失败也不足为奇。</p><p>   不给自己留后路，让自己没有回旋的余地，方能竭尽全力，锐意进取，就算遇到千万困难，也不会退缩，因为回头也没有路了，不如不顾一切地前进，还能找到一线希望。有了这样一种“拼命”和“豁出去”了的信念，才能彻彻底底地消除心中的恐惧、犹豫、胆怯。当一个人不给自己任何退路的时候，他就什么都不怕了，勇气、信心、热忱等从心底油然而生，到最后自然能“置之死地而后生”。</p><p>    面对严峻的问题和重要环节，周全而细致地考虑问题的各个方面也是应该的，但是过多地权衡，前怕狼后怕虎，一会儿这样一会儿那样，最终却还是原样，可以肯定地说，你不会有任何进展，甚至还会变得—塌糊涂。</p><p>出路和退路不是同义词，而是反义词，留退路就没有出路，因此，你应该只找出路，不留退路。大学生励志青春文章:培养积极的思维模式。</p>');
-INSERT INTO `news` VALUES (154, '2024-03-05 11:41:50', '在大学给自己定个目标', '最近和几名大一的学生聊天，几名同学认为身边的人普遍都很迷茫，不知道该干什么，业余时间要么是对着电脑、要么是抱着手机刷微博。我问道:“为什么不找点事情做做，制定一个计划，哪怕是锻炼身体也好?4年也可以把身体锻炼得结实些。”当然，我也清楚，我的这些建议对他们来说，未必能有多大用。许多学生因为意志不坚定，没有老师的监督、逼迫，根本就无法做到', '分类名称4', '发布人4', 'upload/news_headportrait4.jpg', 7, '2025-06-27 09:10:46', 4, 4, 4, 'upload/news_picture4.jpg', '<p>  最近和几名大一的学生聊天，几名同学认为身边的人普遍都很迷茫，不知道该干什么，业余时间要么是对着电脑、要么是抱着手机刷微博。我问道:“为什么不找点事情做做，制定一个计划，哪怕是锻炼身体也好?4年也可以把身体锻炼得结实些。”当然，我也清楚，我的这些建议对他们来说，未必能有多大用。许多学生因为意志不坚定，没有老师的监督、逼迫，根本就无法做到。</p><p>   这让我想到前段时间蹿红网络的“悔过励志帖”——《同学，我大四了》，作者回首自己的大学4年，他感叹投入精力“充其量不过40%”︰每天上网时间少则4个小时，多则10个小时;考试永远是画画重点，在高呼“60分万岁”中与奖学金无缘。作者借自己求职受挫，写帖子以警醒后来人，不要等毕业时再后悔，就业难不仅仅是大学、社会的问题，也是自身的问题。</p><p>  也许，这样的大学生不是一个两个，而是一个群体。然而，我总是怀疑这样的励志帖，甚至教师在课堂上苦口婆心地劝说，能对现实中的大学和大学生起到多大的影响和作用，很多时候恐怕只有“三分钟热度”的效应。毕竟，现实的窘境不是一天积累起来的，从小学到高中，学生们的学习都是被动地接受应试，隐藏着功利性的目的，也许从没有为主动学习感到过快乐，而在高中时代，有的教师甚至打出这样的励志宣言:等你考上大学，你就可以想干什么干什么了..…..乎，高中时代的目标是很清晰的，就是为了考上大学，而在一些高中生的眼里，大学甚至就好比是天堂，进了大学的门就可以放轻松了。</p><p> 此前，有很多声音都认为大学越来越像培训机构，功利性学习正在整个大学蔓延，考证热、过早地职业化都是大学功利性学习最好的表现形式。在这种批判的声音中，“培训机构”总有被贬低的意味，难与大学之学术思想殿堂的高雅相媲美。但是，在这种批判的背后，还有一个现实问题被遮蔽，那就是很多大学生对自己的学习、对大学生活没有任何目标。</p><p>暨南大学舆情研究中心曾就“当代广州大学生生活与思想现状”作过详细的问卷调查，其中，接受调查的广州高校在读本科生共有191份有效样本，就“读大学的原因”、“大学第一印象”、“专业选择首要因素”等问题制作问卷调查并进行分析。结果显示，在未来规划方面，73.3%的同学表示只有粗略的想法，并无非常明确的目标。</p><p>  如果说功利化的学习毕竟还有一个前进的目标，至少能体现出一种为了目标而奋斗的精神和奔头，而没有任何目标，漫无目的地混日子则更可怕，它体现的是一种虚无、意义的缺失。说实话，没有引导学生树立明确的奋斗目标、进而指引学生为之努力的大学，学生很难找到努力的方向，也找不到努力的意义，这还不如“培训机构”来得实在、来得有效用，至少，培训机构的目标很清晰，它能够给学生们一个实实在在看得见的效果，而没有任何目标、浑浑噩噩的大学生活，也许只会给很多学生带来悔过。</p><p>无论如何，混日子的大学生活是不可取的。一方面，高校应该在新生入学的时候，作好目标和方向的引导，甚至贯穿大学4年的学习过程;另一方面，还在迷途的大学生，应尽早为自己找个前进的方向，作好自我规划，对自己的未来和前途负责。</p>');
-INSERT INTO `news` VALUES (155, '2024-03-05 11:41:50', '做个真正的学生', '最坚强的人，是以宽容的态度面对自己缺点的人，而懦弱的人，则不敢面对自己的缺点，最终自暴自弃，葬送自己。只要有进取心，我们都能从失败的领域中，发现到达成功的途径;只要有自信心，我们身上的每一个缺陷，也都可以成为与众不同的优点', '分类名称5', '发布人5', 'upload/news_headportrait5.jpg', 7, '2025-06-27 09:10:47', 5, 5, 5, 'upload/news_picture5.jpg', '<p>  最坚强的人，是以宽容的态度面对自己缺点的人，而懦弱的人，则不敢面对自己的缺点，最终自暴自弃，葬送自己。只要有进取心，我们都能从失败的领域中，发现到达成功的途径;只要有自信心，我们身上的每一个缺陷，也都可以成为与众不同的优点。</p><p>曾经有人特地赶赴日本，向三宅一生服装设计大师请教如何设计出独具一格的服装款式。三宅一生大师提出两个很有意思的观点:一是，设计的衣服，其实都是没有全部完成的，其余的创作空间，则是留给穿衣服的人去完成的;二是，选择布料时，会请厂商提供纺织、印染失败的布料，从这些“残次”的作品中寻找泉涌般的创作灵感，设计出最具独创性的作品。</p><p>这样一来，顾客才能穿出自己的风格，并使得同一件衣服，在不同的人身上，能有不同的效果。而且，以这样的概念设计出来的衣服，也不容易失败。正是因为这两个观点，三宅一生所设计的服装总是独一无二地能够引领世界潮流。</p><p>  在艺术家的眼中，任何事物都是创作的最好材料，不管是枯木还是残破的布料，对他们而言，都是最具生命力的事物，在他们手中都能画腐朽为神奇。</p><p>朽木也能精雕，更何况我们自己。那些看起来弯曲、盘旋、似乎毫无用处的木料，往往最终能成为艺术品的原材料，因为这种不同，才特别珍贵。花点心思，身上的缺点也能变成独特的优点，就像艺术家们一般，顺着曲折的木头，创造出与众不同、完美无缺的惊世杰作。</p><p>励志文章3:一生学习，成就一生无知的人并不是没有学问的人，而是不明了自己的人。当一个有学问的人信赖书本、知识和权威，借着它们而了解自己，那么他便是愚蠢的。了解是由自我认识而来，而自我认识乃是一个人明白他自己的整个心理过程。因此，教育的真正意义是自我了解，因为整个生活是汇聚于我们每个人的身心的最高“机密”。</p><p>   目前我们所谓的教育，只是由书本聚集见闻、知识，这是任何懂得阅读的人都办得到的。这种教育提供了一条巧妙的逃避自我之途，如同其他所有的逃避方式一样，它无可避免地制造出有增无减的苦难。冲突和混乱是由于我们和他人、事物、概念之间差错的关系而产生，除非我们了解此项关系而改变它，否则，知识的学习和堆砌，各种技能的获取，都只会将我们导向更深的混乱和毁灭。</p><p> 我们将子女送入学校，学习一些技能，并希望借此来带动整个家庭的长久繁荣，至少在家长们年老的时候有养老保险，有稳定的照顾。我们对孩子最急切的渴望，就是将他塑造成一个能在一个领域中出类拔萃之人，希望给予他一个安全的经济地位。物质的获得有时候并不难，然而，技术的训练能使我们了解自己吗?</p><p>虽然，懂得念书写字、学习土木工程或其他某种职业，是必需的，然而技术能给予我们了解生活的能力吗?技术，无疑是次要的;如果技术是我们惟一奋力以求的东西，那么我们就摒弃了生活中最主要的东西了。</p><p>    生活，是痛苦、喜悦、美、丑、爱等多种感受的综合，一旦我们将它整体地加以了解，那么这项了解在各方面都会创出它应有的技术。不过，相反的说法就不是真的了∶技术永远无法产生创造性的了解。</p><p>如果过分强调技术，我们便毁灭了人。磨练技能和效率，然而对生活却不了解，对思想、欲望的行踪不能领悟，只会使我们变得日益残暴无情，以致于触发战争，危害了我们肉体上的安全。由于我们的教育过重于单单培养技术，已经制造出许多科学家、数学家、造桥工程师、征服太空的人，但这些人了解生活的整体过程吗?一个专家能把生活本身完整地体验感受表达出来吗?或者他真的体验到生活了吗?有时候，当他不是专家时，反而更能直指生活的本质。一颗能够给予人辉煌一生的企图心，首先应当是一颗敏感的善良的热情的心，让我们对周围的一切保持孩童一样旺盛的好奇心。我们应当渴望了解新奇的事物，渴望探索未知的领域。只有在这种理念的支配下，我们才能不断地、孜孜以求地、乐此不疲地提升自己的认知和理解能力，改善自我，从而更接近成功的巅峰。</p>');
-INSERT INTO `news` VALUES (156, '2024-03-05 11:41:50', '远大的目标是成功的磁石', '上天对每个老实人都是公平的，每个人每一天都是二十四个小时，每个人的所有时间都是一生;同时上天对每个老实人又是不公平的，给每一个人的时间不都是二十四个小时，给每一个人的所有时间不都是一生。这之间的区别就在于有无远大目标', '分类名称6', '发布人6', 'upload/news_headportrait6.jpg', 9, '2025-06-27 09:10:49', 6, 6, 6, 'upload/news_picture6.jpg', '<p>  上天对每个老实人都是公平的，每个人每一天都是二十四个小时，每个人的所有时间都是一生;同时上天对每个老实人又是不公平的，给每一个人的时间不都是二十四个小时，给每一个人的所有时间不都是一生。这之间的区别就在于有无远大目标。</p><p>    有大目标的人，生活永远是积极的，他们会朝着自己的目标不断前进;没有大目标的老实人浑浑噩噩，不思进取，最后被生活淘汰。</p><p> 从前有个叫阿巴格的人生活在内蒙古草原上。有一次，年少的阿巴格和爸爸在草原上迷了路，阿巴格又累又怕，到最后快走不动了。爸爸就从兜里掏出五枚硬币，把一枚硬币埋在草地里，把其余四枚放在阿巴格的手上，说:“人生有五枚金币，童年、少年、青年、中年、老年各有一枚，你现在才用了一枚，就是埋在草地里的那一枚，你不能把五枚都扔在草原里，你要一点点地用，每一次都用出不同来，这样才不枉人生一世。今天我们一定要走出草原，你将来也一定要走出草原。世界很大，人活着，就要多走些地方，多看看，不要让你的金币没有用就扔掉。”在父亲的鼓励下，阿巴格走出了草原。长大后，阿巴格离开了家乡，成了一名十分优秀的船长。</p><p>  目标是与一个人的愿望相联系的，是对未来的一种设想，它往往和目前的行动不直接联系。但目标又不能脱离现实的生活，现实生活中的某些现象如果符合了个人的需要，与个人的世界观一致，这些现实的因素就会以个人目标的形式表现出来。目标总是对现实生活的重新加工，舍弃其中某些成分，又对某些因素给予强调的过程，但它必须以对客观规律的认识为基础，符合客观规律。</p><p> 能实现自己目标的老实人，对他个人而言，他是一个成功者，也是个幸福者。目标是成功的必要条件，虽然仅仅拥有目标，你不一定能取得成功;但是如果没有目标，成功对你而言就无从谈起。</p><p>远大的美好目标能吸引人努力为实现它而奋斗不止。</p>');
-INSERT INTO `news` VALUES (157, '2024-03-05 11:41:50', '做一个最好的自己', '自信是成功的前提，你拥有自信，就拥有成功的一半机会。相信自己是最棒的就一定会成就一定的事业。拥有自信的人之所以会心想事成、走向成功，是因为他们都有着巨大无比的潜能等着去开发;消极失败的心态之所以会使人怯弱无能、走向失败，是因为它使人放弃潜能的开发，让潜能在那里沉睡、白白浪费', '分类名称7', '发布人7', 'upload/news_headportrait7.jpg', 10, '2025-06-27 09:10:51', 7, 7, 7, 'upload/news_picture7.jpg', '<p>自信是成功的前提，你拥有自信，就拥有成功的一半机会。相信自己是最棒的就一定会成就一定的事业。拥有自信的人之所以会心想事成、走向成功，是因为他们都有着巨大无比的潜能等着去开发;消极失败的心态之所以会使人怯弱无能、走向失败，是因为它使人放弃潜能的开发，让潜能在那里沉睡、白白浪费。</p><p>我们大家都知道的人大脑拥有140亿个脑细胞，但我们思维意识只利用了脑细胞的很少部分，如能将更多的脑细胞从睡眠中激活出来，人的思维意识将更加强大。如果我们都能充满自信，就能创造人间奇迹，亦能创造一个最好的自己。</p><p> 一个人相信自己是什么，就会是什么。一个人心里怎样想，就会成为怎样的人。这从心里学上讲是有一定的道理的。我们每一个人心里都有一幅心里蓝图，或是一幅自画像，有人称它为运作结果。如果你想象的是做最好的你，那么你就会在你内心的荧光屏上看到一个踌躇满志、不断进取、勇于开拓创新的自我。同时还会经常收到我做的很好，我以后还会做的更好之类的信息，这样你注定会成为一个最好的你。美国哲学家爱默生说:“人的一生正如他一天中所想的那样，你怎么想，怎么期待，就有怎样的人生。”美国有名的钢铁大王安德鲁·卡耐基就是一个充分发挥自己创造机会的楷模。他12岁时由英格兰移居美国，先是在一家纺织厂做工人，当时他的目标是“做全厂最出色的工人。”因为他经常这样想，以这样做，最终他实现了他的目标。后来命运有安排他当邮递员，他想的是怎样成为“全美最杰出的邮递员。”结果他的这一目标也实现了。他的一生总是根据自己所处的环境和地位塑造最佳的自己，他的座右铭就是“相信自己是最棒的。“</p><p>做一个最好的自己，不一定非要当什么“家”，也不一定非要出什么“名”，更不要与别人比高低、比大小。就像人的手指，有大有小，有长有短，他们各有所长，各有所短，你能说拇指比食指好吗?决定最好的你，既不是你拥有的物质财富的多少，也不是你身份的贵贱，关键是看你是否拥有实现自己理想的强烈愿望的程度，看你身上的潜力能否充分发挥。人们熟知的一些英雄模范，就是在平凡的工作岗位上充分发挥人的创新能力，做好自己身边的每一件小事，创造了做好的自己。</p><p>“塑造一个最好的自己”，这个目标人人都可以实现。你只意识到自己是大自然的一分子，坚信自己拥有“无限的能力”与“无限的可能”，这种坚定的信心能帮助你创造和谐的心理、生理韵律，建立起自己理想的自我形象，体现自己人格行为应该具有的魅力。</p>');
-INSERT INTO `news` VALUES (158, '2024-03-05 11:41:50', '有了梦想就不会感到疲惫', '一段时间以前，一位在港的大陆学生，因为学业的压力、前途的渺茫等诸多原因，选择了自杀。在讨论和反思的潮流中，有一位毕业生在校内网匿名发表了自己的故事。他说，自己当年在学校也曾经面临绝境，一文不名。他选择了做“乞丐学生”，坚持着念完了课程。回忆的一些情节让我印象深刻，比如，平时偷偷住电梯间，蓬头垢面如乞丐;实在很饿，学校举办餐会的时候默默进场埋头大吃', '分类名称8', '发布人8', 'upload/news_headportrait8.jpg', 9, '2025-06-27 09:10:01', 8, 8, 8, 'upload/news_picture8.jpg', '<p>  一段时间以前，一位在港的大陆学生，因为学业的压力、前途的渺茫等诸多原因，选择了自杀。在讨论和反思的潮流中，有一位毕业生在校内网匿名发表了自己的故事。他说，自己当年在学校也曾经面临绝境，一文不名。他选择了做“乞丐学生”，坚持着念完了课程。回忆的一些情节让我印象深刻，比如，平时偷偷住电梯间，蓬头垢面如乞丐;实在很饿，学校举办餐会的时候默默进场埋头大吃。</p><p>“峣峣者易折，皎皎者易污。”能够从内地高校到香港读书的学子，都是一些很优秀的年轻人。不知道曾经高居象牙塔的书生，怎样狠下心，咬牙面对那一个天渊般的落差，以及旁人的目光和议论。</p><p>  说到这里，很像一个《读者》式的励志故事。但是这种励志故事从来就不缺乏感动人的力量，因为虽然光明的尾巴不是人人都能够拥有，但是人人都有梦想，面对实现过程中的困难，其奋斗或者说挣扎，却常常和平凡如你我的人们相遇。</p><p>    《当幸福来敲门/The Pursuit of Happyness》就是这样偶然被看到，又感动了我的电影。黑人克里斯是一名普普通通的医疗器械推销员，妻子忍受不了经济上的压力离开了他，留下5岁的儿子克里斯托夫和他相依为命。克里斯银行账户里只剩下21块钱，因为没钱付房租，他和儿子被撵出了公寓。费尽周折，克里斯赢得了在一家着名股票投资公司实习的机会，但是实习期间没有薪水，而且最终只有一人可以成功进入公司。</p><p>    学妹曾经告诉我一个故事，让我每次想到都觉得莫名恐怖。她说，她硕士毕业去广东求职，一个中学要招几个老师，结果南来北往的硕士博士挤了快有一个礼堂。可想而知，竞争有多么残酷。看来，中外求职者都面临着同样的挑战。但是克里斯和许多“80后”的大学毕业生不同，他更加坚韧:为了节省时间，上班时候不喝水，以避免上厕所。以疯狂的速度给客户打电话，打完一个，直接按挂机键就拨下一个电话。白天，克里斯忍受着一次又一次被拒绝的失望，带着微笑在公司和客户之间穿梭。回家，则要带着儿子穿过污秽的街道，忍受房东的咆哮。</p><p>    终于，交不起房租的父子俩流落街头。克里斯和儿子在午夜地铁里相对无言，儿子不能理解为什么不能回家住，爸爸却开始玩游戏:“我们通过时光机，到达古代了!”儿子立刻兴奋地配合起来，环顾左右。父子俩在“恐龙”的追杀下，逃到了一个“山洞”里，“山洞”是什么呢，其实是一间男厕所。克里斯搂着熟睡的儿子，坐靠在厕所的墙面。午夜的灯光很惨白，这个消瘦的、营养不良的父亲，默默地流下了泪水。</p><p>    父子俩依旧为了幸福到来而努力。他们开始住收容所，面对有限的床位，这个奔跑起来像猎豹一样的人，有时候得把草原上的爆发力运用到打架上面来。儿子在简陋的收容所床上睡着了，父亲还在埋头修理推销的医疗器械，或者翻那本厚厚的笔试全书。</p><p>   钱包磨损得厉害，而且，太瘪了，每张钱都很熟悉。老板要借5块钱，犹豫再三，摩挚着纸币，最终还是把钱送了出去。卖血。鲜血在塑料袋里面渗开，那是一个男人所能奉献的最后。拿着卖血的钱，克里斯仍然去买电子元件。一点点的希望，都要去坚持。</p><p>对于父母，最心酸的事儿是什么呢?就是子女的一点可怜的愿望得不到满足。克里斯托夫的惟一的玩偶“美国英雄”，在一次挤车的过程中掉到了地上。5岁的男孩悲伤欲绝，克里斯坚硬的表情下，读出的是面对困难的凶狠和惨痛。但是，无论多么深切的无望，都没有摧毁父子间的亲情与他们的信念，他们相信幸福总会落到自己的身上。“你是个好爸爸”，克里斯托夫跟着爸爸四处流浪，可是孩子的心灵，衡量的砝码和天使是—样的。</p><p>  克里斯最终成为了投资公司的员工，看似冷漠的白人老板们，此时显出他们的些微温情。他忍住了泪水，颤抖着拿起自己的物品，走入了茫茫人海。在熙熙攘攘的人群中间，克里斯举起手，为自己鼓掌，那无声的，一下下重重的掌声，是在为自己喝彩。其实，克里斯托夫的“美国英雄”并没有失落。</p><p>  这是一个非常典型的“美国梦”:一个人通过自己的努力，可以实现自己的梦想，幸福，会来敲门。很多人往往会关注对于梦想的树立，而往往忽略过程的艰辛。特别是，当面对一个看似无望的现实的时候，有多少人会坚持，多少人会放弃呢?生活总是在不断地修正，并且提醒我们，顺应大潮的人总是较有可能抵达成功的彼岸。可是，确实是有些人，愿意逆流而上。我相信，这是导演对于逆行者的一点鼓励。</p><p>那个香港的匿名毕业生后来博士毕业，找到了一份不错的工作，有了漂亮的妻子和可爱的孩子。这个强人在帖子里说，有什么坚持不下来的呢?只要有梦想</p>');
-INSERT INTO `news` VALUES (159, '2024-03-05 11:52:39', '远程教育网站的设计与实现', '远程教育网站的设计与实现远程教育网站的设计与实现', '通知', '杨洋', '', 3, '2025-06-27 08:59:52', 0, 0, 0, 'upload/1709610745296.jpg', '<p>远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现远程教育网站的设计与实现</p>');
-
--- ----------------------------
--- Table structure for news_type
--- ----------------------------
-DROP TABLE IF EXISTS `news_type`;
-CREATE TABLE `news_type`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `typename` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '分类名称',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 150 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统公告分类' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of news_type
--- ----------------------------
-INSERT INTO `news_type` VALUES (141, '2024-03-05 11:41:50', '分类名称1');
-INSERT INTO `news_type` VALUES (142, '2024-03-05 11:41:50', '分类名称2');
-INSERT INTO `news_type` VALUES (143, '2024-03-05 11:41:50', '分类名称3');
-INSERT INTO `news_type` VALUES (144, '2024-03-05 11:41:50', '分类名称4');
-INSERT INTO `news_type` VALUES (145, '2024-03-05 11:41:50', '分类名称5');
-INSERT INTO `news_type` VALUES (146, '2024-03-05 11:41:50', '分类名称6');
-INSERT INTO `news_type` VALUES (147, '2024-03-05 11:41:50', '分类名称7');
-INSERT INTO `news_type` VALUES (148, '2024-03-05 11:41:50', '分类名称8');
-INSERT INTO `news_type` VALUES (149, '2024-03-05 11:52:04', '通知');
 
 -- ----------------------------
 -- Table structure for store_up
@@ -698,7 +420,7 @@ CREATE TABLE `system_intro`  (
 -- ----------------------------
 -- Records of system_intro
 -- ----------------------------
-INSERT INTO `system_intro` VALUES (1, '2024-03-05 11:41:50', '系统简介', '远程教育网站的设计与实现', '<p>在平静的海平面上，每个人都可以成为领航员。但如果只有阳光而没有阴影，只有欢乐而没有痛苦，那就不是完整的人生。就拿最幸福的人来说吧——他的幸福是一团纠结的纱线。痛苦和幸福轮番而至，让我们悲喜交集，甚至死亡都让人生更加可爱。人在生命的严肃时刻，在悲伤与丧亲的阴影下，才最接近真实的自我。在生活和事业的各个方面，才智的功能远不如性格，头脑的功能远不如心性，天分远不如自制力、毅力与教养。我始终认为内心开始过严肃生活的人，他外在的生活会开始变得更为俭朴。在一个奢侈浪费的年代，但愿我能让世人了解：人类真正的需求是多么的稀少。不重蹈覆辙才是真正的醒悟。比别人优秀并无任何高贵之处，真正的高贵在于超越从前的自我。</p>', 'upload/systemintro_picture1.jpg', 'upload/systemintro_picture2.jpg', 'upload/systemintro_picture3.jpg');
+INSERT INTO `system_intro` VALUES (1, '2024-03-05 11:41:50', '系统简介', '智能化在线教学支持服务平台教师中心系统', '<p>在平静的海平面上，每个人都可以成为领航员。但如果只有阳光而没有阴影，只有欢乐而没有痛苦，那就不是完整的人生。就拿最幸福的人来说吧——他的幸福是一团纠结的纱线。痛苦和幸福轮番而至，让我们悲喜交集，甚至死亡都让人生更加可爱。人在生命的严肃时刻，在悲伤与丧亲的阴影下，才最接近真实的自我。在生活和事业的各个方面，才智的功能远不如性格，头脑的功能远不如心性，天分远不如自制力、毅力与教养。我始终认为内心开始过严肃生活的人，他外在的生活会开始变得更为俭朴。在一个奢侈浪费的年代，但愿我能让世人了解：人类真正的需求是多么的稀少。不重蹈覆辙才是真正的醒悟。比别人优秀并无任何高贵之处，真正的高贵在于超越从前的自我。</p>', 'upload/systemintro_picture1.jpg', 'upload/systemintro_picture2.jpg', 'upload/systemintro_picture3.jpg');
 
 -- ----------------------------
 -- Table structure for token
@@ -762,14 +484,6 @@ CREATE TABLE `user_student`  (
 -- ----------------------------
 -- Records of user_student
 -- ----------------------------
-INSERT INTO `user_student` VALUES (21, '2024-03-05 11:41:50', '学生账号1', '学生姓名1', '123456', '男', '13823888881', 'upload/xuesheng_touxiang1.jpg');
-INSERT INTO `user_student` VALUES (22, '2024-03-05 11:41:50', '学生账号2', '学生姓名2', '123456', '男', '13823888882', 'upload/xuesheng_touxiang2.jpg');
-INSERT INTO `user_student` VALUES (23, '2024-03-05 11:41:50', '学生账号3', '学生姓名3', '123456', '男', '13823888883', 'upload/xuesheng_touxiang3.jpg');
-INSERT INTO `user_student` VALUES (24, '2024-03-05 11:41:50', '学生账号4', '学生姓名4', '123456', '男', '13823888884', 'upload/xuesheng_touxiang4.jpg');
-INSERT INTO `user_student` VALUES (25, '2024-03-05 11:41:50', '学生账号5', '学生姓名5', '123456', '男', '13823888885', 'upload/xuesheng_touxiang5.jpg');
-INSERT INTO `user_student` VALUES (26, '2024-03-05 11:41:50', '学生账号6', '学生姓名6', '123456', '男', '13823888886', 'upload/xuesheng_touxiang6.jpg');
-INSERT INTO `user_student` VALUES (27, '2024-03-05 11:41:50', '学生账号7', '学生姓名7', '123456', '男', '13823888887', 'upload/xuesheng_touxiang7.jpg');
-INSERT INTO `user_student` VALUES (28, '2024-03-05 11:41:50', '学生账号8', '学生姓名8', '123456', '男', '13823888888', 'upload/xuesheng_touxiang8.jpg');
 INSERT INTO `user_student` VALUES (1709611010643, '2024-03-05 11:56:50', '222', '杨悦', '222', '女', '13612514514', 'upload/1750986712544.png');
 
 -- ----------------------------
@@ -795,14 +509,6 @@ CREATE TABLE `user_teacher`  (
 -- ----------------------------
 -- Records of user_teacher
 -- ----------------------------
-INSERT INTO `user_teacher` VALUES (11, '2024-03-05 11:41:50', '教师工号1', '教师姓名1', '123456', '男', 'upload/jiaoshi_touxiang1.jpg', '13823888881', '课程名称1', '教师');
-INSERT INTO `user_teacher` VALUES (12, '2024-03-05 11:41:50', '教师工号2', '教师姓名2', '123456', '男', 'upload/jiaoshi_touxiang2.jpg', '13823888882', '课程名称2', '教师');
-INSERT INTO `user_teacher` VALUES (13, '2024-03-05 11:41:50', '教师工号3', '教师姓名3', '123456', '男', 'upload/jiaoshi_touxiang3.jpg', '13823888883', '课程名称3', '教师');
-INSERT INTO `user_teacher` VALUES (14, '2024-03-05 11:41:50', '教师工号4', '教师姓名4', '123456', '男', 'upload/jiaoshi_touxiang4.jpg', '13823888884', '课程名称4', '助教');
-INSERT INTO `user_teacher` VALUES (15, '2024-03-05 11:41:50', '教师工号5', '教师姓名5', '123456', '男', 'upload/jiaoshi_touxiang5.jpg', '13823888885', '课程名称5', '助教');
-INSERT INTO `user_teacher` VALUES (16, '2024-03-05 11:41:50', '教师工号6', '教师姓名6', '123456', '男', 'upload/jiaoshi_touxiang6.jpg', '13823888886', '课程名称6', '教师');
-INSERT INTO `user_teacher` VALUES (17, '2024-03-05 11:41:50', '教师工号7', '教师姓名7', '123456', '男', 'upload/jiaoshi_touxiang7.jpg', '13823888887', '课程名称7', '助教');
-INSERT INTO `user_teacher` VALUES (18, '2024-03-05 11:41:50', '教师工号8', '教师姓名8', '123456', '男', 'upload/jiaoshi_touxiang8.jpg', '13823888888', '课程名称8', '教师');
 INSERT INTO `user_teacher` VALUES (1709610637034, '2024-03-05 11:50:37', '111', '杨洋', '111', '女', 'upload/1709610626972.png', '13612514514', '编程', '教师');
 
 SET FOREIGN_KEY_CHECKS = 1;
