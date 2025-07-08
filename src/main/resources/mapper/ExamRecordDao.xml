@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dao.ExamRecordDao">
+    <select id="selectExamStudentResultList" resultType="com.entity.vo.ExamStudentResultVO">
+        SELECT
+            us.s_name AS studentName,
+            ep.title AS paperName,
+            cc.course AS courseName,
+            SUM(er.myscore) AS totalScore,
+            DATE_FORMAT(MIN(er.addtime), '%Y-%m-%d %H:%i') AS submitTime
+        FROM exam_record er
+                 LEFT JOIN exam_paper ep ON er.paperid = ep.id
+                 LEFT JOIN course_categories cc ON ep.course_id = cc.id
+                 LEFT JOIN user_student us ON er.s_username = us.s_username
+        WHERE ep.t_username = #{teacherUsername}
+        GROUP BY er.paperid, er.s_username
+    </select>
+
     <!-- 查询考试记录视图 -->
     <select id="selectExamRecordDetail" resultType="com.entity.vo.ExamRecordVO">
         SELECT

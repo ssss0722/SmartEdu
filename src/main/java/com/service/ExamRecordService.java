@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.baomidou.mybatisplus.service.IService;
 import com.entity.ExamRecordEntity;
 import com.entity.vo.ExamRecordVO;
+import com.entity.vo.ExamStudentResultVO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ public interface ExamRecordService extends IService<ExamRecordEntity> {
 	void autoMarkRecord(Long recordId);
 
 	Map<String, Object> getExamDetail(Long paperId, String sUsername);
+	List<ExamStudentResultVO> getStudentExamResults(String teacherUsername);
 
 
 

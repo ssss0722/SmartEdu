@@ -95,4 +95,13 @@ public class JwtUtils {
             return null;
         }
     }
+    public static String getUserName(String token) {
+        try {
+            Claims claims = parseToken(token);
+            return claims.get("username", String.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

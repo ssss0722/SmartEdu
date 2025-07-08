@@ -2,11 +2,14 @@ package com.controller;
 
 import com.annotation.IgnoreAuth;
 import com.entity.vo.ExamRecordVO;
+import com.entity.vo.ExamStudentResultVO;
 import com.service.ExamRecordService;
+import com.utils.JwtUtils;
 import com.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +54,23 @@ public class ExamRecordController {
                     @RequestParam("sUsername") String sUsername) {
         Map<String, Object> detail = examRecordService.getExamDetail(paperId, sUsername);
         return R.ok().put("data", detail);
+    }
+
+    @GetMapping("/resultList")
+    public R getResultList(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return R.error("未携带合法的token");
+        }
+        String token = authorization.substring(7); // 去除 Bearer 空格部分
+        String teacherUsername = null;
+        try {
+            teacherUsername = JwtUtils.getUserName(token);
+        } catch (Exception e) {
+            return R.error("token解析失败");
+        }
+        List<ExamStudentResultVO> resultList = examRecordService.getStudentExamResults(teacherUsername);
+        return R.ok().put("data", resultList);
     }
 
 }

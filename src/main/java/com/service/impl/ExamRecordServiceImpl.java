@@ -11,6 +11,7 @@ import com.entity.ExamRecordEntity;
 import com.entity.StudentEntity;
 import com.entity.vo.ExamDetailQuestionVO;
 import com.entity.vo.ExamRecordVO;
+import com.entity.vo.ExamStudentResultVO;
 import com.service.ExamRecordService;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,6 +141,14 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordDao, ExamRecord
 		result.put("questions", questions);
 
 		return result;
+	}
+
+	@Autowired
+	private ExamRecordDao examRecordMapper;
+
+	@Override
+	public List<ExamStudentResultVO> getStudentExamResults(String teacherUsername) {
+		return examRecordMapper.selectExamStudentResultList(teacherUsername);
 	}
 
 

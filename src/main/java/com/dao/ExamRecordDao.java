@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import com.entity.vo.ExamDetailQuestionVO;
+import com.entity.vo.ExamStudentResultVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import com.entity.vo.ExamRecordVO;
@@ -32,6 +33,8 @@ public interface ExamRecordDao extends BaseMapper<ExamRecordEntity> {
 			@Param("sUsername") String sUsername,
 			@Param("paperId") Long paperId
 	);
+
+	List<ExamStudentResultVO> selectExamStudentResultList(@Param("teacherUsername") String teacherUsername);
 
 
 

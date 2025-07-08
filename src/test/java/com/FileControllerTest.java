@@ -24,7 +24,7 @@ public class FileControllerTest {
     @Test
     public void testUploadImage() throws Exception {
         // 读取本地文件
-        FileInputStream fis = new FileInputStream("D:/下载/springboot.jpg");
+        FileInputStream fis = new FileInputStream("D:/下载/中国近代史纲要.jpg");
         MockMultipartFile mockFile = new MockMultipartFile(
                 "file",
                 "test.jpg",
