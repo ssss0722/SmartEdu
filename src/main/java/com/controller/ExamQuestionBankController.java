@@ -1,11 +1,17 @@
 package com.controller;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.entity.CourseCategoriesEntity;
+import com.entity.CourseTeacherEntity;
 import com.entity.TeacherEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.service.CourseCategoryService;
+import com.service.CourseTeacherService;
 import com.service.TeacherService;
 import com.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +34,7 @@ import com.utils.MPUtil;
  * 后端接口
  * @author 
  * @email 
- * @date 2024-03-05 11:41:24
+ * @date 2025-07-04 19:40:32
  */
 @RestController
 @RequestMapping("/questionbank")
@@ -37,6 +43,10 @@ public class ExamQuestionBankController {
     private ExamquestionbankService examquestionbankService;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private CourseTeacherService courseTeacherService;
+    @Autowired
+    private CourseCategoryService courseCategoryService;
 
 
 
@@ -67,6 +77,36 @@ public class ExamQuestionBankController {
 
         return R.ok().put("data", page);
     }
+    /**
+     *课程列表
+     */
+    @RequestMapping("/courselist")
+    public R listCourses(@RequestParam String token){
+        String role=JwtUtils.getRoleFromToken(token);
+        if(!"teacher".equals(role)){
+            return R.ok("只有教师可以查看课程列表");
+        }
+        Long teacherId=JwtUtils.getUserIdFromToken(token);
+        TeacherEntity teacher=teacherService.selectById(teacherId);
+        if(teacher==null){
+            return R.error("无效的教师身份");
+        }
+        List<CourseTeacherEntity> ctList = courseTeacherService.selectList(
+                new EntityWrapper<CourseTeacherEntity>().eq("t_username", teacher.getT_username())
+        );
+        List<Map<String,Object>> courseList=new ArrayList<>();
+        for(CourseTeacherEntity ct:ctList){
+            CourseCategoriesEntity courseCategories=courseCategoryService.selectById(ct.getCourseId());
+            if(courseCategories!=null) {
+                Map<String,Object>map=new HashMap<>();
+                map.put("id",courseCategories.getId());
+                map.put("name",courseCategories.getCourse());
+                courseList.add(map);
+            }
+        }
+        return R.ok().put("data",courseList);
+
+    }
     
     /**
      * 前端列表
@@ -83,6 +123,17 @@ public class ExamQuestionBankController {
         if (title != null && !title.trim().isEmpty()) {
             ew.like("title", title.trim());
             System.out.println("【调试信息】添加title模糊查询条件：" + title);
+        }
+        //添加courseId精准查询
+        String courseIdStr=(String)params.get("courseId");
+        if (courseIdStr != null && !courseIdStr.trim().isEmpty()) {
+            try {
+                Long courseId = Long.parseLong(courseIdStr);
+                ew.eq("course_id", courseId);
+                System.out.println("【调试】添加课程筛选条件：course_id = " + courseId);
+            } catch (NumberFormatException e) {
+                System.out.println("【警告】courseId 解析失败：" + courseIdStr);
+            }
         }
 
         // 解析用户角色
@@ -104,22 +155,41 @@ public class ExamQuestionBankController {
 
         // 查询分页数据
         PageUtils page = examquestionbankService.queryPage(params, ew);
+        List<ExamQuestionBankEntity> eqbList = (List<ExamQuestionBankEntity>) page.getList();
+        // 5. 批量查询课程信息（避免N+1问题）
+        Set<Long> courseIdSet = eqbList.stream()
+                .map(ExamQuestionBankEntity::getCourseId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        Map<Long, CourseCategoriesEntity> courseMap = new HashMap<>();
+        if (!courseIdSet.isEmpty()) {
+            List<CourseCategoriesEntity> courseList = courseCategoryService.selectBatchIds(courseIdSet);
+            courseMap = courseList.stream()
+                    .collect(Collectors.toMap(CourseCategoriesEntity::getId, Function.identity()));
+        }
+        //  填充课程名称和类别
+        for (ExamQuestionBankEntity qb : eqbList) {
+            CourseCategoriesEntity course = courseMap.get(qb.getCourseId());
+            if (course != null) {
+                qb.setCourseName(course.getCourse());
+
+            }
+        }
         // 打印 SQL 片段
         System.out.println("查询条件 SQL：" + ew.getSqlSegment());
         System.out.println("查询参数：" + ew.getParamNameValuePairs());
-        // ✅ 打印数据到控制台
+        //  打印数据到控制台
         System.out.println("【题库分页查询】当前页码：" + page.getCurrPage());
         System.out.println("【题库分页查询】每页数量：" + page.getPageSize());
         System.out.println("【题库分页查询】结果列表：");
         ObjectMapper mapper= new ObjectMapper();
         List<?> list = page.getList();
-        if (list != null) {
-            for (Object obj : page.getList()) {
-                try {
-                    System.out.println(mapper.writeValueAsString(obj));
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        for (ExamQuestionBankEntity qb : eqbList) {
+            try {
+                System.out.println(mapper.writeValueAsString(qb));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

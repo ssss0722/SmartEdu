@@ -10,7 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.Date;
 
-@TableName("exam")
+@TableName("exam_homework")
 public class ExamEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
@@ -27,9 +27,11 @@ public class ExamEntity implements Serializable {
      */
     private Long paperId;
     /**
-     * 考试状态：0 草稿，1 已发布
+     * 课程id
      */
-    private Integer status;
+    @TableField(exist = false)
+    private Long courseId;
+
     /**
      * 考试开始时间
      */
@@ -43,12 +45,6 @@ public class ExamEntity implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
-    /**
-     *
-     * 考试的发布老师
-     */
-    @TableField("t_username")
-    private String tUsername;
     public Long getId() {
         return id;
     }
@@ -73,13 +69,6 @@ public class ExamEntity implements Serializable {
         this.paperId = paperId;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 
     public Date getStartTime() {
         return startTime;
@@ -96,17 +85,12 @@ public class ExamEntity implements Serializable {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
-    /**
-     * 设置：教师工号
-     */
-    public void setT_username(String username) {
-        this.tUsername = username;
-    }
-    /**
-     * 获取：教师工号
-     */
-    public String getT_username() {
-        return tUsername;
+
+    public Long getCourseId() {
+        return courseId;
     }
 
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
 }

@@ -13,30 +13,31 @@
         <result property="type" column="type"/>
         <result property="sequence" column="sequence"/>
         <result property="tUsername" column="t_username"/>
+		<result property="courseId" column="course_id"/>
     </resultMap>
 
 	<select id="selectListVO"
 		resultType="com.entity.vo.ExamQuestionbankVO" >
-		SELECT * FROM exam_question_bank  exam_question_bank
+		SELECT * FROM question_bank  question_bank
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectVO"
 		resultType="com.entity.vo.ExamQuestionbankVO" >
-		SELECT  exam_question_bank.* FROM exam_question_bank  exam_question_bank
+		SELECT  question_bank.* FROM question_bank  question_bank
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
     <select id="selectListView"
 		resultType="com.entity.view.ExamQuestionBankView" >
 
-		SELECT  exam_question_bank.* FROM exam_question_bank  exam_question_bank
+		SELECT  question_bank.* FROM question_bank  question_bank
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
 		resultType="com.entity.view.ExamQuestionBankView" >
-		SELECT * FROM exam_question_bank  exam_question_bank <where> 1=1 ${ew.sqlSegment}</where>
+		SELECT * FROM question_bank  question_bank <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 

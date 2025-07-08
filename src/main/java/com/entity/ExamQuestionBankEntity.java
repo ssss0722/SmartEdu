@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-@TableName("exam_question_bank")
+@TableName("question_bank")
 public class ExamQuestionBankEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -92,6 +92,9 @@ public class ExamQuestionBankEntity<T> implements Serializable {
 	 */
 	@TableField("t_username")
 	private String tUsername;
+	private Long courseId;
+	@TableField(exist = false)
+	private String courseName;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -209,4 +212,20 @@ public class ExamQuestionBankEntity<T> implements Serializable {
 		return tUsername;
 	}
 
+
+	public Long getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
 }

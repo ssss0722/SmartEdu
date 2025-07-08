@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-@TableName("exam_question")
+@TableName("question")
 public class ExamQuestionEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,7 @@ public class ExamQuestionEntity<T> implements Serializable {
 	 * 分值
 	 */
 					
-	private Long score;
+
 
 
 
@@ -69,7 +69,7 @@ public class ExamQuestionEntity<T> implements Serializable {
 	 * 试题排序，值越大排越前面
 	 */
 					
-	private Long sequence;
+
 	
 	/**
 	 * 教师工号
@@ -122,31 +122,6 @@ public class ExamQuestionEntity<T> implements Serializable {
 	}
 
 
-	/**
-	 * 设置：分值
-	 */
-	public void setScore(Long score) {
-		this.score = score;
-	}
-	/**
-	 * 获取：分值
-	 */
-	public Long getScore() {
-		return score;
-	}
-
-	/**
-	 * 设置：试题排序，值越大排越前面
-	 */
-	public void setSequence(Long sequence) {
-		this.sequence = sequence;
-	}
-	/**
-	 * 获取：试题排序，值越大排越前面
-	 */
-	public Long getSequence() {
-		return sequence;
-	}
 	/**
 	 * 设置：教师工号
 	 */

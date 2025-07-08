@@ -11,9 +11,13 @@ public class ExamRequestDTO {
     private Integer status;
     private Date startTime;
     private Date endTime;
+    private Long courseId;
     @TableField("t_username")
     private String tUsername;
-    private List<Long> studentIds;
+    private List<String> sUsernames;
+
+    public ExamRequestDTO() {
+    }
 
     public String getName() {
         return name;
@@ -50,12 +54,23 @@ public class ExamRequestDTO {
         this.endTime = endTime;
     }
 
-    public List<Long> getStudentIds() {
-        return studentIds;
-    }
-    public void setStudentIds(List<Long> studentIds) {
-        this.studentIds = studentIds;
-    }
+
     public void settUsername(String username){this.tUsername=username;}
     public String gettUsername(){return tUsername;}
+
+    public List<String> getsUsernames() {
+        return sUsernames;
+    }
+
+    public void setsUsernames(List<String> sUsernames) {
+        this.sUsernames = sUsernames;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
 }
