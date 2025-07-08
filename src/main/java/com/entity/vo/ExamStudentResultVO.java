@@ -2,7 +2,7 @@ package com.entity.vo;
 
 public class ExamStudentResultVO {
     private String studentName;
-    private String paperName;
+    private String examName;
     private Integer totalScore;
     private String courseName;
     private String submitTime;
@@ -14,11 +14,11 @@ public class ExamStudentResultVO {
         this.studentName = studentName;
     }
 
-    public String getPaperName() {
-        return paperName;
+    public String getExamName() {
+        return examName;
     }
-    public void setPaperName(String paperName) {
-        this.paperName = paperName;
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
     public Integer getTotalScore() {

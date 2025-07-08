@@ -5,59 +5,60 @@
     <select id="selectExamStudentResultList" resultType="com.entity.vo.ExamStudentResultVO">
         SELECT
             us.s_name AS studentName,
-            ep.title AS paperName,
+            eh.name AS examName,
             cc.course AS courseName,
-            SUM(er.myscore) AS totalScore,
-            DATE_FORMAT(MIN(er.addtime), '%Y-%m-%d %H:%i') AS submitTime
-        FROM exam_record er
-                 LEFT JOIN exam_paper ep ON er.paperid = ep.id
-                 LEFT JOIN course_categories cc ON ep.course_id = cc.id
-                 LEFT JOIN user_student us ON er.s_username = us.s_username
-        WHERE ep.t_username = #{teacherUsername}
-        GROUP BY er.paperid, er.s_username
+            SUM(r.myscore) AS totalScore,
+            DATE_FORMAT(MIN(r.addtime), '%Y-%m-%d %H:%i') AS submitTime
+        FROM record r
+                 LEFT JOIN paper p ON r.paperid = p.id
+                 LEFT JOIN exam_homework eh ON p.id = eh.paper_id
+                 LEFT JOIN course_categories cc ON p.course_id = cc.id
+                 LEFT JOIN user_student us ON r.s_username = us.s_username
+        WHERE p.t_username = #{teacherUsername}
+        GROUP BY r.paperid, r.s_username, eh.name, cc.course, us.s_name
     </select>
 
     <!-- 查询考试记录视图 -->
-    <select id="selectExamRecordDetail" resultType="com.entity.vo.ExamRecordVO">
-        SELECT
-            MIN(er.id) AS id,
-            ep.title AS paperName,
-            cc.course AS courseType,
-            us.s_name AS studentName,
-            DATE_FORMAT(MIN(er.addtime), '%Y-%m-%d %H:%i') AS submitTime,
-            SUM(er.myscore) AS score,
-            CASE WHEN MIN(er.ismark) = 1 THEN '已批改' ELSE '未批改' END AS status
-        FROM exam_record er
-                 LEFT JOIN exam_paper ep ON er.paperid = ep.id
-                 LEFT JOIN course_categories cc ON ep.course_id = cc.id
-                 LEFT JOIN user_student us ON er.s_username = us.s_username
-        GROUP BY
-            er.paperid,
-            er.s_username,
-            ep.title,
-            cc.course,
-            us.s_name
-    </select>
-    <update id="markSingleQuestionById">
-        UPDATE exam_record
-        SET myscore = #{score},
-            ismark = 1
-        WHERE id = #{id}
-    </update>
-    <select id="selectExamDetailQuestions" resultType="com.entity.vo.ExamDetailQuestionVO">
-        SELECT
-            er.questionid AS id,
-            eq.type AS type,
-            eq.title AS question,
-            er.myanswer AS studentAnswer,
-            eq.answer AS correctAnswer
-        FROM
-            exam_record er
-                LEFT JOIN exam_question_bank eq ON er.questionid = eq.id
-        WHERE
-            er.paperid = #{paperId}
-          AND er.s_username = #{sUsername}
-    </select>
+<!--    <select id="selectExamRecordDetail" resultType="com.entity.vo.ExamRecordVO">-->
+<!--        SELECT-->
+<!--            MIN(er.id) AS id,-->
+<!--            ep.title AS paperName,-->
+<!--            cc.course AS courseType,-->
+<!--            us.s_name AS studentName,-->
+<!--            DATE_FORMAT(MIN(er.addtime), '%Y-%m-%d %H:%i') AS submitTime,-->
+<!--            SUM(er.myscore) AS score,-->
+<!--            CASE WHEN MIN(er.ismark) = 1 THEN '已批改' ELSE '未批改' END AS status-->
+<!--        FROM exam_record er-->
+<!--                 LEFT JOIN exam_paper ep ON er.paperid = ep.id-->
+<!--                 LEFT JOIN course_categories cc ON ep.course_id = cc.id-->
+<!--                 LEFT JOIN user_student us ON er.s_username = us.s_username-->
+<!--        GROUP BY-->
+<!--            er.paperid,-->
+<!--            er.s_username,-->
+<!--            ep.title,-->
+<!--            cc.course,-->
+<!--            us.s_name-->
+<!--    </select>-->
+<!--    <update id="markSingleQuestionById">-->
+<!--        UPDATE exam_record-->
+<!--        SET myscore = #{score},-->
+<!--            ismark = 1-->
+<!--        WHERE id = #{id}-->
+<!--    </update>-->
+<!--    <select id="selectExamDetailQuestions" resultType="com.entity.vo.ExamDetailQuestionVO">-->
+<!--        SELECT-->
+<!--            er.questionid AS id,-->
+<!--            eq.type AS type,-->
+<!--            eq.title AS question,-->
+<!--            er.myanswer AS studentAnswer,-->
+<!--            eq.answer AS correctAnswer-->
+<!--        FROM-->
+<!--            exam_record er-->
+<!--                LEFT JOIN exam_question_bank eq ON er.questionid = eq.id-->
+<!--        WHERE-->
+<!--            er.paperid = #{paperId}-->
+<!--          AND er.s_username = #{sUsername}-->
+<!--    </select>-->
 
 
 

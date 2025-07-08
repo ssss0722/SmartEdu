@@ -55,9 +55,10 @@ public class ExamRecordController {
         Map<String, Object> detail = examRecordService.getExamDetail(paperId, sUsername);
         return R.ok().put("data", detail);
     }
-
+    @IgnoreAuth
     @GetMapping("/resultList")
     public R getResultList(HttpServletRequest request) {
+
         String authorization = request.getHeader("Authorization");
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             return R.error("未携带合法的token");
@@ -70,6 +71,7 @@ public class ExamRecordController {
             return R.error("token解析失败");
         }
         List<ExamStudentResultVO> resultList = examRecordService.getStudentExamResults(teacherUsername);
+        System.out.println("teacherUsername = " + teacherUsername);
         return R.ok().put("data", resultList);
     }
 
