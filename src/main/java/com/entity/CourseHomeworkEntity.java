@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-@TableName("course_homework")
+@TableName("exam_homework")
 public class CourseHomeworkEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 

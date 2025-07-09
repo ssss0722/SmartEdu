@@ -164,8 +164,7 @@ public class CourseHomeworkController {
     public R compose(@RequestParam String title,@RequestParam String course,
                      @RequestParam Integer single, @RequestParam Integer multiple,
                      @RequestParam Integer judge, @RequestParam Integer blank,
-                     @RequestParam Integer subjective,
-                     String token,@RequestBody(required = false)List<ExamQuestionBankEntity> newQuestions){
+                     String token){
         Long id=JwtUtils.getUserIdFromToken(token);
         String role=JwtUtils.getRoleFromToken(token);
         List<ExamQuestionBankEntity> questionList = new ArrayList<ExamQuestionBankEntity>();
@@ -182,19 +181,6 @@ public class CourseHomeworkController {
         courseHomeworkService.insert(homework);
         Long homeworkId = homework.getId();  // 获取回填的主键ID
 
-        if(!newQuestions.isEmpty()||newQuestions!=null){
-            questionList.addAll(newQuestions);
-            for(ExamQuestionBankEntity q:newQuestions){
-                q.setAddtime(new Date());
-                q.setT_username(teacherService.selectById(id).getT_username());
-                examquestionbankService.insert(q);
-
-                HomeworkQuestionEntity hq=new HomeworkQuestionEntity();
-                hq.setHomeworkId(homeworkId);
-                hq.setQuestionId(q.getId());
-                hq.settUsername(teacherService.selectById(id).getT_username());
-            }
-        }
         //单选题
         if(single>0) {
             Integer singleSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 0));
@@ -253,21 +239,6 @@ public class CourseHomeworkController {
                 ew.eq("type", 3).orderBy("RAND()").last("limit "+blank);
                 List<ExamQuestionBankEntity> fillList = examquestionbankService.selectList(ew);
                 questionList.addAll(fillList);
-            }
-        }
-        //主观题
-        if(subjective>0) {
-            Integer subjectiveSize = examquestionbankService.selectCount(new EntityWrapper<ExamQuestionBankEntity>().eq("type", 4));
-            if(subjectiveSize<subjective) {
-                return R.error("主观题库不足");
-            } else {
-                Wrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-                if(role.equals("teacher")) {
-                    ew.eq("t_username", teacherService.selectById(id).getT_username());
-                }
-                ew.eq("type", 4).orderBy("RAND()").last("limit "+subjective);
-                List<ExamQuestionBankEntity> subjectivityList = examquestionbankService.selectList(ew);
-                questionList.addAll(subjectivityList);
             }
         }
         if(questionList!=null && questionList.size()>0) {

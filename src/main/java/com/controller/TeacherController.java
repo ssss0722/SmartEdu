@@ -11,13 +11,12 @@ import com.service.*;
 import com.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import org.springframework.mail.SimpleMailMessage;
 import com.annotation.IgnoreAuth;
 
 import com.entity.TeacherEntity;
@@ -48,6 +47,12 @@ public class TeacherController {
     @Autowired
     private CourseCategoryService courseCategoryService;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String sender;
+
 	/**
 	 * 登录
 	 */
@@ -74,25 +79,67 @@ public class TeacherController {
 	/**
      * 注册
      */
-	@IgnoreAuth
-    @RequestMapping("/register")
-    public R register(@RequestBody TeacherEntity teacher){
-    	TeacherEntity u = teacherService.selectOne(new EntityWrapper<TeacherEntity>().eq("t_username", teacher.getT_username()));
-		if(u!=null) {
-			return R.error("注册用户已存在");
-		}
-		Long uId = new Date().getTime();
-		teacher.setId(uId);
-        teacherService.insert(teacher);
-        List<String> courseList=teacher.getCourse();
-        for(String courseName:courseList){
-            CourseTeacherEntity courseTeacher=new CourseTeacherEntity<>();
-            CourseCategoriesEntity course=courseCategoryService.selectByName(courseName);
-            courseTeacher.setCourseId(course.getId());
-            courseTeacher.settUsername(teacherService.selectById(uId).getT_username());
-            courseTeacherService.insert(courseTeacher);
+    @IgnoreAuth
+    @PostMapping("/register")
+    public R register(@RequestBody TeacherEntity teacher, String code) {
+        // 1. 验证邮箱和验证码
+        String email = teacher.getEmail(); // 需要在TeacherEntity中添加email字段
+
+        if (!VerificationCodeManager.verifyCode(email, code)) {
+            return R.error("验证码错误或已过期");
         }
-        return R.ok("注册成功").put("data",teacher);
+
+        // 2. 验证通过后移除验证码
+        VerificationCodeManager.removeCode(email);
+
+        TeacherEntity u = teacherService.selectOne(
+                new EntityWrapper<TeacherEntity>().eq("t_username", teacher.getT_username())
+        );
+
+        if (u != null) {
+            return R.error("注册用户已存在");
+        }
+
+        Long uId = new Date().getTime();
+        teacher.setId(uId);
+        teacher.setRole("teacher");
+        teacherService.insert(teacher);
+
+        List<String> courseList = teacher.getCourse();
+        for (String courseName : courseList) {
+            CourseTeacherEntity courseTeacher = new CourseTeacherEntity();
+            CourseCategoriesEntity course = courseCategoryService.selectByName(courseName);
+            if (course != null) {
+                courseTeacher.setCourseId(course.getId());
+                courseTeacher.settUsername(teacher.getT_username());
+                courseTeacherService.insert(courseTeacher);
+            }
+        }
+        return R.ok("注册成功").put("data", teacher);
+    }
+
+    @IgnoreAuth
+    @PostMapping("/sendVerificationCode")
+    public R sendVerificationCode(String email) {
+        // 生成6位随机验证码
+        String code = String.valueOf((int) ((Math.random() * 9 + 1) * 100000));
+
+        // 存储验证码
+        VerificationCodeManager.storeCode(email, code);
+
+        // 发送邮件
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(sender);
+        message.setTo(email);
+        message.setSubject("注册验证码");
+        message.setText("您的注册验证码是: " + code + "，有效期为5分钟");
+
+        try {
+            mailSender.send(message);
+            return R.ok("验证码已发送");
+        } catch (Exception e) {
+            return R.error("邮件发送失败: " + e.getMessage());
+        }
     }
 
 	

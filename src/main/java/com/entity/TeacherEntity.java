@@ -87,8 +87,17 @@ public class TeacherEntity<T> implements Serializable {
 	 */
 
 	private String role;
-	
-	
+
+	private String email;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat
 	private Date addtime;

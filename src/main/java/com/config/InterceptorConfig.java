@@ -23,7 +23,6 @@ public class InterceptorConfig extends WebMvcConfigurationSupport{
 						"/register",
 						"/resetPass"
 				);
-        super.addInterceptors(registry);
 	}
 	
 	/**
@@ -37,6 +36,5 @@ public class InterceptorConfig extends WebMvcConfigurationSupport{
         .addResourceLocations("classpath:/admin/")
         .addResourceLocations("classpath:/front/")
         .addResourceLocations("classpath:/public/");
-		super.addResourceHandlers(registry);
     }
 }

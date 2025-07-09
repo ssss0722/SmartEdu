@@ -39,7 +39,6 @@ public class JwtUtils {
             Claims claims = parseToken(token);
             Date expiration = claims.getExpiration();
             long remainingMillis = expiration.getTime() - System.currentTimeMillis();
-
             switch (timeUnit) {
                 case SECONDS: return remainingMillis / 1000;
                 case MINUTES: return remainingMillis / (1000 * 60);

@@ -57,6 +57,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         return true;
     }
 
+
     private boolean isValidToken(String fullToken) {
         if (fullToken == null) return false;
 

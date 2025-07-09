@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -69,9 +70,9 @@ public class HomeworkRecordController {
         EntityWrapper<HomeworkRecordEntity> ew = new EntityWrapper<>();
 
         // 4. 使用增强的MPUtil方法（带表别名支持）
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.likeOrEqWithAlias(ew, homeworkRecord, "chr");
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.betweenWithAlias(ew, params, "chr");
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.sortWithAlias(ew, params, "chr");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.likeOrEqWithAlias(ew, homeworkRecord, "r");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.betweenWithAlias(ew, params, "r");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.sortWithAlias(ew, params, "r");
 
         PageUtils page = homeworkRecordService.queryPageGroupBy(params, ew);
         return R.ok().put("data", page);
@@ -87,9 +88,9 @@ public class HomeworkRecordController {
         EntityWrapper<HomeworkRecordEntity> ew = new EntityWrapper<>();
 
         // 使用增强的MPUtil方法（带表别名支持）
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.likeOrEqWithAlias(ew, record, "chr");
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.betweenWithAlias(ew, params, "chr");
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.sortWithAlias(ew, params, "chr");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.likeOrEqWithAlias(ew, record, "r");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.betweenWithAlias(ew, params, "r");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.sortWithAlias(ew, params, "r");
 
         PageUtils page = homeworkRecordService.queryPageOptionsNum(params, ew);
         return R.ok().put("data", page);
@@ -127,9 +128,9 @@ public class HomeworkRecordController {
 
         // 4. 使用增强的MPUtil方法（带表别名支持）
         // 注意：只使用带别名的方法，不使用原始方法
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.likeOrEqWithAlias(ew, homeworkRecord, "chr");
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.betweenWithAlias(ew, params, "chr");
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.sortWithAlias(ew, params, "chr");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.likeOrEqWithAlias(ew, homeworkRecord, "r");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.betweenWithAlias(ew, params, "r");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.sortWithAlias(ew, params, "r");
 
         PageUtils page = homeworkRecordService.queryPage(params, ew);
         return R.ok().put("data", page);
@@ -158,9 +159,9 @@ public class HomeworkRecordController {
             }
         }
         EntityWrapper<HomeworkRecordEntity> ew = new EntityWrapper<>();
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.likeOrEqWithAlias(ew, homeworkRecord, "chr");
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.betweenWithAlias(ew, params, "chr");
-        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.sortWithAlias(ew, params, "chr");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.likeOrEqWithAlias(ew, homeworkRecord, "r");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.betweenWithAlias(ew, params, "r");
+        ew = (EntityWrapper<HomeworkRecordEntity>) MPUtil.sortWithAlias(ew, params, "r");
 
         PageUtils page = homeworkRecordService.queryPage(params, ew);
         return R.ok().put("data", page);
@@ -174,7 +175,7 @@ public class HomeworkRecordController {
     @RequestMapping("/lists")
     public R list( HomeworkRecordEntity homeworkRecordEntity){
         EntityWrapper<HomeworkRecordEntity> ew = new EntityWrapper<HomeworkRecordEntity>();
-        ew.allEq(MPUtil.allEQMapPre( homeworkRecordEntity, "chr"));
+        ew.allEq(MPUtil.allEQMapPre( homeworkRecordEntity, "r"));
         return R.ok().put("data", homeworkRecordService.selectListView(ew));
     }
 
@@ -184,7 +185,7 @@ public class HomeworkRecordController {
     @RequestMapping("/query")
     public R query(HomeworkRecordEntity record){
         EntityWrapper<HomeworkRecordEntity> ew = new EntityWrapper<HomeworkRecordEntity>();
-        ew.allEq(MPUtil.allEQMapPre( record, "chr"));
+        ew.allEq(MPUtil.allEQMapPre( record, "r"));
         HomeworkRecordView view =  homeworkRecordService.selectView(ew);
         return R.ok("查询作业记录成功").put("data", view);
     }
@@ -241,7 +242,7 @@ public class HomeworkRecordController {
             record.setMyscore(Long.valueOf(0));
         }
         record.setsUsername(studentService.selectById(id).getsUsername());
-        CourseHomeworkEntity homework = courseHomeworkService.selectById(record.getHomeworkId());
+        CourseHomeworkEntity homework = courseHomeworkService.selectById(record.getPaperid());
         record.settUsername(homework.gettUsername());
         homeworkRecordService.insert(record);
         return R.ok("添加成功");
@@ -253,8 +254,30 @@ public class HomeworkRecordController {
     @RequestMapping("/update")
     @Transactional
     @IgnoreAuth
-    public R update(@RequestBody HomeworkRecordEntity record){
-        homeworkRecordService.updateById(record);//全部更新
+    public R update(@RequestBody HomeworkRecordEntity record) {
+        // 使用EntityWrapper构建查询条件
+        EntityWrapper<HomeworkRecordEntity> wrapper = new EntityWrapper<>();
+
+        // 添加复合查询条件（homeworkId + questionId + sUsername）
+        wrapper.eq("homework_id", record.getPaperid())
+                .eq("question_id", record.getQuestionId())
+                .eq("s_username", record.getsUsername());
+
+        // 查询现有记录
+        HomeworkRecordEntity existingRecord = homeworkRecordService.selectOne(wrapper);
+
+        // 处理记录不存在的情况
+        if (existingRecord == null) {
+            return R.error("未找到对应的作业记录，请检查参数");
+        }
+
+        // 只更新允许修改的字段
+        existingRecord.setIsmark(record.getIsmark());
+        existingRecord.setMyscore(record.getMyscore());
+        existingRecord.setMyanswer(record.getMyanswer());
+
+        // 根据ID更新记录
+        homeworkRecordService.updateById(existingRecord);
         return R.ok("更新成功");
     }
 
@@ -275,7 +298,7 @@ public class HomeworkRecordController {
         Long id=JwtUtils.getUserIdFromToken(token);
         StudentEntity student=studentService.selectById(id);
         String userid=student.getsUsername();
-        homeworkRecordService.delete(new EntityWrapper<HomeworkRecordEntity>().eq("homework_id", homeworkId).eq("s_username", userid));
+        homeworkRecordService.delete(new EntityWrapper<HomeworkRecordEntity>().eq("paperid", homeworkId).eq("s_username", userid));
         return R.ok("删除成功");
     }
 
@@ -284,15 +307,25 @@ public class HomeworkRecordController {
      * 批改完所有主观题后计算总分
      */
     @RequestMapping("/calculateTotal")
-    public R calculateTotal(@RequestParam String token,@RequestParam Long homeworkId){
-        Long id=JwtUtils.getUserIdFromToken(token);
-        StudentEntity student=studentService.selectById(id);
-        String sUsername=student.getsUsername();
+    public R calculateTotal(@RequestParam String sUsername,@RequestParam Long homeworkId){
         try {
             int score=homeworkRecordService.calculateTotalScore(sUsername, homeworkId);
             return R.ok("作业总分计算成功").put("totalScore",score);
         } catch (Exception e) {
             return R.error(500, e.getMessage());
         }
+    }
+
+    /**
+     * 查找学生作业记录
+     */
+    @RequestMapping("/selectHomework")
+    public R selectHomework(@RequestParam String token){
+        Long id=JwtUtils.getUserIdFromToken(token);
+        String teacherUsername = teacherService.selectById(id).getT_username();
+        // 2. 查询该教师布置的所有作业的学生提交记录
+        List<Map<String, Object>> homeworkList = homeworkRecordService.selectTeacherHomework(teacherUsername);
+        // 3. 返回结果
+        return R.ok().put("data", homeworkList);
     }
 }

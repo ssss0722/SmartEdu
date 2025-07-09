@@ -32,8 +32,6 @@ public class AliOSSUtils {
     public String upload(MultipartFile multipartFile) throws IOException {
         InputStream inputStream = multipartFile.getInputStream();
         String originalFilename = multipartFile.getOriginalFilename();
-        String fileName = UUID.randomUUID().toString() + originalFilename.substring(originalFilename.lastIndexOf("."));
-
         // 1. 创建ObjectMetadata并设置关键头信息
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(multipartFile.getContentType()); // 设置MIME类型
@@ -43,13 +41,13 @@ public class AliOSSUtils {
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         ossClient.putObject(
                 bucketName,
-                fileName,
+                originalFilename,
                 inputStream,
                 metadata // 传入元数据设置
         );
 
         //文件访问路径
-        String url = endpoint.split("//")[0] + "//" + bucketName + "." + endpoint.split("//")[1] + "/" + fileName;
+        String url = endpoint.split("//")[0] + "//" + bucketName + "." + endpoint.split("//")[1] + "/" + originalFilename;
 
         // 关闭ossClient
         ossClient.shutdown();

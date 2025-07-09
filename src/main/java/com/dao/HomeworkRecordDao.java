@@ -25,8 +25,32 @@ public interface HomeworkRecordDao extends BaseMapper<HomeworkRecordEntity> {
     HomeworkRecordView selectView(@Param("ew") EntityWrapper<HomeworkRecordEntity> ew);
 
     @Select("SELECT SUM(myscore) AS total_score " +
-            "FROM course_homework_record " +
+            "FROM record " +
             "WHERE s_username = #{s_username} " +
-            "AND homework_id = #{homework_id}")
+            "AND paperid = #{homework_id}")
     int selectTotalScore(Map<String, Object> params);
+
+    @Select("SELECT" +
+            "    ANY_VALUE(s.s_name) AS studentName, " +
+            "    s.s_username AS sUsername, " +
+            "    ANY_VALUE(p.title) AS homeworkName, " +
+            "    ANY_VALUE(cc.course) AS courseName, " +
+            "    SUM(r.myscore) AS score, " +
+            "    p.id AS homeworkId, " +
+            "    (SELECT SUM(qb.score) " +
+            "     FROM question q " +
+            "     JOIN question_bank qb ON q.question_id = qb.id " +
+            "     WHERE q.paperid = p.id) AS total_score, " +
+            "    MAX(r.addtime) AS submitTime, " +
+            "    IF(MIN(r.ismark) > 0, 1, 0) AS isMarked, " +
+            "    ANY_VALUE(t.t_name) AS teacherName " +
+            "FROM record r " +
+            "JOIN user_student s ON r.s_username = s.s_username " +
+            "JOIN paper p ON r.paperid = p.id " +
+            "JOIN user_teacher t ON p.t_username = t.t_username " +
+            "JOIN course_categories cc ON p.course_id = cc.id " +
+            "WHERE t.t_username = #{teacherUsername} " +
+            "  AND p.status = '0' " +
+            "GROUP BY p.id, s.s_username") // 按作业和学生分组
+    List<Map<String, Object>> selectTeacherHomework(String teacherUsername);
 }

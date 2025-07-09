@@ -10,19 +10,33 @@ server:
 spring:
     datasource:
         driverClassName: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/edu_system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+        url: jdbc:mysql://47.111.15.15:3306/edu_system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
         username: root
-        password: GQL123456.
+        password: zhenghanyu
 
-#        driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    mail:
+      host: smtp.qq.com
+      port: 465
+      username: 2469835322@qq.com
+      password: auxtddwqezwgeaei
+      properties:
+        mail:
+          smtp:
+            auth: true
+            ssl:
+              enable: true  # QQ邮箱使用SSL加密
+
+
+
+  #        driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
 #        url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=springbootsagm21hd
 #        username: sa
 #        password: 123456
 
     servlet:
       multipart:
-        max-file-size: 300MB
-        max-request-size: 300MB
+        max-file-size: 5GB
+        max-request-size: 5GB
     resources:
       static-locations: classpath:static/,file:static/
 
@@ -55,3 +69,41 @@ mybatis-plus:
 aliyun:
   accessKeyId: ${ALIYUN_ACCESS_KEY_ID:}
   accessKeySecret: ${ALIYUN_ACCESS_KEY_SECRET:}
+
+# 讯飞API配置
+xfyun:
+  appid: ${XFYUN_APPID:}
+  api-key: ${XFYUN_API_KEY:}
+  api-secret: ${XFYUN_API_SECRET:}
+  api-password: ${XFYUN_API_PASSWORD:}
+  model: lite
+
+springdoc:
+  default-flat-param-object: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+knife4j:
+  enable: true
+  setting:
+    language: zh-CN
+    enable-swagger-models: true
+    enable-document-manage: true
+
+agora:
+  app:
+    id: ${AGORA_APP_ID}       # 替换为你的声网App ID
+    certificate: ${AGORA_CERTIFICATE}  # 替换为你的声网App证书
+  token:
+    expire-time: 3600           # Token有效期，单位秒（默认3600秒=1小时）
+
+baidu:
+  ai:
+    app-id: ${BAIDU_APP_ID}
+    api-key: ${BAIDU_API_KEY}
+    secret-key: ${BAIDU_SECRET_KEY}
+    group-id: edusys
+
+

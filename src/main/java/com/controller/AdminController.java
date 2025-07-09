@@ -7,6 +7,7 @@ import java.util.*;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.service.TokenBlacklistService;
 import com.utils.*;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,14 +33,16 @@ public class AdminController {
 	@Autowired
 	private TokenBlacklistService tokenBlacklistService;
 
+
 	@IgnoreAuth
 	@PostMapping("/login") // 建议明确请求方法
 	public R login(
 			@RequestParam String username,
-			@RequestParam String password) {
+			@RequestParam String password,
+			@RequestParam String role) {
 
 		AdminEntity user = adminService.selectOne(new EntityWrapper<AdminEntity>().eq("username", username));
-		if (user == null || !password.equals(user.getPassword())) {
+		if (user == null || !password.equals(user.getPassword())|| !role.equals("admin")) {
 			return R.error("账号或密码不正确");
 		}
 

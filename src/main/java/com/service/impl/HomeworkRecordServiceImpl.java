@@ -66,33 +66,15 @@ public class HomeworkRecordServiceImpl extends ServiceImpl<HomeworkRecordDao, Ho
 
     @Override
     public int calculateTotalScore(String sUsername, Long homeworkId) {
-        // 1. 检查所有题目是否都已批改
-        int totalQuestions = selectCount(new EntityWrapper<HomeworkRecordEntity>()
-                .eq("s_username", sUsername)
-                .eq("homework_id", homeworkId));
-
-        int markedQuestions = selectCount(new EntityWrapper<HomeworkRecordEntity>()
-                .eq("s_username", sUsername)
-                .eq("homework_id", homeworkId)
-                .eq("ismark", 1));
-
-        if (totalQuestions == 0 || totalQuestions != markedQuestions) {
-            throw new RuntimeException("作业尚未全部批改完成");
-        }
-
-        // 2. 计算总分
         Map<String, Object> params = new HashMap<>();
         params.put("s_username", sUsername);
         params.put("homework_id", homeworkId);
-
         int totalScore = baseMapper.selectTotalScore(params);
-
-        // 3. 获取作业信息
-        CourseHomeworkEntity homework = courseHomeworkService.selectById(homeworkId);
-        if (homework == null) {
-            throw new RuntimeException("找不到对应的作业信息");
-        }
-
         return totalScore;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectTeacherHomework(String teacherUsername) {
+        return baseMapper.selectTeacherHomework(teacherUsername);
     }
 }

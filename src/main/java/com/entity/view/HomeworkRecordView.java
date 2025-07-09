@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 
-@TableName("course_homework_record")
+@TableName("record")
 public class HomeworkRecordView extends HomeworkRecordEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

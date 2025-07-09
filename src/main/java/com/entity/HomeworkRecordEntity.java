@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
@@ -8,7 +9,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
-@TableName("course_homework_record")
+@TableName("record")
 public class HomeworkRecordEntity<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -34,19 +35,22 @@ public class HomeworkRecordEntity<T> implements Serializable {
      * 学生用户名
      */
 
+    @TableField("s_username")
     private String sUsername;
 
     /**
      * 老师用户名
      */
 
+    @TableField("t_username")
     private String tUsername;
 
     /**
      * 作业id（外键）
      */
 
-    private Long homeworkId;
+    @TableField("paperid")
+    private Long paperid;
 
     /**
      * 题目id（外键）
@@ -96,12 +100,12 @@ public class HomeworkRecordEntity<T> implements Serializable {
         this.tUsername = tUsername;
     }
 
-    public Long getHomeworkId() {
-        return homeworkId;
+    public Long getPaperid() {
+        return paperid;
     }
 
-    public void setHomeworkId(Long homeworkId) {
-        this.homeworkId = homeworkId;
+    public void setPaperid(Long homeworkId) {
+        this.paperid = homeworkId;
     }
 
     public Long getQuestionId() {
