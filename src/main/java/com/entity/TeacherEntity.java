@@ -75,6 +75,16 @@ public class TeacherEntity<T> implements Serializable {
 					
 	private String tel;
 
+	private String signature;
+
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
 	/**
 	 * 课程名称
 	 */
@@ -89,6 +99,8 @@ public class TeacherEntity<T> implements Serializable {
 	private String role;
 
 	private String email;
+
+	private int certificated;
 
 	public String getEmail() {
 		return email;
@@ -212,5 +224,13 @@ public class TeacherEntity<T> implements Serializable {
 	 */
 	public String getRole() {
 		return role;
+	}
+
+	public int getCertificated() {
+		return certificated;
+	}
+
+	public void setCertificated(int certificated) {
+		this.certificated = certificated;
 	}
 }

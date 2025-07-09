@@ -1,12 +1,9 @@
 package com.controller;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-import com.baomidou.mybatisplus.plugins.Page;
 import com.entity.TeacherEntity;
 import com.service.TeacherService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +17,6 @@ import com.service.CourseMaterialService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
-import com.service.StoreupService;
-import com.entity.StoreUpEntity;
 import com.utils.JwtUtils;
 
 /**
@@ -36,9 +31,6 @@ import com.utils.JwtUtils;
 public class CourseMaterialController {
     @Autowired
     private CourseMaterialService courseMaterialService;
-
-    @Autowired
-    private StoreupService storeupService;
 
     @Autowired
     private TeacherService teacherService;
@@ -171,80 +163,5 @@ public class CourseMaterialController {
     public R delete(@RequestBody Long[] ids){
         courseMaterialService.deleteBatchIds(Arrays.asList(ids));
         return R.ok("删除成功");
-    }
-
-
-	/**
-     * 前端智能排序
-     */
-	@IgnoreAuth
-    @RequestMapping("/autoSort")
-    public R autoSort(@RequestParam Map<String, Object> params,
-                      @ModelAttribute CourseMaterialEntity courseMaterial,
-                      @RequestParam(required = false) String prefix){
-        EntityWrapper<CourseMaterialEntity> ew = new EntityWrapper<CourseMaterialEntity>();
-        Map<String, Object> newMap = new HashMap<String, Object>();
-        Map<String, Object> param = new HashMap<String, Object>();
-		Iterator<Map.Entry<String, Object>> it = param.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry<String, Object> entry = it.next();
-			String key = entry.getKey();
-			String newKey = entry.getKey();
-			if (prefix.endsWith(".")) {
-				newMap.put(prefix + newKey, entry.getValue());
-			} else if (StringUtils.isEmpty(prefix)) {
-				newMap.put(newKey, entry.getValue());
-			} else {
-				newMap.put(prefix + "." + newKey, entry.getValue());
-			}
-		}
-		params.put("sort", "clicknum");
-        params.put("order", "desc");
-		PageUtils page = courseMaterialService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, courseMaterial), params), params));
-        return R.ok().put("data", page);
-    }
-
-
-    /**
-     * 协同算法（按收藏推荐）
-     */
-    @RequestMapping("/autoSort2")
-    public R autoSort2(@RequestParam Map<String, Object> params, @ModelAttribute CourseMaterialEntity courseMaterial,String token){
-        String userId = String.valueOf(JwtUtils.getUserIdFromToken(token));
-
-        // 1. 从params获取分页参数（带默认值）
-        int pageNum = Integer.parseInt(params.getOrDefault("page", "1").toString());
-        int pageSize = Integer.parseInt(params.getOrDefault("limit", "10").toString());
-
-        // 2. 获取用户收藏的课程类别
-        List<StoreUpEntity> storeups = storeupService.selectList(
-                new EntityWrapper<StoreUpEntity>()
-                        .eq("type", 1)
-                        .eq("userid", userId)
-                        .eq("tablename", "course_material")
-        );
-
-        Set<String> userFavoriteCategories = storeups.stream()
-                .map(StoreUpEntity::getInteltype)
-                .collect(Collectors.toSet());
-
-        // 3. 构建查询条件
-        EntityWrapper<CourseMaterialEntity> ew = new EntityWrapper<>();
-
-        // 4. 添加类别过滤（如果有收藏类别）
-        if (!userFavoriteCategories.isEmpty()) {
-            ew.in("course", userFavoriteCategories);
-        }
-
-        // 5. 按收藏量降序排序
-        ew.orderBy("storeupnum", false);
-
-        // 6. 正确使用分页参数
-        Page<CourseMaterialEntity> page = new Page<>(pageNum, pageSize);
-
-        // 7. 执行分页查询
-        Page<CourseMaterialEntity> result = courseMaterialService.selectPage(page, ew);
-
-        return R.ok().put("data", new PageUtils(result));
     }
 }

@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import com.entity.CourseHomeworkReviewEntity;
 import com.entity.HomeworkQuestionEntity;
 import com.entity.view.CourseHomeworkQuestionView;
-import com.entity.view.CourseHomeworkReviewView;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

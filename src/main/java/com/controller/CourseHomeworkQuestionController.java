@@ -3,12 +3,9 @@ package com.controller;
 
 import com.annotation.IgnoreAuth;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.entity.CourseHomeworkReviewEntity;
-import com.entity.ExamQuestionEntity;
 import com.entity.HomeworkQuestionEntity;
 import com.entity.TeacherEntity;
 import com.entity.view.CourseHomeworkQuestionView;
-import com.entity.view.ExamQuestionView;
 import com.service.CourseHomeworkQuestionService;
 import com.service.TeacherService;
 import com.utils.JwtUtils;
@@ -16,11 +13,9 @@ import com.utils.MPUtil;
 import com.utils.PageUtils;
 import com.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;

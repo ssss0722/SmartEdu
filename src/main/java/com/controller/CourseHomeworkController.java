@@ -29,9 +29,6 @@ public class CourseHomeworkController {
     private CourseHomeworkService courseHomeworkService;
 
     @Autowired
-    private StoreupService storeupService;
-
-    @Autowired
     private TeacherService teacherService;
 
     @Autowired

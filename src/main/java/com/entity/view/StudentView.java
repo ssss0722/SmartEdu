@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @email 
  * @date 2024-03-05 11:41:23
  */
-@TableName("xuesheng")
+@TableName("user_student")
 public class StudentView extends StudentEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

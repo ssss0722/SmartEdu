@@ -30,7 +30,7 @@ public class AdminEntity implements Serializable {
     /**
      * 头像
      */
-    private String image;
+    private String avatar;
 	
 	/**
 	 * 用户类型
@@ -79,12 +79,11 @@ public class AdminEntity implements Serializable {
 		this.id = id;
 	}
 
-    public String getImage() {
-        return image;
-    }
+	public String getAvatar() {
+		return avatar;
+	}
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
 }

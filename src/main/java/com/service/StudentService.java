@@ -6,7 +6,7 @@ import com.utils.PageUtils;
 import com.entity.StudentEntity;
 import java.util.List;
 import java.util.Map;
-import com.entity.vo.XueshengVO;
+import com.entity.vo.StudentVO;
 import org.apache.ibatis.annotations.Param;
 import com.entity.view.StudentView;
 
@@ -22,9 +22,9 @@ public interface StudentService extends IService<StudentEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
-   	List<XueshengVO> selectListVO(Wrapper<StudentEntity> wrapper);
+   	List<StudentVO> selectListVO(Wrapper<StudentEntity> wrapper);
    	
-   	XueshengVO selectVO(@Param("ew") Wrapper<StudentEntity> wrapper);
+   	StudentVO selectVO(@Param("ew") Wrapper<StudentEntity> wrapper);
    	
    	List<StudentView> selectListView(Wrapper<StudentEntity> wrapper);
    	

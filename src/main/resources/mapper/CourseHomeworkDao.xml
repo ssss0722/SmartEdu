@@ -10,7 +10,6 @@
         <result property="picture" column="picture"/>
         <result property="attachment" column="attachment"/>
         <result property="tUsername" column="t_username"/>
-        <result property="tName" column="t_name"/>
         <result property="publishAt" column="publish_at"/>
         <result property="contxt" column="contxt"/>
         <result property="discussnum" column="discussnum"/>

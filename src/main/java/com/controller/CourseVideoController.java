@@ -1,17 +1,11 @@
 package com.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Date;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 
 import com.service.TeacherService;
 import com.utils.JwtUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +23,6 @@ import com.service.CourseVideoService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
-import com.service.StoreupService;
-import com.entity.StoreUpEntity;
 
 /**
  * 教学视频
@@ -44,9 +36,6 @@ import com.entity.StoreUpEntity;
 public class CourseVideoController {
     @Autowired
     private CourseVideoService courseVideoService;
-
-    @Autowired
-    private StoreupService storeupService;
 
     @Autowired
     private TeacherService teacherService;
@@ -183,83 +172,6 @@ public class CourseVideoController {
         courseVideoService.deleteBatchIds(Arrays.asList(ids));
         return R.ok("删除成功");
     }
-    
-	
-	/**
-     * 前端智能排序
-     */
-	@IgnoreAuth
-    @RequestMapping("/autoSort")
-    public R autoSort(@RequestParam Map<String, Object> params, CourseVideoEntity jiaoxueshipin, HttpServletRequest request, String pre){
-        EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<CourseVideoEntity>();
-        Map<String, Object> newMap = new HashMap<String, Object>();
-        Map<String, Object> param = new HashMap<String, Object>();
-		Iterator<Map.Entry<String, Object>> it = param.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry<String, Object> entry = it.next();
-			String key = entry.getKey();
-			String newKey = entry.getKey();
-			if (pre.endsWith(".")) {
-				newMap.put(pre + newKey, entry.getValue());
-			} else if (StringUtils.isEmpty(pre)) {
-				newMap.put(newKey, entry.getValue());
-			} else {
-				newMap.put(pre + "." + newKey, entry.getValue());
-			}
-		}
-		params.put("sort", "clicknum");
-        params.put("order", "desc");
-		PageUtils page = courseVideoService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, jiaoxueshipin), params), params));
-        return R.ok().put("data", page);
-    }
-
-
-    /**
-     * 协同算法（按收藏推荐）
-     */
-    @RequestMapping("/autoSort2")
-    public R autoSort2(@RequestParam Map<String, Object> params, CourseVideoEntity jiaoxueshipin, HttpServletRequest request){
-        String userId = request.getSession().getAttribute("userId").toString();
-        String inteltypeColumn = "kechengleibie";
-        List<StoreUpEntity> storeups = storeupService.selectList(new EntityWrapper<StoreUpEntity>().eq("type", 1).eq("userid", userId).eq("tablename", "jiaoxueshipin").orderBy("addtime", false));
-        List<String> inteltypes = new ArrayList<String>();
-        Integer limit = params.get("limit")==null?10:Integer.parseInt(params.get("limit").toString());
-        List<CourseVideoEntity> jiaoxueshipinList = new ArrayList<CourseVideoEntity>();
-        //去重
-        if(storeups!=null && storeups.size()>0) {
-            for(StoreUpEntity s : storeups) {
-                jiaoxueshipinList.addAll(courseVideoService.selectList(new EntityWrapper<CourseVideoEntity>().eq(inteltypeColumn, s.getInteltype())));
-            }
-        }
-        EntityWrapper<CourseVideoEntity> ew = new EntityWrapper<CourseVideoEntity>();
-        params.put("sort", "id");
-        params.put("order", "desc");
-        PageUtils page = courseVideoService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, jiaoxueshipin), params), params));
-        List<CourseVideoEntity> pageList = (List<CourseVideoEntity>)page.getList();
-        if(jiaoxueshipinList.size()<limit) {
-            int toAddNum = (limit-jiaoxueshipinList.size())<=pageList.size()?(limit-jiaoxueshipinList.size()):pageList.size();
-            for(CourseVideoEntity o1 : pageList) {
-                boolean addFlag = true;
-                for(CourseVideoEntity o2 : jiaoxueshipinList) {
-                    if(o1.getId().intValue()==o2.getId().intValue()) {
-                        addFlag = false;
-                        break;
-                    }
-                }
-                if(addFlag) {
-                    jiaoxueshipinList.add(o1);
-                    if(--toAddNum==0) break;
-                }
-            }
-        } else if(jiaoxueshipinList.size()>limit) {
-            jiaoxueshipinList = jiaoxueshipinList.subList(0, limit);
-        }
-        page.setList(jiaoxueshipinList);
-        return R.ok().put("data", page);
-    }
-
-
-
 
 
 

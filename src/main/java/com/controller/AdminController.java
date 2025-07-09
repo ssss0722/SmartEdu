@@ -7,14 +7,12 @@ import java.util.*;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.service.TokenBlacklistService;
 import com.utils.*;
-import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.annotation.IgnoreAuth;
 import com.entity.AdminEntity;
-import com.service.TokenService;
 import com.service.AdminService;
 
 /**
@@ -26,9 +24,6 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
-	
-	@Autowired
-	private TokenService tokenService;
 
 	@Autowired
 	private TokenBlacklistService tokenBlacklistService;
@@ -47,7 +42,7 @@ public class AdminController {
 		}
 
 		String token = JwtUtils.generateToken(user.getId(), username, "users", user.getRole());
-		return R.ok().put("token", token);
+		return R.ok().put("token", token).put("data",user);
 	}
 	
 	/**
