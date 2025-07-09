@@ -61,5 +61,9 @@ public class ExamServiceImpl extends ServiceImpl<ExamDao, ExamEntity> implements
     public List<ExamExportDTO> getExportData(String examName) {
         return examDao.exportExamResult(examName);
     }
+    @Override
+    public List<Map<String, Object>> getExamsByTeacher(String teacherUsername) {
+        return examDao.getExamsByTeacher(teacherUsername);
+    }
 
 }

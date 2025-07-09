@@ -11,6 +11,7 @@ import com.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -334,5 +335,28 @@ public class ExamController {
         if (date == null) return "";
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
     }
+    @GetMapping("/teacher")
+    public List<Map<String, Object>> getExamsByTeacher(HttpServletRequest request) {
+        String fullToken = request.getHeader("Authorization");
+
+        if (!JwtUtils.isValidToken(fullToken)) {
+            System.out.println("无效 token");
+            return Collections.emptyList();
+        }
+
+        // ✅ 手动处理 token 去掉 Bearer 前缀再传入
+        String token = fullToken.startsWith("Bearer ") ? fullToken.substring(7) : fullToken;
+        String teacherUsername = JwtUtils.getUserName(token);
+        String role = JwtUtils.getRoleFromToken(token);
+
+        System.out.println("教师账号：" + teacherUsername);
+        System.out.println("角色：" + role);
+
+        if (teacherUsername == null || !"teacher".equals(role)) {
+            return Collections.emptyList();
+        }
+
+        return examService.getExamsByTeacher(teacherUsername);
     }
+}
 

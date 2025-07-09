@@ -9,8 +9,10 @@ import com.entity.vo.ExamVO;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface ExamDao extends BaseMapper<ExamEntity> {
@@ -26,5 +28,8 @@ public interface ExamDao extends BaseMapper<ExamEntity> {
     ExamView selectView(@Param("ew") Wrapper<ExamEntity> wrapper);
 
     List<ExamExportDTO> exportExamResult(@Param("examName") String examName);
+
+    List<Map<String, Object>> getExamsByTeacher(@Param("teacherUsername") String teacherUsername);
+
 
 }

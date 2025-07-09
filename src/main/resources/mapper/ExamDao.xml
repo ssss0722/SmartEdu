@@ -54,4 +54,13 @@
         GROUP BY ehs.s_username, eh.id
     </select>
 
+    <select id="getExamsByTeacher" resultType="map" parameterType="string">
+        SELECT
+            eh.id AS examId,
+            eh.name AS examName
+        FROM exam_homework eh
+                 JOIN paper p ON eh.paper_id = p.id
+        WHERE p.t_username = #{teacherUsername}
+    </select>
+
 </mapper>

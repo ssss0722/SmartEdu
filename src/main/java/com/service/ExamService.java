@@ -39,4 +39,6 @@ public interface ExamService extends IService<ExamEntity> {
     ExamView selectView(@Param("ew") Wrapper<ExamEntity> wrapper);
 
     List<ExamExportDTO> getExportData(String examName);
+
+    List<Map<String, Object>> getExamsByTeacher(String teacherUsername);
 }
