@@ -335,7 +335,7 @@ public class ExamController {
         if (date == null) return "";
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
     }
-    @GetMapping("/teacher")
+    @GetMapping("/examAnalysis")
     public List<Map<String, Object>> getExamsByTeacher(HttpServletRequest request) {
         String fullToken = request.getHeader("Authorization");
 
