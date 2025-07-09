@@ -19,6 +19,23 @@
         GROUP BY eh.id, r.paperid, r.s_username, eh.name, cc.course, us.s_name
     </select>
 
+    <select id="getExamDetailByHomework" resultType="com.entity.vo.ExamDetailVO">
+        SELECT
+            qb.id AS questionId,
+            qb.title AS questionStem,
+            qb.answer AS correctAnswer,
+            qb.score AS questionScore,
+            r.myanswer AS studentAnswer,
+            r.myscore AS studentScore
+        FROM record r
+                 JOIN exam_homework eh ON r.paperid = eh.paper_id
+                 JOIN question_bank qb ON r.question_id = qb.id
+        WHERE eh.id = #{examHomeworkId}
+          AND r.s_username = #{studentUsername}
+        ORDER BY qb.sequence ASC;
+
+    </select>
+
 
     <!-- 查询考试记录视图 -->
 <!--    <select id="selectExamRecordDetail" resultType="com.entity.vo.ExamRecordVO">-->

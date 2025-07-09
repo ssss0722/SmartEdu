@@ -10,6 +10,7 @@ import com.entity.ExamQuestionBankEntity;
 import com.entity.ExamRecordEntity;
 import com.entity.StudentEntity;
 import com.entity.vo.ExamDetailQuestionVO;
+import com.entity.vo.ExamDetailVO;
 import com.entity.vo.ExamRecordVO;
 import com.entity.vo.ExamStudentResultVO;
 import com.service.ExamRecordService;
@@ -149,6 +150,11 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordDao, ExamRecord
 	@Override
 	public List<ExamStudentResultVO> getStudentExamResults(String teacherUsername) {
 		return examRecordMapper.selectExamStudentResultList(teacherUsername);
+	}
+
+	@Override
+	public List<ExamDetailVO> getExamDetailByHomework(Long examHomeworkId, String studentUsername) {
+		return examRecordMapper.getExamDetailByHomework(examHomeworkId, studentUsername);
 	}
 
 

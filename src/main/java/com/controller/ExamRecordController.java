@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.annotation.IgnoreAuth;
+import com.entity.vo.ExamDetailVO;
 import com.entity.vo.ExamRecordVO;
 import com.entity.vo.ExamStudentResultVO;
 import com.service.ExamRecordService;
@@ -43,6 +44,14 @@ public class ExamRecordController {
         List<ExamStudentResultVO> resultList = examRecordService.getStudentExamResults(teacherUsername);
         System.out.println("teacherUsername = " + teacherUsername);
         return R.ok().put("data", resultList);
+    }
+
+    @GetMapping("/examDetail")
+    public R getExamDetail(@RequestParam Long examHomeworkId,
+                           @RequestParam String studentUsername) {
+
+        List<ExamDetailVO> details = examRecordService.getExamDetailByHomework(examHomeworkId, studentUsername);
+        return R.ok().put("data", details);
     }
 
 }

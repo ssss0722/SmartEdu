@@ -3,6 +3,7 @@ package com.service;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.baomidou.mybatisplus.service.IService;
 import com.entity.ExamRecordEntity;
+import com.entity.vo.ExamDetailVO;
 import com.entity.vo.ExamRecordVO;
 import com.entity.vo.ExamStudentResultVO;
 
@@ -27,7 +28,6 @@ public interface ExamRecordService extends IService<ExamRecordEntity> {
 
 	Map<String, Object> getExamDetail(Long paperId, String sUsername);
 	List<ExamStudentResultVO> getStudentExamResults(String teacherUsername);
-
-
+	List<ExamDetailVO> getExamDetailByHomework(Long examHomeworkId, String studentUsername);
 
 }
