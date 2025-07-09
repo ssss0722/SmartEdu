@@ -5,12 +5,14 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.dao.ExamDao;
+import com.dto.ExamExportDTO;
 import com.entity.ExamEntity;
 import com.entity.view.ExamView;
 import com.entity.vo.ExamVO;
 import com.service.ExamService;
 import com.utils.PageUtils;
 import com.utils.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,6 +53,13 @@ public class ExamServiceImpl extends ServiceImpl<ExamDao, ExamEntity> implements
     @Override
     public ExamView selectView(Wrapper<ExamEntity> wrapper) {
         return baseMapper.selectView(wrapper);
+    }
+    @Autowired
+    private ExamDao examDao;
+
+    @Override
+    public List<ExamExportDTO> getExportData(String examName) {
+        return examDao.exportExamResult(examName);
     }
 
 }

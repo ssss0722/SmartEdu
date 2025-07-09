@@ -38,4 +38,20 @@
         <where> 1=1 ${ew.sqlSegment} </where>
     </select>
 
+    <!-- 新增导出成绩的查询 -->
+    <select id="exportExamResult" resultType="com.dto.ExamExportDTO" parameterType="string">
+        SELECT
+            us.s_name AS studentName,
+            eh.name AS examName,
+            DATE_FORMAT(eh.start_time, '%Y-%m-%d %H:%i:%s') AS startTime,
+            DATE_FORMAT(eh.end_time, '%Y-%m-%d %H:%i:%s') AS endTime,
+            IFNULL(SUM(r.myscore),0) AS totalScore
+        FROM exam_homework_student ehs
+                 LEFT JOIN user_student us ON ehs.s_username = us.s_username
+                 LEFT JOIN exam_homework eh ON ehs.exam_id = eh.id
+                 LEFT JOIN record r ON r.s_username = ehs.s_username AND r.paperid = eh.paper_id
+        WHERE eh.name = #{examName}
+        GROUP BY ehs.s_username, eh.id
+    </select>
+
 </mapper>

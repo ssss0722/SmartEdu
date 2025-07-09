@@ -2,6 +2,7 @@ package com.service;
 
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
+import com.dto.ExamExportDTO;
 import com.entity.ExamEntity;
 import com.entity.view.ExamView;
 import com.entity.vo.ExamVO;
@@ -36,4 +37,6 @@ public interface ExamService extends IService<ExamEntity> {
      * 返回单个视图对象
      */
     ExamView selectView(@Param("ew") Wrapper<ExamEntity> wrapper);
+
+    List<ExamExportDTO> getExportData(String examName);
 }
