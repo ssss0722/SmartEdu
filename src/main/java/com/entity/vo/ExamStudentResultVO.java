@@ -6,6 +6,16 @@ public class ExamStudentResultVO {
     private Integer totalScore;
     private String courseName;
     private String submitTime;
+    private Long examHomeworkId;
+    private String studentUsername;
+
+    public String getStudentUsername() {
+        return studentUsername;
+    }
+
+    public void setStudentUsername(String studentUsername) {
+        this.studentUsername = studentUsername;
+    }
 
     public Long getExamHomeworkId() {
         return examHomeworkId;
@@ -15,7 +25,7 @@ public class ExamStudentResultVO {
         this.examHomeworkId = examHomeworkId;
     }
 
-    private Long examHomeworkId;
+
 
     public String getStudentName() {
         return studentName;

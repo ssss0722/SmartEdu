@@ -5,6 +5,7 @@
     <select id="selectExamStudentResultList" resultType="com.entity.vo.ExamStudentResultVO">
         SELECT
             eh.id AS examHomeworkId,
+            r.s_username AS studentUsername,
             us.s_name AS studentName,
             eh.name AS examName,
             cc.course AS courseName,
