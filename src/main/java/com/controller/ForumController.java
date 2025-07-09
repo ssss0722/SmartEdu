@@ -39,13 +39,6 @@ import com.utils.MapUtils;
 import com.utils.CommonUtil;
 import java.io.IOException;
 
-/**
- * 交流论坛
- * 后端接口
- * @author 
- * @email 
- * @date 2024-03-05 11:41:24
- */
 @RestController
 @RequestMapping("/forum")
 public class ForumController {

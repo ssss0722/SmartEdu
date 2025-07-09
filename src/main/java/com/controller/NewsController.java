@@ -30,13 +30,7 @@ import com.utils.MPUtil;
 import com.service.StoreupService;
 import com.entity.StoreUpEntity;
 
-/**
- * 系统公告
- * 后端接口
- * @author 
- * @email 
- * @date 2024-03-05 11:41:24
- */
+
 @RestController
 @RequestMapping("/news")
 public class NewsController {

@@ -39,7 +39,7 @@ public class ExamController {
     //获取考试列表
     @IgnoreAuth
     @RequestMapping("/list")
-    public R list(@RequestParam(required = false)String name,@RequestParam String token){
+    public R list(@RequestParam(required = false)String name,@RequestParam(required = false) Long courseId,@RequestParam String token){
         String role=JwtUtils.getRoleFromToken(token);
         // 仅允许教师访问
         if (!"teacher".equals(role)) {
@@ -54,15 +54,15 @@ public class ExamController {
         String tUsername = teacherService.selectById(teacherId).getT_username();
         System.out.println("【调试】当前教师用户名: " + tUsername);
 
-        // 构建查询条件
         //从 exam_paper 表查出该教师发布的、status=0 的试卷
-        List<ExamPaperEntity> examPapers = exampaperService.selectList(
-                new EntityWrapper<ExamPaperEntity>()
-                        .eq("t_username", tUsername)
-                        .eq("status", 1) // 1表示考试，0 表示作业
-        );
-        System.out.println("【调试】找到的考试试卷数量: " + (examPapers != null ? examPapers.size() : 0));
-
+        // 查询教师发布的试卷（课程ID条件为可选）
+        EntityWrapper<ExamPaperEntity> paperWrapper = (EntityWrapper<ExamPaperEntity>) new EntityWrapper<ExamPaperEntity>()
+                .eq("t_username", tUsername)
+                .eq("status", 1); // 考试类试卷
+        if (courseId != null) {
+            paperWrapper.eq("course_id", courseId);
+        }
+        List<ExamPaperEntity> examPapers = exampaperService.selectList(paperWrapper);
         if (examPapers == null || examPapers.isEmpty()) {
             return R.ok().put("data", new ArrayList<>()); // 没有考试类试卷
         }

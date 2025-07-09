@@ -47,36 +47,6 @@ public class ExamQuestionBankController {
     private CourseTeacherService courseTeacherService;
     @Autowired
     private CourseCategoryService courseCategoryService;
-
-
-
-
-    
-
-
-
-    /**
-     * 后端列表
-     */
-    @RequestMapping("/list")
-    public R page(@RequestParam Map<String, Object> params, ExamQuestionBankEntity examquestionbank,
-                  @RequestParam String token){
-        String role = JwtUtils.getRoleFromToken(token);
-        if ("user_teacher".equals(role)) {
-            // 教师只能查看自己发布的题库
-            Long teacherId = JwtUtils.getUserIdFromToken(token);
-            TeacherEntity teacher = teacherService.selectById(teacherId);
-            if (teacher == null) {
-                return R.error("无效教师身份");
-            }
-            examquestionbank.setT_username(teacher.getT_username());
-        }
-        EntityWrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
-
-		PageUtils page = examquestionbankService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, examquestionbank), params), params));
-
-        return R.ok().put("data", page);
-    }
     /**
      *课程列表
      */
@@ -109,7 +79,7 @@ public class ExamQuestionBankController {
     }
     
     /**
-     * 前端列表
+     * 教师查看题库列表
      */
     @IgnoreAuth
     @RequestMapping("/managerlist")
@@ -230,7 +200,7 @@ public class ExamQuestionBankController {
     }
 
     /**
-     * 前端详情
+     * 教师查看试卷详情
      */
 	@IgnoreAuth
     @RequestMapping("/detail/{id}")
@@ -238,26 +208,9 @@ public class ExamQuestionBankController {
         ExamQuestionBankEntity examquestionbank = examquestionbankService.selectById(id);
         return R.ok().put("data", examquestionbank);
     }
-    
-
-
 
     /**
-     * 后端保存
-     */
-    @RequestMapping("/save")
-    public R save(@RequestBody ExamQuestionBankEntity examquestionbank, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(examquestionbank);
-        String tableName = request.getSession().getAttribute("tableName").toString();
-        if(tableName.equals("user_teacher")) {
-            examquestionbank.setT_username((String)request.getSession().getAttribute("username"));
-        }
-        examquestionbankService.insert(examquestionbank);
-        return R.ok();
-    }
-    
-    /**
-     * 前端保存
+     * 教师端创建题库
      */
     @RequestMapping("/create")
     public R add(@RequestBody ExamQuestionBankEntity examquestionbank,@RequestHeader("Authorization") String authHeader){

@@ -25,13 +25,7 @@ import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
 
-/**
- * 系统公告分类
- * 后端接口
- * @author 
- * @email 
- * @date 2024-03-05 11:41:24
- */
+
 @RestController
 @RequestMapping("/newstype")
 public class NewsTypeController {

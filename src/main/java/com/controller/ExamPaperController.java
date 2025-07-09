@@ -61,26 +61,9 @@ public class ExamPaperController {
     private CourseCategoryService courseCategoryService;
     @Autowired
     private CourseTeacherService courseTeacherService;
-    
-
-
 
     /**
-     * 后端列表
-     */
-    @RequestMapping("/list")
-    public R page(@RequestParam Map<String, Object> params, ExamPaperEntity exampaper,
-                   String tableName,String token){
-
-        EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
-
-		PageUtils page = exampaperService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, exampaper), params), params));
-
-        return R.ok().put("data", page);
-    }
-    
-    /**
-     * 前端列表
+     * 考试试卷列表
      */
 	@IgnoreAuth
     @RequestMapping("/managerlist")
@@ -130,18 +113,6 @@ public class ExamPaperController {
         return R.ok().put("data", page);
     }
 
-
-
-	/**
-     * 列表
-     */
-    @RequestMapping("/lists")
-    public R list( ExamPaperEntity exampaper){
-       	EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
-      	ew.allEq(MPUtil.allEQMapPre( exampaper, "exampaper")); 
-        return R.ok().put("data", exampaperService.selectListView(ew));
-    }
-
 	 /**
      * 查询
      */
@@ -152,18 +123,9 @@ public class ExamPaperController {
 		ExamPaperView exampaperView =  exampaperService.selectView(ew);
 		return R.ok("查询在线考试表成功").put("data", exampaperView);
     }
-	
-    /**
-     * 后端详情
-     */
-    @RequestMapping("/info/{id}")
-    public R info(@PathVariable("id") Long id){
-        ExamPaperEntity exampaper = exampaperService.selectById(id);
-        return R.ok().put("data", exampaper);
-    }
 
     /**
-     * 前端详情
+     * 教师查看试卷详情
      */
 	@IgnoreAuth
     @RequestMapping("/detail/{id}")
@@ -186,23 +148,6 @@ public class ExamPaperController {
         result.put("questions", questions);
 
         return R.ok().put("data", result);
-    }
-    
-
-
-
-    /**
-     * 后端保存
-     */
-    @RequestMapping("/save")
-    public R save(@RequestBody ExamPaperEntity exampaper, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(exampaper);
-        String tableName = request.getSession().getAttribute("tableName").toString();
-        if(tableName.equals("user_teacher")) {
-            exampaper.setTUsername((String)request.getSession().getAttribute("username"));
-        }
-        exampaperService.insert(exampaper);
-        return R.ok();
     }
      /**
      * 获取用户密保
