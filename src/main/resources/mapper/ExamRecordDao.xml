@@ -4,6 +4,7 @@
 <mapper namespace="com.dao.ExamRecordDao">
     <select id="selectExamStudentResultList" resultType="com.entity.vo.ExamStudentResultVO">
         SELECT
+            eh.id AS examHomeworkId,
             us.s_name AS studentName,
             eh.name AS examName,
             cc.course AS courseName,
@@ -15,8 +16,9 @@
                  LEFT JOIN course_categories cc ON p.course_id = cc.id
                  LEFT JOIN user_student us ON r.s_username = us.s_username
         WHERE p.t_username = #{teacherUsername}
-        GROUP BY r.paperid, r.s_username, eh.name, cc.course, us.s_name
+        GROUP BY eh.id, r.paperid, r.s_username, eh.name, cc.course, us.s_name
     </select>
+
 
     <!-- 查询考试记录视图 -->
 <!--    <select id="selectExamRecordDetail" resultType="com.entity.vo.ExamRecordVO">-->

@@ -7,6 +7,16 @@ public class ExamStudentResultVO {
     private String courseName;
     private String submitTime;
 
+    public Long getExamHomeworkId() {
+        return examHomeworkId;
+    }
+
+    public void setExamHomeworkId(Long examHomeworkId) {
+        this.examHomeworkId = examHomeworkId;
+    }
+
+    private Long examHomeworkId;
+
     public String getStudentName() {
         return studentName;
     }

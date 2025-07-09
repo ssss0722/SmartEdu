@@ -25,37 +25,7 @@ public class ExamRecordController {
      * 查询考试记录列表
      */
 
-    @GetMapping("/list")
-    public R list() {
-        List<ExamRecordVO> records = examRecordService.queryExamRecordList();
-        return R.ok().put("data", records);
-    }
 
-
-    @PostMapping("/mark")
-    public R mark(@RequestBody Map<String, Object> params) {
-        Long id = Long.valueOf(params.get("id").toString());
-        Long score = Long.valueOf(params.get("score").toString());
-
-        examRecordService.markSingleQuestion(id, score);
-
-        return R.ok().put("message", "批改成功");
-    }
-
-    @PostMapping("/autoMark/{id}")
-    public R autoMark(@PathVariable("id") Long id) {
-        examRecordService.autoMarkRecord(id);
-        return R.ok("自动判分成功");
-    }
-
-    @IgnoreAuth
-    @GetMapping("/detail")
-    public R detail(@RequestParam("paperId") Long paperId,
-                    @RequestParam("sUsername") String sUsername) {
-        Map<String, Object> detail = examRecordService.getExamDetail(paperId, sUsername);
-        return R.ok().put("data", detail);
-    }
-    @IgnoreAuth
     @GetMapping("/resultList")
     public R getResultList(HttpServletRequest request) {
 
@@ -76,3 +46,33 @@ public class ExamRecordController {
     }
 
 }
+//@GetMapping("/list")
+//public R list() {
+//    List<ExamRecordVO> records = examRecordService.queryExamRecordList();
+//    return R.ok().put("data", records);
+//}
+//
+//
+//@PostMapping("/mark")
+//public R mark(@RequestBody Map<String, Object> params) {
+//    Long id = Long.valueOf(params.get("id").toString());
+//    Long score = Long.valueOf(params.get("score").toString());
+//
+//    examRecordService.markSingleQuestion(id, score);
+//
+//    return R.ok().put("message", "批改成功");
+//}
+//
+//@PostMapping("/autoMark/{id}")
+//public R autoMark(@PathVariable("id") Long id) {
+//    examRecordService.autoMarkRecord(id);
+//    return R.ok("自动判分成功");
+//}
+//
+//@IgnoreAuth
+//@GetMapping("/detail")
+//public R detail(@RequestParam("paperId") Long paperId,
+//                @RequestParam("sUsername") String sUsername) {
+//    Map<String, Object> detail = examRecordService.getExamDetail(paperId, sUsername);
+//    return R.ok().put("data", detail);
+//}
