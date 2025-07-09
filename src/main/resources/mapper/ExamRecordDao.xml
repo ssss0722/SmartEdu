@@ -22,17 +22,18 @@
 
     <select id="getExamDetailByHomework" resultType="com.entity.vo.ExamDetailVO">
         SELECT
-            qb.id AS questionId,
-            qb.title AS questionStem,
-            qb.answer AS correctAnswer,
-            qb.score AS questionScore,
-            r.myanswer AS studentAnswer,
-            r.myscore AS studentScore
+        qb.id AS questionId,
+        qb.title AS questionStem,
+        qb.answer AS correctAnswer,
+        qb.options AS options,
+        qb.score AS questionScore,
+        r.myanswer AS studentAnswer,
+        r.myscore AS studentScore
         FROM record r
-                 JOIN exam_homework eh ON r.paperid = eh.paper_id
-                 JOIN question_bank qb ON r.question_id = qb.id
+        JOIN exam_homework eh ON r.paperid = eh.paper_id
+        JOIN question_bank qb ON r.question_id = qb.id
         WHERE eh.id = #{examHomeworkId}
-          AND r.s_username = #{studentUsername}
+        AND r.s_username = #{studentUsername}
         ORDER BY qb.sequence ASC;
 
     </select>

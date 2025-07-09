@@ -8,6 +8,17 @@ public class ExamDetailVO {
     private Integer questionScore;
     private String studentAnswer;
     private Integer studentScore;
+    private String options; // 题目选项（JSON字符串）
+
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
+        this.options = options;
+    }
+
+
 
     // getter & setter
     public Long getQuestionId() {
