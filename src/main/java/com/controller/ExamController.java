@@ -349,8 +349,8 @@ public class ExamController {
         String teacherUsername = JwtUtils.getUserName(token);
         String role = JwtUtils.getRoleFromToken(token);
 
-        System.out.println("教师账号：" + teacherUsername);
-        System.out.println("角色：" + role);
+//        System.out.println("教师账号：" + teacherUsername);
+//        System.out.println("角色：" + role);
 
         if (teacherUsername == null || !"teacher".equals(role)) {
             return Collections.emptyList();

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.ScoreAnalysisDao">
+
+    <select id="queryScoresByExamName" parameterType="string" resultType="com.entity.StudentScore">
+        SELECT
+            us.s_name,
+            es.exam_id,
+            SUM(r.myscore) AS totalScore
+        FROM exam_homework_student es
+                 LEFT JOIN user_student us ON es.s_username = us.s_username
+                 LEFT JOIN exam_homework eh ON es.exam_id = eh.id
+                 LEFT JOIN record r ON r.s_username = es.s_username AND r.paperid = eh.paper_id
+        WHERE eh.name = #{examName}
+        GROUP BY es.s_username, es.exam_id
+    </select>
+
+</mapper>

@@ -70,6 +70,8 @@ aliyun:
   accessKeyId: ${ALIYUN_ACCESS_KEY_ID:}
   accessKeySecret: ${ALIYUN_ACCESS_KEY_SECRET:}
 
+qianfan:
+  apiKey: bce-v3/ALTAK-3xSgbRmTyo8YmrDVkRTRs/92cb4db1ca65724e30717474ab227d8d543e6333
 # 讯飞API配置
 xfyun:
   appid: ${XFYUN_APPID:}
