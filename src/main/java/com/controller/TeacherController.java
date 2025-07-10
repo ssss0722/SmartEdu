@@ -1,12 +1,12 @@
 package com.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.entity.AdminEntity;
-import com.entity.CourseCategoriesEntity;
-import com.entity.CourseTeacherEntity;
+import com.entity.*;
 import com.service.*;
 import com.utils.*;
 import org.apache.commons.lang3.StringUtils;
@@ -19,27 +19,29 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.springframework.mail.SimpleMailMessage;
 import com.annotation.IgnoreAuth;
 
-import com.entity.TeacherEntity;
 import com.entity.view.TeacherView;
 
 /**
  * 教师
  * 后端接口
  * @author 
- * @email 
- * @date 2024-03-05 11:41:23
+ * @email
  */
 @RestController
 @RequestMapping("/teacher")
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private StudentService studentService;
 
     @Autowired
     private TokenBlacklistService tokenBlacklistService;
 
     @Autowired
     private CourseTeacherService courseTeacherService;
+    @Autowired
+    private CourseEvaluationService courseEvaluationService;
 
     @Autowired
     private CourseCategoryService courseCategoryService;
@@ -338,7 +340,66 @@ public class TeacherController {
                 .put("data", pageResult.getRecords())
                 .put("count", pageResult.getTotal());
     }
-	
+    /**
+     * 教师查看评价
+     */
+    @GetMapping("/evaluations")
+    public R getTeacherCourseEvaluations(@RequestParam String token){
+        //解析token获取教师身份
+        Long teacherId = JwtUtils.getUserIdFromToken(token);
+        if (teacherId == null) {
+            return R.error("无效 token");
+        }
+
+        TeacherEntity teacher = teacherService.selectById(teacherId);
+        if (teacher == null) {
+            return R.error("教师不存在");
+        }
+
+        String tUsername = teacher.getT_username();
+        //查询该教师教授的课程列表
+           List<CourseTeacherEntity> teacherCourses = courseTeacherService.selectList(
+                  new EntityWrapper<CourseTeacherEntity>().eq("t_username", tUsername)
+          );
+        List<Long> courseIds = teacherCourses.stream()
+                .map(CourseTeacherEntity::getCourseId)
+                .collect(Collectors.toList());
+        if (courseIds.isEmpty()) {
+            return R.ok().put("data", Collections.emptyList());
+        }
+        //查询评价信息
+            List<CourseEvaluationEntity> evaluations = courseEvaluationService.selectList(
+                    new EntityWrapper<CourseEvaluationEntity>().in("course_id", courseIds)
+            );
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (CourseEvaluationEntity eval : evaluations) {
+            Map<String, Object> map = new HashMap<>();
+            // 查课程名
+            CourseCategoriesEntity course = courseCategoryService.selectById(eval.getCourseId());
+            map.put("courseName", course != null ? course.getCourse() : "未知课程");
+
+            // 查学生名
+            StudentEntity student = studentService.selectOne(
+                    new EntityWrapper<StudentEntity>().eq("s_username", eval.getsUsername())
+            );
+            map.put("studentName", student != null ? student.getsName() : eval.getsUsername());
+
+            map.put("rating", eval.getRating());
+            map.put("comment", eval.getComment());
+            map.put("addtime", formatDatetime(eval.getAddTime()));
+
+            resultList.add(map);
+        }
+
+        return R.ok().put("data", resultList);
+    }
+    /**
+     * 格式化时间
+     */
+    private String formatDatetime(Date date) {
+        if (date == null) return "";
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
+    }
     /**
      * 获取用户信息
      */
