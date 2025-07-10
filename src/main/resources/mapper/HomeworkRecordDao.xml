@@ -83,7 +83,7 @@
         FROM record r
         LEFT JOIN paper p ON r.paperid = p.id
         LEFT JOIN question_bank qb ON r.question_id = qb.id
-        LEFT JOIN question q ON q.question_id = qb.id
+        LEFT JOIN question q ON q.question_id = qb.id AND q.paperid = r.paperid
         LEFT JOIN course_categories cc ON cc.id = qb.course_id
         WHERE p.status = '0'  -- 只取作业数据
         <if test="ew != null">
@@ -105,7 +105,7 @@
         FROM record r
         LEFT JOIN paper p ON r.paperid = p.id
         LEFT JOIN question_bank qb ON r.question_id = qb.id
-        LEFT JOIN question q ON q.question_id = qb.id
+        LEFT JOIN question q ON q.question_id = qb.id AND q.paperid = r.paperid
         LEFT JOIN course_categories cc ON cc.id = qb.course_id
         WHERE p.status = '0'  -- 只取作业数据
         <if test="ew != null">
