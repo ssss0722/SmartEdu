@@ -25,7 +25,6 @@ public class ScreenVideoView extends ScreenVideoEntity implements Serializable {
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-
     }
 
     public String gettName() {

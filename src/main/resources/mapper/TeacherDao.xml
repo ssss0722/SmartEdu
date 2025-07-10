@@ -4,7 +4,7 @@
 <mapper namespace="com.dao.TeacherDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.entity.TeacherEntity" id="jiaoshiMap">
+    <resultMap type="com.entity.TeacherEntity" id="teacherMap">
         <result property="tUsername" column="t_username"/>
         <result property="tName" column="t_name"/>
         <result property="password" column="password"/>

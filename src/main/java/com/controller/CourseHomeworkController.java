@@ -29,9 +29,6 @@ public class CourseHomeworkController {
     private CourseHomeworkService courseHomeworkService;
 
     @Autowired
-    private StoreupService storeupService;
-
-    @Autowired
     private TeacherService teacherService;
 
     @Autowired
@@ -40,34 +37,8 @@ public class CourseHomeworkController {
     @Autowired
     private CourseHomeworkQuestionService courseHomeworkQuestionService;
 
-
-    /**
-     * 后端列表
-     */
-    @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params, CourseHomeworkEntity courseHomework,
-                  String tableName,String token){
-        Long id= JwtUtils.getUserIdFromToken(token);
-		if(tableName.equals("user_teacher")) {
-			courseHomework.settUsername(teacherService.selectById(id).getT_username());
-		}
-        EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
-
-		PageUtils page = courseHomeworkService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, courseHomework), params), params));
-
-        return R.ok().put("data", page);
-    }
-    
-    /**
-     * 前端列表
-     */
-	@IgnoreAuth
-    @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params, CourseHomeworkEntity courseHomework){
-        EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
-		PageUtils page = courseHomeworkService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, courseHomework), params), params));
-        return R.ok().put("data", page);
-    }
+    @Autowired
+    private ExampaperService exampaperService;
 
 
 	/**
@@ -76,7 +47,8 @@ public class CourseHomeworkController {
     @RequestMapping("/lists")
     public R list(CourseHomeworkEntity courseHomework){
        	EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
-      	ew.allEq(MPUtil.allEQMapPre(courseHomework, "ch"));
+      	ew.allEq(MPUtil.allEQMapPre(courseHomework, "eh"));
+        ew.addFilter("paper_id IN (SELECT id FROM paper WHERE status = 0)");
         return R.ok().put("data", courseHomeworkService.selectListView(ew));
     }
 
@@ -86,7 +58,8 @@ public class CourseHomeworkController {
     @RequestMapping("/query")
     public R query(CourseHomeworkEntity courseHomework){
         EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
- 		ew.allEq(MPUtil.allEQMapPre(courseHomework, "ch"));
+ 		ew.allEq(MPUtil.allEQMapPre(courseHomework, "eh"));
+        ew.addFilter("paper_id IN (SELECT id FROM paper WHERE status = 0)");
 		CourseHomeworkView courseHomeworkView =  courseHomeworkService.selectView(ew);
 		return R.ok("查询课程作业成功").put("data", courseHomeworkView);
     }
@@ -115,12 +88,6 @@ public class CourseHomeworkController {
      */
     @RequestMapping("/add")
     public R save(@RequestBody CourseHomeworkEntity courseHomework,String token){
-        Long id=JwtUtils.getUserIdFromToken(token);
-        String role=JwtUtils.getRoleFromToken(token);
-        if(role.equals("teacher")){
-            courseHomework.settUsername(teacherService.selectById(id).getT_username());
-        }
-        courseHomework.setPublishAt(new Date());
         courseHomeworkService.insert(courseHomework);
         return R.ok("保存成功");
     }
@@ -136,7 +103,7 @@ public class CourseHomeworkController {
         TeacherEntity teacher=teacherService.selectById(id);
         CourseHomeworkEntity target=courseHomeworkService.selectById(courseHomework.getId());
         if(role.equals("teacher")){
-            if(target.gettUsername().equals(teacher.getT_username())) {
+            if(true) {
                 courseHomeworkService.updateById(courseHomework);//全部更新
                 return R.ok("修改成功");
             }else{
@@ -164,21 +131,18 @@ public class CourseHomeworkController {
     public R compose(@RequestParam String title,@RequestParam String course,
                      @RequestParam Integer single, @RequestParam Integer multiple,
                      @RequestParam Integer judge, @RequestParam Integer blank,
-                     String token){
+                     String token,String status){
         Long id=JwtUtils.getUserIdFromToken(token);
         String role=JwtUtils.getRoleFromToken(token);
         List<ExamQuestionBankEntity> questionList = new ArrayList<ExamQuestionBankEntity>();
         //创建试卷对象
-        CourseHomeworkEntity homework = new CourseHomeworkEntity();
-        homework.setHomework(title);
-        homework.setAddtime(new Date());
-        homework.setCourse(course);
-        homework.setPublishAt(new Date());
+        ExamPaperEntity homework = new ExamPaperEntity();
+        homework.setTitle(title);
         if(role.equals("teacher")) {
-            homework.settUsername(teacherService.selectById(id).getT_username());
+            homework.setTUsername(teacherService.selectById(id).getT_username());
         }
         // 插入试卷，自动回填ID
-        courseHomeworkService.insert(homework);
+        exampaperService.insert(homework);
         Long homeworkId = homework.getId();  // 获取回填的主键ID
 
         //单选题
@@ -246,7 +210,7 @@ public class CourseHomeworkController {
             for(ExamQuestionBankEntity q : questionList) {
                 HomeworkQuestionEntity question = new HomeworkQuestionEntity();
                 question.setId(System.currentTimeMillis()+(long)Math.floor(Math.random()*1000));
-                question.setHomeworkId(homeworkId);
+                question.setPaperid(homeworkId);
                 question.setQuestionId(q.getId());
                 if(role.equals("teacher")) {
                     question.settUsername(teacherService.selectById(id).getT_username());

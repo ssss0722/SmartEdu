@@ -6,7 +6,7 @@
         SELECT
         chq.id,
         chq.addtime,
-        chq.homework_id,
+        chq.paperid,
         chq.question_id,
         chq.t_username,
         eqb.title AS question_name,
@@ -16,21 +16,26 @@
         eqb.analysis,
         eqb.type,
         eqb.sequence,
-        ch.homework AS homework,
+        ch.name AS homework,
         ut.t_name AS tName,
         cc.course AS course
-        FROM course_homework_question chq
-        LEFT JOIN exam_question_bank eqb ON chq.question_id = eqb.id
-        LEFT JOIN course_homework ch ON chq.homework_id = ch.id
+        FROM question chq
+        LEFT JOIN question_bank eqb ON chq.question_id = eqb.id
+        LEFT JOIN exam_homework ch ON chq.paperid = ch.id
         LEFT JOIN user_teacher ut ON chq.t_username = ut.t_username
-        LEFT JOIN course_categories cc ON ch.course = cc.course
-        <where> 1=1 ${ew.sqlSegment}</where>
+        LEFT JOIN paper p ON ch.paper_id = p.id
+        LEFT JOIN course_categories cc ON p.course_id = cc.id  <!-- 修改这里 -->
+        <where>
+            1=1
+            AND p.status = 0
+            ${ew.sqlSegment}
+        </where>
     </select>
     <select id="selectView" resultType="com.entity.view.CourseHomeworkQuestionView">
         SELECT
         chq.id,
         chq.addtime,
-        chq.homework_id,
+        chq.paperid,
         chq.question_id,
         chq.t_username,
         eqb.title AS question_name,
@@ -40,14 +45,19 @@
         eqb.analysis,
         eqb.type,
         eqb.sequence,
-        ch.homework AS homework,
+        ch.name AS homework,
         ut.t_name AS tName,
         cc.course AS course
-        FROM course_homework_question chq
-        LEFT JOIN exam_question_bank eqb ON chq.question_id = eqb.id
-        LEFT JOIN course_homework ch ON chq.homework_id = ch.id
+        FROM question chq
+        LEFT JOIN question_bank eqb ON chq.question_id = eqb.id
+        LEFT JOIN exam_homework ch ON chq.paperid = ch.id
         LEFT JOIN user_teacher ut ON chq.t_username = ut.t_username
-        LEFT JOIN course_categories cc ON ch.course = cc.course
-        <where> 1=1 ${ew.sqlSegment}</where>
+        LEFT JOIN paper p ON ch.paper_id = p.id
+        LEFT JOIN course_categories cc ON p.course_id = cc.id  <!-- 修改这里 -->
+        <where>
+            1=1
+            AND p.status = 0
+            ${ew.sqlSegment}
+        </where>
     </select>
 </mapper>

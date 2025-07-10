@@ -4,17 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.entity.TeacherEntity;
-import com.entity.view.TeacherView;
 import com.service.TokenBlacklistService;
 import com.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +22,6 @@ import com.entity.StudentEntity;
 import com.entity.view.StudentView;
 
 import com.service.StudentService;
-import com.service.TokenService;
 
 /**
  * 学生
@@ -40,10 +35,6 @@ import com.service.TokenService;
 public class StudentController {
     @Autowired
     private StudentService studentService;
-
-
-	@Autowired
-	private TokenService tokenService;
 
     @Autowired
     private TokenBlacklistService tokenBlacklistService;

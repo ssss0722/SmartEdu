@@ -37,9 +37,6 @@ public class TeacherController {
 
     @Autowired
     private TokenBlacklistService tokenBlacklistService;
-    
-	@Autowired
-	private TokenService tokenService;
 
     @Autowired
     private CourseTeacherService courseTeacherService;
@@ -345,12 +342,11 @@ public class TeacherController {
     /**
      * 获取用户信息
      */
-    @RequestMapping("/info")
-    public R info(String token){
+    @RequestMapping("/info/{id}")
+    public R info(@PathVariable("id") Long id){
         try {
-            Long userId = JwtUtils.getUserIdFromToken(token);
-            TeacherEntity teacher = teacherService.selectById(userId);
-            List<CourseCategoriesEntity> list=courseCategoryService.selectByTeacher(teacherService.selectById(userId).getT_username());
+            TeacherEntity teacher = teacherService.selectById(id);
+            List<CourseCategoriesEntity> list=courseCategoryService.selectByTeacher(teacherService.selectById(id).getT_username());
             List<String> result=new ArrayList<>();
             for(CourseCategoriesEntity course:list){
                 String name=course.getCourse();

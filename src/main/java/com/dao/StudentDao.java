@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import org.apache.ibatis.annotations.Param;
-import com.entity.vo.XueshengVO;
+import com.entity.vo.StudentVO;
 import com.entity.view.StudentView;
 
 
@@ -21,9 +21,9 @@ import com.entity.view.StudentView;
  */
 public interface StudentDao extends BaseMapper<StudentEntity> {
 	
-	List<XueshengVO> selectListVO(@Param("ew") Wrapper<StudentEntity> wrapper);
+	List<StudentVO> selectListVO(@Param("ew") Wrapper<StudentEntity> wrapper);
 	
-	XueshengVO selectVO(@Param("ew") Wrapper<StudentEntity> wrapper);
+	StudentVO selectVO(@Param("ew") Wrapper<StudentEntity> wrapper);
 	
 	List<StudentView> selectListView(@Param("ew") Wrapper<StudentEntity> wrapper);
 

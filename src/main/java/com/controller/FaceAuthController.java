@@ -65,6 +65,9 @@ public class FaceAuthController {
             @RequestParam("file") MultipartFile file) throws IOException { // Base64格式
         String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
         Long userId=JwtUtils.getUserIdFromToken(token);
+        TeacherEntity teacher=teacherService.selectById(userId);
+        teacher.setCertificated(1);
+        teacherService.updateById(teacher);
         JSONObject result = faceService.registerFace(String.valueOf(userId), base64Image, groupId);
         return R.ok(result.toMap());
     }

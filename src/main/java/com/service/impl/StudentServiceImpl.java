@@ -15,10 +15,10 @@ import com.utils.Query;
 import com.dao.StudentDao;
 import com.entity.StudentEntity;
 import com.service.StudentService;
-import com.entity.vo.XueshengVO;
+import com.entity.vo.StudentVO;
 import com.entity.view.StudentView;
 
-@Service("xueshengService")
+@Service("StudentService")
 public class StudentServiceImpl extends ServiceImpl<StudentDao, StudentEntity> implements StudentService {
 	
 	
@@ -41,12 +41,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentDao, StudentEntity> i
 
     
     @Override
-	public List<XueshengVO> selectListVO(Wrapper<StudentEntity> wrapper) {
+	public List<StudentVO> selectListVO(Wrapper<StudentEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public XueshengVO selectVO(Wrapper<StudentEntity> wrapper) {
+	public StudentVO selectVO(Wrapper<StudentEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
