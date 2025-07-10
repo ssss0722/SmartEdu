@@ -3,10 +3,12 @@ package com.entity.view;
 import com.entity.CourseHomeworkEntity;
 
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.entity.StudentEntity;
 import org.apache.commons.beanutils.BeanUtils;
 import java.lang.reflect.InvocationTargetException;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -24,6 +26,7 @@ public class CourseHomeworkView extends CourseHomeworkEntity implements Serializ
 	// 新增字段
 	private Long courseId;
 	private String courseName;
+	private List<StudentEntity> studentList;
 	// getter和setter
 	public Long getCourseId() {
 		return courseId;
@@ -36,6 +39,13 @@ public class CourseHomeworkView extends CourseHomeworkEntity implements Serializ
 	}
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
+	}
+
+	public List<StudentEntity> getStudentList() {
+		return studentList;
+	}
+	public void setStudentList(List<StudentEntity> studentList) {
+		this.studentList = studentList;
 	}
 
 	public CourseHomeworkView(){

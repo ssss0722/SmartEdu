@@ -1,6 +1,8 @@
 package com.service.impl;
 
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.Map;
 import java.util.List;
 
@@ -39,8 +41,19 @@ public class StudentServiceImpl extends ServiceImpl<StudentDao, StudentEntity> i
 	    	return pageUtil;
  	}
 
-    
-    @Override
+	@Override
+	public List<StudentEntity> findStudentsByHomeworkId(Long id) {
+		// 创建查询条件
+		EntityWrapper<StudentEntity> ew = new EntityWrapper<>();
+
+		// 构建SQL查询：通过exam_homework_student表关联
+		ew.addFilter("s_username IN (SELECT s_username FROM exam_homework_student WHERE exam_id = " + id + ")");
+
+		return this.selectList(ew);
+	}
+
+
+	@Override
 	public List<StudentVO> selectListVO(Wrapper<StudentEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}

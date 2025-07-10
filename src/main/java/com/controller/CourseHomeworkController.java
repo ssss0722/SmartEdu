@@ -40,6 +40,9 @@ public class CourseHomeworkController {
     @Autowired
     private ExampaperService exampaperService;
 
+    @Autowired
+    private StudentService studentService;
+
 
 	/**
      * 列表
@@ -51,7 +54,17 @@ public class CourseHomeworkController {
        	EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
       	ew.allEq(MPUtil.allEQMapPre(courseHomework, "eh"));
         ew.addFilter("paper_id IN (SELECT id FROM paper WHERE status = 0 AND t_username = '" + username + "')");
-        return R.ok().put("data", courseHomeworkService.selectListView(ew));
+        // 4. 查询作业列表
+        List<CourseHomeworkView> homeworkList = courseHomeworkService.selectListView(ew);
+
+        // 5. 为每个作业查询学生列表
+        for (CourseHomeworkView homework : homeworkList) {
+            // 查询该作业的学生列表
+            List<StudentEntity> students = studentService.findStudentsByHomeworkId(homework.getId());
+            homework.setStudentList(students);
+        }
+
+        return R.ok().put("data", homeworkList);
     }
 
 	 /**

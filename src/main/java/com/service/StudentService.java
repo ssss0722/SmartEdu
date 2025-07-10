@@ -32,7 +32,7 @@ public interface StudentService extends IService<StudentEntity> {
    	
    	PageUtils queryPage(Map<String, Object> params,Wrapper<StudentEntity> wrapper);
 
-   	
 
+    List<StudentEntity> findStudentsByHomeworkId(Long id);
 }
 
