@@ -119,7 +119,7 @@ public class ExamPaperController {
     @RequestMapping("/query")
     public R query(ExamPaperEntity exampaper){
         EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
- 		ew.allEq(MPUtil.allEQMapPre( exampaper, "exampaper")); 
+ 		ew.allEq(MPUtil.allEQMapPre( exampaper, "paper"));
 		ExamPaperView exampaperView =  exampaperService.selectView(ew);
 		return R.ok("查询在线考试表成功").put("data", exampaperView);
     }

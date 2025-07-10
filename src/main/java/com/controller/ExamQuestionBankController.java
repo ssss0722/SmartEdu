@@ -185,7 +185,7 @@ public class ExamQuestionBankController {
     @RequestMapping("/query")
     public R query(ExamQuestionBankEntity examquestionbank){
         EntityWrapper<ExamQuestionBankEntity> ew = new EntityWrapper<ExamQuestionBankEntity>();
- 		ew.allEq(MPUtil.allEQMapPre( examquestionbank, "examquestionbank")); 
+ 		ew.allEq(MPUtil.allEQMapPre( examquestionbank, "question_bank"));
 		ExamQuestionBankView examquestionbankView =  examquestionbankService.selectView(ew);
 		return R.ok("查询试题库表成功").put("data", examquestionbankView);
     }

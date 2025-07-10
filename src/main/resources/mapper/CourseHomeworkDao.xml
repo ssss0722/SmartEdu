@@ -24,15 +24,32 @@
  		<where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 
-    <select id="selectListView"
-		resultType="com.entity.view.CourseHomeworkView" >
-		SELECT  eh.* FROM exam_homework eh
-        <where> 1=1 ${ew.sqlSegment}</where>
+	<select id="selectListView" resultType="com.entity.view.CourseHomeworkView">
+		SELECT
+		eh.*,
+		cc.id AS courseId,
+		cc.course AS courseName
+		FROM exam_homework eh
+		LEFT JOIN paper p ON eh.paper_id = p.id
+		LEFT JOIN course_categories cc ON p.course_id = cc.id
+		<where>
+			1=1
+			${ew.sqlSegment}
+		</where>
 	</select>
-	
-	<select id="selectView"
-		resultType="com.entity.view.CourseHomeworkView" >
-		SELECT * FROM exam_homework eh <where> 1=1 ${ew.sqlSegment}</where>
+
+	<select id="selectView" resultType="com.entity.view.CourseHomeworkView">
+		SELECT
+		eh.*,
+		cc.id AS courseId,
+		cc.course AS courseName
+		FROM exam_homework eh
+		LEFT JOIN paper p ON eh.paper_id = p.id
+		LEFT JOIN course_categories cc ON p.course_id = cc.id
+		<where>
+			1=1
+			${ew.sqlSegment}
+		</where>
 	</select>
 	
 

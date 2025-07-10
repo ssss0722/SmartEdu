@@ -45,10 +45,12 @@ public class CourseHomeworkController {
      * 列表
      */
     @RequestMapping("/lists")
-    public R list(CourseHomeworkEntity courseHomework){
+    public R list(CourseHomeworkEntity courseHomework,String token){
+        Long id=JwtUtils.getUserIdFromToken(token);
+        String username=teacherService.selectById(id).getT_username();
        	EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
       	ew.allEq(MPUtil.allEQMapPre(courseHomework, "eh"));
-        ew.addFilter("paper_id IN (SELECT id FROM paper WHERE status = 0)");
+        ew.addFilter("paper_id IN (SELECT id FROM paper WHERE status = 0 AND t_username = '" + username + "')");
         return R.ok().put("data", courseHomeworkService.selectListView(ew));
     }
 
@@ -56,10 +58,12 @@ public class CourseHomeworkController {
      * 查询
      */
     @RequestMapping("/query")
-    public R query(CourseHomeworkEntity courseHomework){
+    public R query(CourseHomeworkEntity courseHomework,String token){
+        Long id=JwtUtils.getUserIdFromToken(token);
+        String username=teacherService.selectById(id).getT_username();
         EntityWrapper<CourseHomeworkEntity> ew = new EntityWrapper<CourseHomeworkEntity>();
  		ew.allEq(MPUtil.allEQMapPre(courseHomework, "eh"));
-        ew.addFilter("paper_id IN (SELECT id FROM paper WHERE status = 0)");
+        ew.addFilter("paper_id IN (SELECT id FROM paper WHERE status = 0 AND t_username = '" + username + "')");
 		CourseHomeworkView courseHomeworkView =  courseHomeworkService.selectView(ew);
 		return R.ok("查询课程作业成功").put("data", courseHomeworkView);
     }

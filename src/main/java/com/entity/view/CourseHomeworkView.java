@@ -21,6 +21,23 @@ import java.io.Serializable;
 public class CourseHomeworkView extends CourseHomeworkEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	// 新增字段
+	private Long courseId;
+	private String courseName;
+	// getter和setter
+	public Long getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
+	}
+	public String getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
 	public CourseHomeworkView(){
 	}
  
@@ -33,6 +50,8 @@ public class CourseHomeworkView extends CourseHomeworkEntity implements Serializ
 		}
  		
 	}
+
+
 
 
 }
