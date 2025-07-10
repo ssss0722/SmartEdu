@@ -18,7 +18,7 @@ import com.entity.view.ExamQuestionBankView;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public interface ExamquestionbankService extends IService<ExamQuestionBankEntity> {
+public interface ExamQuestionBankService extends IService<ExamQuestionBankEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     

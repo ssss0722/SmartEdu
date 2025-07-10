@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * 测试记录表
  * 数据库通用操作实体类（普通增删改查）
  */
-@TableName("exam_record")
+@TableName("record")
 public class ExamRecordEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -103,21 +103,8 @@ public class ExamRecordEntity implements Serializable {
 		this.questionId = questionId;
 	}
 
-	public Long getIsmark() {
-		return ismark;
-	}
 
-	public void setIsmark(Long ismark) {
-		this.ismark = ismark;
-	}
 
-	public Long getMyscore() {
-		return myscore;
-	}
-
-	public void setMyscore(Long myscore) {
-		this.myscore = myscore;
-	}
 
 	public String getMyanswer() {
 		return myanswer;
@@ -141,5 +128,22 @@ public class ExamRecordEntity implements Serializable {
 
 	public void setAddtime(Date addtime) {
 		this.addtime = addtime;
+	}
+
+
+	public Long getIsmark() {
+		return ismark;
+	}
+
+	public void setIsmark(Long ismark) {
+		this.ismark = ismark;
+	}
+
+	public Long getMyscore() {
+		return myscore;
+	}
+
+	public void setMyscore(Long myscore) {
+		this.myscore = myscore;
 	}
 }

@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.service.ExamQuestionBankService;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.List;
@@ -14,12 +15,12 @@ import com.utils.Query;
 
 import com.dao.ExamQuestionBankDao;
 import com.entity.ExamQuestionBankEntity;
-import com.service.ExamquestionbankService;
+
 import com.entity.vo.ExamQuestionbankVO;
 import com.entity.view.ExamQuestionBankView;
 
-@Service("examquestionbankService")
-public class ExamquestionbankServiceImpl extends ServiceImpl<ExamQuestionBankDao, ExamQuestionBankEntity> implements ExamquestionbankService {
+@Service("ExamQuestionBankService")
+public class ExamQuestionBankServiceImpl extends ServiceImpl<ExamQuestionBankDao, ExamQuestionBankEntity> implements ExamQuestionBankService {
 	
 	
     @Override

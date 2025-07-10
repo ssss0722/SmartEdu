@@ -1,25 +1,22 @@
 package com.service.impl;
 
+import com.service.ExamQuestionService;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.List;
-
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.utils.PageUtils;
 import com.utils.Query;
-
-
 import com.dao.ExamQuestionDao;
 import com.entity.ExamQuestionEntity;
-import com.service.ExamquestionService;
 import com.entity.vo.ExamQuestionVO;
 import com.entity.view.ExamQuestionView;
 
 @Service("examquestionService")
-public class ExamquestionServiceImpl extends ServiceImpl<ExamQuestionDao, ExamQuestionEntity> implements ExamquestionService {
+public class ExamQuestionServiceImpl extends ServiceImpl<ExamQuestionDao, ExamQuestionEntity> implements ExamQuestionService {
 	
 	
     @Override

@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.util.*;
-import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.entity.*;
@@ -19,8 +18,7 @@ import com.entity.view.CourseHomeworkView;
  * 课程作业
  * 后端接口
  * @author 
- * @email 
- * @date 2024-03-05 11:41:24
+ * @email
  */
 @RestController
 @RequestMapping("/courseHomework")
@@ -32,13 +30,13 @@ public class CourseHomeworkController {
     private TeacherService teacherService;
 
     @Autowired
-    private ExamquestionbankService examquestionbankService;
+    private ExamQuestionBankService examquestionbankService;
 
     @Autowired
     private CourseHomeworkQuestionService courseHomeworkQuestionService;
 
     @Autowired
-    private ExampaperService exampaperService;
+    private ExamPaperService exampaperService;
 
     @Autowired
     private StudentService studentService;

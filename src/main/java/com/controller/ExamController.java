@@ -22,7 +22,7 @@ public class ExamController {
     @Autowired
     private ExamService examService;
     @Autowired
-    private ExampaperService exampaperService;
+    private ExamPaperService exampaperService;
     @Autowired
     private StudentService studentService;
     @Autowired
@@ -34,9 +34,9 @@ public class ExamController {
     @Autowired
     private CourseCategoryService courseCategoryService;
     @Autowired
-    private ExamquestionService examquestionService;
+    private ExamQuestionService examquestionService;
     @Autowired
-    private ExamquestionbankService examquestionbankService;
+    private ExamQuestionBankService examquestionbankService;
     //获取考试列表
     @IgnoreAuth
     @RequestMapping("/list")
@@ -176,7 +176,7 @@ public class ExamController {
     }
     //查看试卷列表
     @GetMapping("/paperlistbycourse")
-    public R getPapersByCourse(@RequestParam Long courseId, @RequestParam String token) {
+    public R getPapersByCourse(@RequestParam Long courseId,@RequestParam Integer status, @RequestParam String token) {
         // 解析 token 获取教师身份（可选）
         Long teacherId = JwtUtils.getUserIdFromToken(token);
         if (teacherId == null) {
@@ -188,11 +188,11 @@ public class ExamController {
             return R.error("教师不存在");
         }
 
-        // 查询指定课程下属于该教师的试卷
+        // 查询指定课程下属于该教师的试卷和作业
         EntityWrapper<ExamPaperEntity> wrapper = new EntityWrapper<>();
         wrapper.eq("course_id", courseId);
         wrapper.eq("t_username", teacher.getT_username());
-        wrapper.eq("status", 1); // 只查“考试”类型试卷（非作业）
+        wrapper.eq("status", status); // 只查“考试”类型试卷（非作业）
 
         List<ExamPaperEntity> paperList = exampaperService.selectList(wrapper);
 

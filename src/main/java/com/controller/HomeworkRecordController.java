@@ -3,7 +3,6 @@ package com.controller;
 import com.annotation.IgnoreAuth;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.entity.*;
-import com.entity.view.ExamRecordView;
 import com.entity.view.HomeworkRecordView;
 import com.service.*;
 import com.utils.JwtUtils;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +34,10 @@ public class HomeworkRecordController {
     private CourseHomeworkService courseHomeworkService;
 
     @Autowired
-    private ExamquestionbankService examquestionbankService;
+    private ExamQuestionBankService examquestionbankService;
 
     @Autowired
-    private ExampaperService exampaperService;
+    private ExamPaperService exampaperService;
 
     /**
      * 作业记录接口

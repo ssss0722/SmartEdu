@@ -1,27 +1,22 @@
 package com.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.service.TokenBlacklistService;
+import com.dto.SubmitRequestDTO;
+import com.entity.*;
+import com.service.*;
 import com.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.annotation.IgnoreAuth;
 
-import com.entity.StudentEntity;
 import com.entity.view.StudentView;
-
-import com.service.StudentService;
 
 /**
  * 学生
@@ -36,9 +31,30 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+
+
+
     @Autowired
     private TokenBlacklistService tokenBlacklistService;
-	
+    @Autowired
+    private CourseStudentService courseStudentService;
+    @Autowired
+    private CourseTeacherService courseTeacherService;
+    @Autowired
+    private CourseCategoryService courseCategoryService;
+    @Autowired
+    private ExamPaperService examPaperService;
+	@Autowired
+    private ExamService examService;
+    @Autowired
+    ExamQuestionService examQuestionService;
+    @Autowired
+    private ExamQuestionBankService examQuestionBankService;
+    @Autowired
+    private ExamRecordService examRecordService;
+    @Autowired
+    private CourseEvaluationService courseEvaluationService;
+
 	/**
 	 * 登录
 	 */
@@ -46,9 +62,14 @@ public class StudentController {
 	@RequestMapping(value = "/login")
 	public R login(String username, String password) {
 		StudentEntity u = studentService.selectOne(new EntityWrapper<StudentEntity>().eq("s_username", username));
+        System.out.println("查询到的用户：" + u);
+        System.out.println("传入密码：" + password);
+        System.out.println("数据库密码：" + (u != null ? u.getPassword() : "null"));
 		if(u==null || !u.getPassword().equals(password)) {
 			return R.error("账号或密码不正确");
 		}
+
+
 
         String token = JwtUtils.generateToken(u.getId(), username, "student", "student");
         return R.ok().put("token", token);
@@ -238,18 +259,119 @@ public class StudentController {
     }
 	
     /**
-     * 后端详情
+     * 学生主页详情
      */
     @RequestMapping("/info")
-    public R info(String token){
-        try {
-            Long userId = JwtUtils.getUserIdFromToken(token);
-            StudentEntity student = studentService.selectById(userId);
-            return R.ok().put("data", student);
-        }catch (Exception e) {
-            return R.error(401, "token解析失败");
+    public R getStudentInfo(@RequestParam String token){
+      //解析token获取studentId
+        Long studentId=JwtUtils.getUserIdFromToken(token);
+        if(studentId==null){
+            return R.error("无效token");
         }
+        //查询学生信息
+        StudentEntity student=studentService.selectById(studentId);
+        if(student==null){
+            return R.error("未找到该学生");
+        }
+        String sUsername=student.getsUsername();
+        //查询学生所选课程
+        List<CourseStudentEntity> courseStudentList=courseStudentService.selectList(
+                new EntityWrapper<CourseStudentEntity>().eq("s_username",sUsername)
+        );
+        List<Long> courseIds=courseStudentList.stream()
+                .map(CourseStudentEntity::getCourseId)
+                .collect(Collectors.toList());
+        //查询课程信息
+        List<CourseCategoriesEntity> courses = courseCategoryService.selectBatchIds(courseIds);
+
+        List<String> courseNames = courses.stream()
+                .map(CourseCategoriesEntity::getCourse)
+                .collect(Collectors.toList());
+        //构造响应数据
+            Map<String, Object> result = new HashMap<>();
+            result.put("s_username", student.getsUsername());
+          result.put("s_name", student.getsName());
+            result.put("courses", courseNames);
+
+            return R.ok().put("data", result);
     }
+    /**
+     * 学生查看考试列表
+     */
+    @IgnoreAuth
+    @RequestMapping("/lists")
+    public R listStudentExams(@RequestParam String token){
+        //解析token,获取s_username
+        String role=JwtUtils.getRoleFromToken(token);
+        if(!"student".equals(role)){
+            return R.error("权限不足，仅限学生访问");
+        }
+        Long studentId=JwtUtils.getUserIdFromToken(token);
+        StudentEntity student=studentService.selectById(studentId);
+        if(student==null){
+            return R.error("无效学生身份");
+        }
+        String sUsername=student.getsUsername();
+        //查询course_student表，获取所有所选课程
+        List<CourseStudentEntity>csList=courseStudentService.selectList(
+                new EntityWrapper<CourseStudentEntity>().eq("s_username",sUsername)
+        );
+        List<Long>courseIds=csList.stream()
+                .map(CourseStudentEntity::getCourseId)
+                .collect(Collectors.toList());
+
+        if (courseIds.isEmpty()) {
+            return R.ok().put("data", Collections.emptyList());
+        }
+        //查询exam_paper，找出试卷和作业
+        List<ExamPaperEntity> papers = examPaperService.selectList(
+                new EntityWrapper<ExamPaperEntity>()
+                        .in("course_id", courseIds)
+
+        );
+        if (papers.isEmpty()) {
+            return R.ok().put("data", Collections.emptyList());
+        }
+        List<Long> paperIds = papers.stream()
+                .map(ExamPaperEntity::getId)
+                .collect(Collectors.toList());
+       // 查询 exam 表，找出这些试卷对应的考试
+        List<ExamEntity> exams = examService.selectList(
+                new EntityWrapper<ExamEntity>().in("paper_id", paperIds)
+        );
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (ExamEntity exam : exams) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("examId", exam.getId());
+            map.put("examName", exam.getName());
+            map.put("startTime", formatDatetime(exam.getStartTime()));
+            map.put("endTime", formatDatetime(exam.getEndTime()));
+
+            // 获取试卷
+            ExamPaperEntity paper = examPaperService.selectById(exam.getPaperId());
+            if (paper != null) {
+                map.put("paperTitle", paper.getTitle());
+
+                // 获取课程名称
+                CourseCategoriesEntity course = courseCategoryService.selectById(paper.getCourseId());
+                if (course != null) {
+                    map.put("courseName", course.getCourse());
+                }
+            }
+
+            resultList.add(map);
+        }
+
+        return R.ok().put("data", resultList);
+
+    }
+    //格式化时间
+    private String formatDatetime(Date date) {
+        if (date == null) return "";
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
+    }
+
+
 
     /**
      * 修改
@@ -285,6 +407,144 @@ public class StudentController {
 
         studentService.updateById(student);
         return R.ok("更新成功");
+    }
+    /**
+     * 学生查看试卷详情
+     */
+    @GetMapping("/paper/detail/{paperId}")
+    public R getPaperDetail(@PathVariable Long paperId){
+        //获取试卷题目列表
+        List<ExamQuestionEntity> questionLinks = examQuestionService.selectList(
+                new EntityWrapper<ExamQuestionEntity>().eq("paperid", paperId)
+        );
+
+        List<Long> questionIds = questionLinks.stream()
+                .map(ExamQuestionEntity::getQuestionId)
+                .collect(Collectors.toList());
+
+        // 批量查出题目详情
+        List<ExamQuestionBankEntity> questions = examQuestionBankService.selectBatchIds(questionIds);
+
+        return R.ok().put("questions", questions);
+    }
+
+    /**
+     * 学生提交答题记录+自动评分
+     */
+
+    @PostMapping("/paper/submit")
+    public R submitPaper(@RequestBody SubmitRequestDTO submit) {
+        String sUsername = submit.getsUsername();
+        Long paperId = submit.getPaperId();
+        Map<Long, String> answers = submit.getAnswers();
+        List<ExamRecordEntity> records = new ArrayList<>();
+        Long totalScore = 0L;
+        for (Map.Entry<Long, String> entry : answers.entrySet()) {
+            Long questionId = entry.getKey();
+            String myAnswer = entry.getValue();
+            ExamQuestionBankEntity question = examQuestionBankService.selectById(questionId);
+            Long score = 0L;
+           if(question!=null&&myAnswer!=null){
+               if (question.getType() == 0 || question.getType() == 2) { // 单选/判断
+                   if (myAnswer.equals(question.getAnswer())) {
+                       score = 5L;
+                       totalScore += 5L;
+                   }
+               } else if (question.getType() == 1) { // 多选
+                   Set<String> correct = new HashSet<>(Arrays.asList(question.getAnswer().split("")));
+                   Set<String> user = new HashSet<>(Arrays.asList(myAnswer.split("")));
+                   if (correct.equals(user)) {
+                       score = 5L;
+                       totalScore += 5L;
+                   }
+               } else if (question.getType() == 3) { // 填空
+                   String correct = question.getAnswer().replaceAll("\\s+", "").toLowerCase();
+                   String user = myAnswer.replaceAll("\\s+", "").toLowerCase();
+                   if (correct.equals(user)) {
+                       score = 5L;
+                       totalScore += 5L;
+                   }
+               }
+           }
+            ExamRecordEntity record = new ExamRecordEntity();
+            record.setAddtime(new Date());
+            record.setsUsername(sUsername);
+            record.setPaperid(paperId);
+            record.setQuestionId(questionId);
+            record.setMyanswer(myAnswer);
+            record.setMyscore(score);
+            record.setIsmark(1L);
+
+            records.add(record);
+        }
+            examRecordService.insertBatch(records); // 批量插入记录
+
+            return R.ok("提交成功").put("totalScore", totalScore);
+
+
+
+    }
+    /**
+     *学生查看课程评价
+     */
+    @IgnoreAuth
+    @GetMapping("/evaluations/{courseId}")
+    public R getStudentEvaluations(@PathVariable Long courseId) {
+        //  查找当前课程写过的评价
+        List<CourseEvaluationEntity> evaluations = courseEvaluationService.selectList(
+                new EntityWrapper<CourseEvaluationEntity>().eq("course_id", courseId)
+        );
+
+        List<Map<String, Object>> resultList = new ArrayList<>();
+
+        for (CourseEvaluationEntity eval : evaluations) {
+            Map<String, Object> map = new HashMap<>();
+
+            // 课程名称
+            CourseCategoriesEntity course = courseCategoryService.selectById(eval.getCourseId());
+            map.put("courseName", course != null ? course.getCourse() : "未知课程");
+
+            // 学生姓名
+            StudentEntity student = studentService.selectOne(
+                    new EntityWrapper<StudentEntity>().eq("s_username", eval.getsUsername())
+            );
+            map.put("studentName", student != null ? student.getsName() : eval.getsUsername());
+
+            map.put("rating", eval.getRating());
+            map.put("comment", eval.getComment());
+            map.put("addtime", formatDatetime(eval.getAddTime()));
+
+            resultList.add(map);
+        }
+
+        return R.ok().put("data", resultList);
+    }
+    @IgnoreAuth
+    @PostMapping("/evaluate")
+    public R evaluate(@RequestBody CourseEvaluationEntity evaluation) {
+        if (evaluation.getCourseId() == null || evaluation.getsUsername() == null || evaluation.getRating() == null) {
+            return R.error("缺少必要字段");
+        }
+
+        // 获取课程信息
+        CourseCategoriesEntity course = courseCategoryService.selectById(evaluation.getCourseId());
+        if (course == null) {
+            return R.error("课程不存在");
+        }
+
+        // 获取任课教师
+        CourseTeacherEntity courseTeacher = courseTeacherService.selectOne(
+                new EntityWrapper<CourseTeacherEntity>().eq("course_id", course.getId())
+        );
+        if (courseTeacher == null) {
+            return R.error("未找到课程对应的任课教师");
+        }
+
+        evaluation.settUsername(courseTeacher.gettUsername());
+        evaluation.setAddTime(new Date());
+
+        courseEvaluationService.insert(evaluation);
+        return R.ok("评价成功");
     }
 
     /**

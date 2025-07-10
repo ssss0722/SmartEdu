@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.service.ExamPaperService;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.List;
@@ -14,12 +15,11 @@ import com.utils.Query;
 
 import com.dao.ExamPaperDao;
 import com.entity.ExamPaperEntity;
-import com.service.ExampaperService;
 import com.entity.vo.ExamPaperVO;
 import com.entity.view.ExamPaperView;
 
-@Service("exampaperService")
-public class ExampaperServiceImpl extends ServiceImpl<ExamPaperDao, ExamPaperEntity> implements ExampaperService {
+@Service("ExamPaperService")
+public class ExamPaperServiceImpl extends ServiceImpl<ExamPaperDao, ExamPaperEntity> implements ExamPaperService {
 	
 	
     @Override

@@ -5,7 +5,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.entity.CourseCategoriesEntity;
 import com.entity.CourseTeacherEntity;
 import com.entity.TeacherEntity;
@@ -24,7 +23,7 @@ import com.annotation.IgnoreAuth;
 import com.entity.ExamQuestionBankEntity;
 import com.entity.view.ExamQuestionBankView;
 
-import com.service.ExamquestionbankService;
+import com.service.ExamQuestionBankService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
@@ -40,7 +39,7 @@ import com.utils.MPUtil;
 @RequestMapping("/questionbank")
 public class ExamQuestionBankController {
     @Autowired
-    private ExamquestionbankService examquestionbankService;
+    private ExamQuestionBankService examquestionbankService;
     @Autowired
     private TeacherService teacherService;
     @Autowired

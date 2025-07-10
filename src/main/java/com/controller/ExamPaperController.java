@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,17 +38,16 @@ import com.entity.view.ExamPaperView;
 @RestController
 @RequestMapping("/paper")
 public class ExamPaperController {
-    @Autowired
-    private ExampaperService exampaperService;
+   @Autowired
+   private ExamPaperService examPaperService;
 
 
-
-
-    @Autowired
-    private ExamquestionService examquestionService;
 
     @Autowired
-    private ExamquestionbankService examquestionbankService;
+    private ExamQuestionService examquestionService;
+
+    @Autowired
+    private ExamQuestionBankService examquestionbankService;
 
     @Autowired
     private ExamRecordService examrecordService;
@@ -87,7 +85,7 @@ public class ExamPaperController {
 
 
 
-        PageUtils page = exampaperService.queryPage(params, ew);
+        PageUtils page = examPaperService.queryPage(params, ew);
         // 拿到当前页的试卷列表
         List<ExamPaperEntity> paperList = (List<ExamPaperEntity>) page.getList();
 
@@ -120,7 +118,7 @@ public class ExamPaperController {
     public R query(ExamPaperEntity exampaper){
         EntityWrapper<ExamPaperEntity> ew = new EntityWrapper<ExamPaperEntity>();
  		ew.allEq(MPUtil.allEQMapPre( exampaper, "paper"));
-		ExamPaperView exampaperView =  exampaperService.selectView(ew);
+		ExamPaperView exampaperView =  examPaperService.selectView(ew);
 		return R.ok("查询在线考试表成功").put("data", exampaperView);
     }
 
@@ -130,7 +128,7 @@ public class ExamPaperController {
 	@IgnoreAuth
     @RequestMapping("/detail/{id}")
     public R detail(@PathVariable("id") Long id){
-        ExamPaperEntity exampaper = exampaperService.selectById(id);
+        ExamPaperEntity exampaper = examPaperService.selectById(id);
         List<ExamQuestionEntity> examQuestions = examquestionService.selectList(
                 new EntityWrapper<ExamQuestionEntity>().eq("paperid", id)
         );
@@ -155,7 +153,7 @@ public class ExamPaperController {
     @RequestMapping("/security")
     @IgnoreAuth
     public R security(@RequestParam String username){
-        ExamPaperEntity exampaper = exampaperService.selectOne(new EntityWrapper<ExamPaperEntity>().eq("", username));
+        ExamPaperEntity exampaper = examPaperService.selectOne(new EntityWrapper<ExamPaperEntity>().eq("", username));
         return R.ok().put("data", exampaper);
     }
 
@@ -168,7 +166,7 @@ public class ExamPaperController {
     @IgnoreAuth
     public R update(@RequestBody ExamPaperUpdateRequest req,@RequestParam String token){
         // 查找并更新试卷基础信息
-        ExamPaperEntity exampaper = exampaperService.selectById(req.getId());
+        ExamPaperEntity exampaper = examPaperService.selectById(req.getId());
         // 验证试卷是否存在
         if (exampaper == null) {
             return R.error("试卷不存在");
@@ -177,7 +175,7 @@ public class ExamPaperController {
         exampaper.setTitle(req.getTitle());
         exampaper.setCourseId(req.getCourseId());
         exampaper.setAddtime(new Date());
-        exampaperService.updateById(exampaper);//全部更新
+        examPaperService.updateById(exampaper);//全部更新
         // 删除原试卷的所有题目
         examquestionService.delete(new EntityWrapper<ExamQuestionEntity>().eq("paperid", exampaper.getId()));
         // 获取当前教师
@@ -241,7 +239,7 @@ public class ExamPaperController {
         examService.delete(new EntityWrapper<ExamEntity>().eq("paper_id", id));
         //删除 question 表中依赖此试卷的记录
         examquestionService.delete(new EntityWrapper<ExamQuestionEntity>().eq("paperid", id));
-        boolean removed = exampaperService.deleteById(id);
+        boolean removed = examPaperService.deleteById(id);
         if (removed) {
             return R.ok();
         } else {
@@ -274,7 +272,7 @@ public class ExamPaperController {
 		}
 		params.put("sort", "clicktime");
         params.put("order", "desc");
-		PageUtils page = exampaperService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, exampaper), params), params));
+		PageUtils page = examPaperService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, exampaper), params), params));
         return R.ok().put("data", page);
     }
 
@@ -298,7 +296,7 @@ public class ExamPaperController {
         exampaper.setStatus(req.getStatus());
         exampaper.setTime(req.getTime());
         // 插入试卷，自动回填ID
-        exampaperService.insert(exampaper);
+        examPaperService.insert(exampaper);
         Long paperid = exampaper.getId();  // 获取回填的主键ID
         //筛选出课程id对应的单选题
         if(req.getSingle()>0) {

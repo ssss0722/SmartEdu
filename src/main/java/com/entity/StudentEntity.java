@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -46,6 +47,7 @@ public class StudentEntity<T> implements Serializable {
 	/**
 	 * 学生账号
 	 */
+	@TableField("s_username")
 					
 	private String sUsername;
 	

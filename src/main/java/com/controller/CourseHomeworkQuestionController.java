@@ -28,7 +28,7 @@ public class CourseHomeworkQuestionController {
     private CourseHomeworkQuestionService courseHomeworkQuestionService;
 
     @Autowired
-    private ExampaperService exampaperService;
+    private ExamPaperService exampaperService;
 
     @Autowired
     private StudentService studentService;

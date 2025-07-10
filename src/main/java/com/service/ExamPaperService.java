@@ -18,7 +18,7 @@ import com.entity.view.ExamPaperView;
  * @email 
  * @date 2024-03-05 11:41:24
  */
-public interface ExampaperService extends IService<ExamPaperEntity> {
+public interface ExamPaperService extends IService<ExamPaperEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     
