@@ -16,5 +16,5 @@ public interface CourseHomeworkQuestionDao extends BaseMapper<HomeworkQuestionEn
 
     List<HomeworkQuestionEntity> selectListView(@Param("ew") EntityWrapper<HomeworkQuestionEntity> wrapper);
 
-    CourseHomeworkQuestionView selectView(EntityWrapper<HomeworkQuestionEntity> ew);
+    CourseHomeworkQuestionView selectView(@Param("ew")EntityWrapper<HomeworkQuestionEntity> ew);
 }

@@ -9,7 +9,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
-@TableName("course_homework_question")
+@TableName("question")
 public class CourseHomeworkQuestionView extends HomeworkQuestionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

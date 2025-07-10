@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
-@TableName("course_homework_question")
+@TableName("question")
 public class HomeworkQuestionEntity<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -39,8 +39,8 @@ public class HomeworkQuestionEntity<T> implements Serializable {
      * 作业id
      */
 
-    @TableField("homework_id")
-    private Long homeworkId;
+    @TableField("paperid")
+    private Long paperid;
 
 
     /**
@@ -77,20 +77,13 @@ public class HomeworkQuestionEntity<T> implements Serializable {
         this.id = id;
     }
 
-    /**
-     * 获取：所属作业id（外键）
-     */
-    public Long getHomeworkId() {
-        return homeworkId;
+    public Long getPaperid() {
+        return paperid;
     }
 
-    /**
-     * 设置：所属作业id（外键）
-     */
-    public void setHomeworkId(Long homeworkId) {
-        this.homeworkId = homeworkId;
+    public void setPaperid(Long paperid) {
+        this.paperid = paperid;
     }
-
 
     /**
      * 获取：题目id（外键）

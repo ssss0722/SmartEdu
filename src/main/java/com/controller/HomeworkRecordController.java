@@ -38,6 +38,9 @@ public class HomeworkRecordController {
     @Autowired
     private ExamquestionbankService examquestionbankService;
 
+    @Autowired
+    private ExampaperService exampaperService;
+
     /**
      * 作业记录接口
      */
@@ -243,7 +246,7 @@ public class HomeworkRecordController {
         }
         record.setsUsername(studentService.selectById(id).getsUsername());
         CourseHomeworkEntity homework = courseHomeworkService.selectById(record.getPaperid());
-        record.settUsername(homework.gettUsername());
+        record.settUsername(exampaperService.selectById(homework.getPaperId()).getTUsername());
         homeworkRecordService.insert(record);
         return R.ok("添加成功");
     }
