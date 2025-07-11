@@ -283,14 +283,19 @@ public class StudentController {
         //查询课程信息
         List<CourseCategoriesEntity> courses = courseCategoryService.selectBatchIds(courseIds);
 
-        List<String> courseNames = courses.stream()
-                .map(CourseCategoriesEntity::getCourse)
-                .collect(Collectors.toList());
+        // 构造课程信息列表（包含 courseId 和 courseName）
+        List<Map<String, Object>> courseInfoList = new ArrayList<>();
+        for (CourseCategoriesEntity course : courses) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("courseId", course.getId());
+            map.put("courseName", course.getCourse());
+            courseInfoList.add(map);
+        }
         //构造响应数据
             Map<String, Object> result = new HashMap<>();
             result.put("s_username", student.getsUsername());
           result.put("s_name", student.getsName());
-            result.put("courses", courseNames);
+            result.put("courses", courseInfoList);
 
             return R.ok().put("data", result);
     }
@@ -322,7 +327,7 @@ public class StudentController {
         if (courseIds.isEmpty()) {
             return R.ok().put("data", Collections.emptyList());
         }
-        //查询exam_paper，找出试卷和作业
+        //查询paper，找出试卷和作业
         List<ExamPaperEntity> papers = examPaperService.selectList(
                 new EntityWrapper<ExamPaperEntity>()
                         .in("course_id", courseIds)
