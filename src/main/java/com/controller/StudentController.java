@@ -438,8 +438,19 @@ public class StudentController {
      */
 
     @PostMapping("/paper/submit")
-    public R submitPaper(@RequestBody SubmitRequestDTO submit) {
-        String sUsername = submit.getsUsername();
+    public R submitPaper(@RequestBody SubmitRequestDTO submit,@RequestParam String token) {
+        //解析用户token获得sUsername
+        Long studentId = JwtUtils.getUserIdFromToken(token);
+        if (studentId == null) {
+            return R.error("无效 token");
+        }
+
+        StudentEntity student = studentService.selectById(studentId);
+        if (student == null) {
+            return R.error("学生不存在");
+        }
+        String sUsername = student.getsUsername();
+
         Long paperId = submit.getPaperId();
         Map<Long, String> answers = submit.getAnswers();
         List<ExamRecordEntity> records = new ArrayList<>();
