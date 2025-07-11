@@ -350,6 +350,7 @@ public class StudentController {
             map.put("examName", exam.getName());
             map.put("startTime", formatDatetime(exam.getStartTime()));
             map.put("endTime", formatDatetime(exam.getEndTime()));
+            map.put("paperId",exam.getPaperId());
 
             // 获取试卷
             ExamPaperEntity paper = examPaperService.selectById(exam.getPaperId());
