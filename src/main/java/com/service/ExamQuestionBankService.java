@@ -15,8 +15,7 @@ import com.entity.view.ExamQuestionBankView;
  * 试题库表
  *
  * @author 
- * @email 
- * @date 2024-03-05 11:41:24
+ * @email
  */
 public interface ExamQuestionBankService extends IService<ExamQuestionBankEntity> {
 

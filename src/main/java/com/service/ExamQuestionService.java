@@ -15,8 +15,7 @@ import com.entity.view.ExamQuestionView;
  * 试题表
  *
  * @author 
- * @email 
- * @date 2024-03-05 11:41:24
+ * @email
  */
 public interface ExamQuestionService extends IService<ExamQuestionEntity> {
 
