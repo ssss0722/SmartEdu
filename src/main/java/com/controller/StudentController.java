@@ -452,6 +452,12 @@ public class StudentController {
         String sUsername = student.getsUsername();
 
         Long paperId = submit.getPaperId();
+        //查询教师用户名
+        ExamPaperEntity paper = examPaperService.selectById(paperId);
+        if (paper == null) {
+            return R.error("试卷不存在");
+        }
+        String tUsername = paper.getTUsername();
         Map<Long, String> answers = submit.getAnswers();
         List<ExamRecordEntity> records = new ArrayList<>();
         Long totalScore = 0L;
@@ -463,22 +469,22 @@ public class StudentController {
            if(question!=null&&myAnswer!=null){
                if (question.getType() == 0 || question.getType() == 2) { // 单选/判断
                    if (myAnswer.equals(question.getAnswer())) {
-                       score = 5L;
-                       totalScore += 5L;
+                       score = 20L;
+                       totalScore += 20L;
                    }
                } else if (question.getType() == 1) { // 多选
                    Set<String> correct = new HashSet<>(Arrays.asList(question.getAnswer().split("")));
                    Set<String> user = new HashSet<>(Arrays.asList(myAnswer.split("")));
                    if (correct.equals(user)) {
-                       score = 5L;
-                       totalScore += 5L;
+                       score = 20L;
+                       totalScore += 20L;
                    }
                } else if (question.getType() == 3) { // 填空
                    String correct = question.getAnswer().replaceAll("\\s+", "").toLowerCase();
                    String user = myAnswer.replaceAll("\\s+", "").toLowerCase();
                    if (correct.equals(user)) {
-                       score = 5L;
-                       totalScore += 5L;
+                       score = 20L;
+                       totalScore += 20L;
                    }
                }
            }
@@ -490,6 +496,7 @@ public class StudentController {
             record.setMyanswer(myAnswer);
             record.setMyscore(score);
             record.setIsmark(1L);
+            record.settUsername(tUsername);
 
             records.add(record);
         }
