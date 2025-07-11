@@ -46,6 +46,8 @@ public class StudentController {
 	@Autowired
     private ExamService examService;
     @Autowired
+    private ExamStudentService examStudentService;
+    @Autowired
     ExamQuestionService examQuestionService;
     @Autowired
     private ExamQuestionBankService examQuestionBankService;
@@ -316,33 +318,22 @@ public class StudentController {
             return R.error("无效学生身份");
         }
         String sUsername=student.getsUsername();
+        //从exam_homework_student表查出该学生参与的考试
+        List<ExamStudentEntity> examStudentList = examStudentService.selectList(
+                new EntityWrapper<ExamStudentEntity>().eq("s_username", sUsername)
+        );
         //查询course_student表，获取所有所选课程
         List<CourseStudentEntity>csList=courseStudentService.selectList(
                 new EntityWrapper<CourseStudentEntity>().eq("s_username",sUsername)
         );
-        List<Long>courseIds=csList.stream()
-                .map(CourseStudentEntity::getCourseId)
-                .collect(Collectors.toList());
-
-        if (courseIds.isEmpty()) {
+        if (examStudentList.isEmpty()) {
             return R.ok().put("data", Collections.emptyList());
         }
-        //查询paper，找出试卷和作业
-        List<ExamPaperEntity> papers = examPaperService.selectList(
-                new EntityWrapper<ExamPaperEntity>()
-                        .in("course_id", courseIds)
-
-        );
-        if (papers.isEmpty()) {
-            return R.ok().put("data", Collections.emptyList());
-        }
-        List<Long> paperIds = papers.stream()
-                .map(ExamPaperEntity::getId)
+        List<Long> examIds = examStudentList.stream()
+                .map(ExamStudentEntity::getExamId)
                 .collect(Collectors.toList());
-       // 查询 exam 表，找出这些试卷对应的考试
-        List<ExamEntity> exams = examService.selectList(
-                new EntityWrapper<ExamEntity>().in("paper_id", paperIds)
-        );
+        //  查询 exam 表中考试详情
+        List<ExamEntity> exams = examService.selectBatchIds(examIds);
         List<Map<String, Object>> resultList = new ArrayList<>();
         for (ExamEntity exam : exams) {
             Map<String, Object> map = new HashMap<>();
